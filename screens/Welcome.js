@@ -5,7 +5,8 @@ const Welcome = ({ navigation }) => {
 	return (
 		<View>
 			<Text>Welcome to ShowNxt</Text>
-			<Button title="Register" />
+			<Button title="Register"
+				onPress={() => navigation.navigate("Register")} />
 			<Button title="Login" />
 		</View>
 	);

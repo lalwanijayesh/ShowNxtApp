@@ -13,37 +13,35 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   {/* <Text>ShowNxt</Text> */}
-    //   {/* <Welcome /> */}
-    //   {/* <Register /> */}
-    //   {/* <CoachRegister /> */}
-    //   <AthleteRegister />
-    //   <StatusBar style="auto" />
-    // </View>
-
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Welcome"
           component={Welcome}
-          options={{ title: "Welcome" }}
-        />
+          options={{
+            title: "Welcome"
+          }} />
 
         <Stack.Screen
           name="Register"
           component={Register}
-        />
+          options={{
+            title: "Register"
+          }} />
 
         <Stack.Screen
-          name="Coach Register"
+          name="CoachRegister"
           component={CoachRegister}
-        />
+          options={{
+            title: "Coach Registration"
+          }} />
 
         <Stack.Screen
-          name="Athlete Register"
+          name="AthleteRegister"
           component={AthleteRegister}
-        />
+          options={{
+            title: "Athlete Registration"
+          }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
