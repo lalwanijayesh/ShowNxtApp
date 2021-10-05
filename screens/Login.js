@@ -1,10 +1,16 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 
 const Login = ({ navigation }) => {
 	return (
 		<View>
-			<Text>Login</Text>
+			
+			<TextInput placeholder="Enter your email" />
+
+			<TextInput placeholder="Enter your password" />
+
+			<Button title="Next" 
+			/>
 		</View>
 	);
 }
