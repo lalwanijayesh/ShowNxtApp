@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, Button } from "react-native";
 
-export default function AthleteRegister() {
+export default function AthleteRegister({ navigation }) {
 	return (
 		<View>
 			<Text>Athlete Register</Text>
@@ -13,7 +13,10 @@ export default function AthleteRegister() {
 			<TextInput placeholder="Upload photos of yourself playing" />
 			<TextInput placeholder="Schedule of upcoming games" />
 
-			<Button title="Next" />
+			<Button title="Next" 
+				onPress={() => navigation.navigate("EmailPass")}
+			/>
+			
 		</View>
 	);
 }

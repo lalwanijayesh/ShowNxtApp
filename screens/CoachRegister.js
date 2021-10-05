@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, Button } from "react-native";
 
-export default function CoachRegister() {
+const CoachRegister = ({navigation}) => {
 	return (
 		<View>
 			<Text>Coach Register</Text>
@@ -16,7 +16,11 @@ export default function CoachRegister() {
 
 			<TextInput placeholder="What is your role at the school?" />
 
-			<Button title="Next" />
+			<Button title="Next" 
+			onPress={() => navigation.navigate("EmailPass")}
+			/>
 		</View>
 	);
 }
+
+export default CoachRegister;

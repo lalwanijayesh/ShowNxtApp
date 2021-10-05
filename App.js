@@ -4,10 +4,14 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import Welcome from './screens/Welcome';
 import Register from './screens/Register';
+import Login from './screens/Login';
+import EmailPass from './screens/EmailPass';
 import CoachRegister from './screens/CoachRegister';
 import AthleteRegister from './screens/AthleteRegister';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -37,11 +41,27 @@ export default function App() {
           }} />
 
         <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              title: "Login"
+            }} />
+
+        <Stack.Screen
           name="AthleteRegister"
           component={AthleteRegister}
           options={{
             title: "Athlete Registration"
           }} />
+
+        <Stack.Screen
+            name="EmailPass"
+            component={EmailPass}
+
+            options={{
+              title: "EmailPass"
+            }} />   
+
       </Stack.Navigator>
     </NavigationContainer>
   );
