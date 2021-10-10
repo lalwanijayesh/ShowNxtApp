@@ -16,4 +16,4 @@ const EmailPassScreen = () => {
     </View>
   );
 };
-export default EmailPass;
+export default EmailPassScreen;

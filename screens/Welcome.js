@@ -14,4 +14,4 @@ const WelcomeScreen = ({ navigation }) => {
   );
 };
 
-export default Welcome;
+export default WelcomeScreen;

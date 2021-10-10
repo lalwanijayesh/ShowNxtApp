@@ -21,4 +21,4 @@ const CoachRegisterScreen = ({ navigation }) => {
   );
 };
 
-export default CoachRegister;
+export default CoachRegisterScreen;

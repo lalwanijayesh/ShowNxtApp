@@ -18,8 +18,10 @@ export default firebase;
  */
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+import firebase from "firebase/app";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,9 +34,14 @@ const firebaseConfig = {
   storageBucket: "new-firebase-project-44edc.appspot.com",
   messagingSenderId: "634397846772",
   appId: "1:634397846772:web:177d459ba8367b2f7982a1",
-  measurementId: "G-MY8X2VXGHN"
+  measurementId: "G-MY8X2VXGHN",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// firebase.initializeApp(firebaseConfig);
+// const app = firebase.initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
+export default !firebase.apps.length
+  ? firebase.initializeApp(firebaseConfig)
+  : firebase.app();
