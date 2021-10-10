@@ -1,17 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import Welcome from './screens/Welcome';
-import Register from './screens/Register';
-import Login from './screens/Login';
-import EmailPass from './screens/EmailPass';
-import CoachRegister from './screens/CoachRegister';
-import AthleteRegister from './screens/AthleteRegister';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
+import WelcomeScreen from "./screens/Welcome";
+import RegisterScreen from "./screens/Register";
+import LoginScreen from "./screens/Login";
+import EmailPassScreen from "./screens/EmailPass";
+import CoachRegisterScreen from "./screens/CoachRegister";
+import AthleteRegisterScreen from "./screens/AthleteRegister";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,47 +19,51 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Welcome"
-          component={Welcome}
+          component={WelcomeScreen}
           options={{
-            title: "Welcome"
-          }} />
+            title: "Welcome",
+          }}
+        />
 
         <Stack.Screen
           name="Register"
-          component={Register}
+          component={RegisterScreen}
           options={{
-            title: "Register"
-          }} />
+            title: "Register",
+          }}
+        />
 
         <Stack.Screen
           name="CoachRegister"
-          component={CoachRegister}
+          component={CoachRegisterScreen}
           options={{
-            title: "Coach Registration"
-          }} />
+            title: "Coach Registration",
+          }}
+        />
 
         <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              title: "Login"
-            }} />
+          name="Login"
+          component={LoginScreen}
+          options={{
+            title: "Login",
+          }}
+        />
 
         <Stack.Screen
           name="AthleteRegister"
-          component={AthleteRegister}
+          component={AthleteRegisterScreen}
           options={{
-            title: "Athlete Registration"
-          }} />
+            title: "Athlete Registration",
+          }}
+        />
 
         <Stack.Screen
-            name="EmailPass"
-            component={EmailPass}
-
-            options={{
-              title: "EmailPass"
-            }} />   
-
+          name="EmailPass"
+          component={EmailPassScreen}
+          options={{
+            title: "EmailPass",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -70,8 +72,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

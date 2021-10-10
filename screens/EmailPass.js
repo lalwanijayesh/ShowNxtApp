@@ -1,17 +1,17 @@
 import React from "react";
 import { View, Text, TextInput, Button } from "react-native";
 
-const EmailPass = () => {
-	return (
-		<View>
-			<Text>Coach Register</Text>
+const EmailPassScreen = () => {
+  return (
+    <View>
+      <Text>Coach Register</Text>
 
-			<TextInput placeholder="Email?" />
+      <TextInput placeholder="Email?" />
 
-			<TextInput placeholder="Password?" />
+      <TextInput placeholder="Password?" />
 
-			<Button title="Next" />
-		</View>
-	);
-}
+      <Button title="Next" />
+    </View>
+  );
+};
 export default EmailPass;

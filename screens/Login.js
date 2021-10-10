@@ -1,19 +1,16 @@
 import React from "react";
 import { View, Text, useState, TextInput, Button } from "react-native";
 
-const Login = ({ navigation }) => {
-	
-	return (
-		<View>
-			
-			<TextInput placeholder="Enter your email" />
+const LoginScreen = ({ navigation }) => {
+  return (
+    <View>
+      <TextInput placeholder="Enter your email" />
 
-			<TextInput placeholder="Enter your password" />
+      <TextInput placeholder="Enter your password" />
 
-			<Button title="Next" 
-			/>
-		</View>
-	);
-}
+      <Button title="Next" />
+    </View>
+  );
+};
 
 export default Login;
