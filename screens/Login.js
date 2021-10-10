@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, useState, TextInput, Button } from "react-native";
 
 const Login = ({ navigation }) => {
+	
 	return (
 		<View>
 			
