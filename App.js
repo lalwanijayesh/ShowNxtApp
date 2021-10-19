@@ -20,34 +20,21 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Signup">
-        <Stack.Screen
-          name="Signup"
-          component={Register}
-          options={{ title: "Register" }}
-        />
-
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={({ title: "Login" }, { headerLeft: null })}
-        />
-
-        <Stack.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={({ title: "Dashboard" }, { headerLeft: null })}
-        />
-      </Stack.Navigator>
-
-      {/* <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Welcome">
         <Stack.Screen
           name="Welcome"
           component={WelcomeScreen}
           options={{
             title: "Welcome",
+            // headerStyle: {
+            //   backgroundColor: "red",
+            // },
+            // headerTintColor: "fff",
           }}
         />
+      </Stack.Navigator>
+
+      {/* <Stack.Navigator>
 
         <Stack.Screen
           name="Register"
