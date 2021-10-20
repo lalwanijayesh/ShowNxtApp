@@ -5,8 +5,10 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { ATHLETE, COACH } from "../constants/enums";
 
 const AthleteCoachSelection = ({ navigation }) => {
   const [fullName, setFullName] = React.useState("");
@@ -34,12 +36,18 @@ const AthleteCoachSelection = ({ navigation }) => {
         <Picker.Item label="Coach" value="coach" />
       </Picker>
 
-      {fullName !== "" && selectedType !== "none" ? (
-        <TouchableOpacity style={styles.buttonReady}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={styles.buttonNotReady} disabled={true}>
+      {fullName !== "" && selectedType !== "none" && (
+        <TouchableOpacity
+          style={styles.buttonReady}
+          onPress={() => {
+            if (selectedType === "athlete") {
+              // navigate to athlete registration page
+              Alert.alert("Hey athlete team, maybe do something here idk");
+            } else {
+              navigation.navigate("EmailPass", { COACH, fullName });
+            }
+          }}
+        >
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       )}
@@ -53,18 +61,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
-  },
-
-  buttonNotReady: {
-    display: "flex",
-    alignItems: "center",
-    borderColor: "black",
-    borderRadius: 8,
-    borderWidth: 1,
-    padding: 10,
-    margin: 30,
-    width: 237,
-    backgroundColor: "#4a4a4a",
   },
 
   buttonReady: {

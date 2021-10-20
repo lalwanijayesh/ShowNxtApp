@@ -6,6 +6,8 @@ import WelcomeScreen from "./screens/Welcome";
 import AthleteCoachSelection from "./screens/AthleteCoachSelection";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import CoachRegisterScreen from "./screens/CoachRegister";
+import EmailPassScreen from "./screens/EmailPass";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,8 +28,16 @@ export default function App() {
         />
 
         <Stack.Screen
-          name="Register"
+          name="AthleteCoachSelection"
           component={AthleteCoachSelection}
+          options={{
+            title: "Register",
+          }}
+        />
+
+        <Stack.Screen
+          name="EmailPass"
+          component={EmailPassScreen}
           options={{
             title: "Register",
           }}

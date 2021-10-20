@@ -1,12 +1,10 @@
 import React from "react";
 import { View, Text, TextInput, Button } from "react-native";
 
-const CoachRegisterScreen = ({ navigation }) => {
+const CoachRegisterScreen = ({ route, navigation }) => {
   return (
     <View>
       <Text>Coach Register</Text>
-
-      <TextInput placeholder="What is your name?" />
 
       <TextInput placeholder="What school do you coach for?" />
 

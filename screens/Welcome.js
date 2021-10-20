@@ -20,7 +20,7 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => navigation.navigate("AthleteCoachSelection")}
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
