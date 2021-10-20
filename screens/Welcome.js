@@ -20,7 +20,7 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => Alert.alert("Register!")}
+        onPress={() => navigation.navigate("Register")}
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   button: {
     display: "flex",
     borderColor: "black",
-    borderRadius: 5,
+    borderRadius: 8,
     borderWidth: 1,
     padding: 10,
     margin: 15,
