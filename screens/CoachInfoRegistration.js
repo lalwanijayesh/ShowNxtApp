@@ -1,13 +1,18 @@
 import React from "react";
-import { View, Text} from "react-native";
+import { View, Text } from "react-native";
 
-const CoachInfoRegistration = ({ navigation }) => {
-  return (
-    <View>
-      <Text>Text!!!!!!!!!!!!!!</Text>
+class CoachInfoRegistration extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-    </View>
-  );
-};
+  render() {
+    return (
+      <View>
+        <Text>Text!!!!!!!!!!!!!!</Text>
+      </View>
+    );
+  }
+}
 
 export default CoachInfoRegistration;

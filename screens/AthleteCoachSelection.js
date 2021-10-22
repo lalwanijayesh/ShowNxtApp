@@ -41,10 +41,15 @@ const AthleteCoachSelection = ({ navigation }) => {
           style={styles.buttonReady}
           onPress={() => {
             if (selectedType === "athlete") {
-              // navigate to athlete registration page
-              Alert.alert("Hey athlete team, maybe do something here idk");
+              navigation.navigate("EmailPass", {
+                userType: ATHLETE,
+                fullName: fullName,
+              });
             } else {
-              navigation.navigate("EmailPass", { COACH, fullName });
+              navigation.navigate("EmailPass", {
+                userType: COACH,
+                fullName: fullName,
+              });
             }
           }}
         >

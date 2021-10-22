@@ -5,7 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
+
+import { COACH, ATHLETE } from "../constants/enums";
 
 class EmailPassScreen extends React.Component {
   constructor(props) {
@@ -150,7 +153,15 @@ class EmailPassScreen extends React.Component {
         {this.state.email !== "" &&
           this.state.password !== "" &&
           this._isPasswordSufficient() && (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("Verification", {
+                  fullName: this.fullName,
+                  email: this.state.email,
+                  password: this.state.password,
+                });
+              }}
+            >
               <Text>Next</Text>
             </TouchableOpacity>
           )}
