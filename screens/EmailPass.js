@@ -1,85 +1,135 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { render } from "react-dom";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { ATHLETE, COACH } from "../constants/enums";
 
-const isPasswordSufficient = (password) => {
-  let hasSpecial = false;
-  let hasNumeric = false;
+class EmailPassScreen extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const specialCharacters = [
-    " ",
-    "!",
-    '"',
-    "#",
-    "$",
-    "%",
-    "&",
-    "`",
-    "(",
-    ")",
-    "*",
-    "+",
-    ",",
-    "-",
-    ".",
-    "/",
-    ":",
-    ";",
-    "<",
-    ">",
-    "=",
-    "?",
-    "@",
-    "[",
-    "]",
-    "^",
-    "_",
-    "`",
-    "{",
-    "}",
-    "|",
-    "~",
-  ];
+    this._setEmail = this._setEmail.bind(this);
+    this._setPassword = this._setPassword.bind(this);
 
-  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    this.state = {
+      email: "",
+      password: "",
+    };
 
-  for (let i = 0; i < password.length; i += 1) {
-    let char = password[i];
-
-    if (specialCharacters.includes(char)) {
-      hasSpecial = true;
-    }
-
-    if (numbers.includes(char)) {
-      hasNumeric = true;
-    }
+    let { userType, fullName } = props.route.params;
+    this.userType = userType;
+    this.fullName = fullName;
   }
 
-  return hasSpecial && hasNumeric && password.length >= 8;
-};
+  _setEmail(newEmail) {
+    this.setState((state) => ({
+      email: newEmail,
+      password: state.password,
+    }));
+  }
 
-const EmailPassScreen = ({ route, navigation }) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  _setPassword(newPassword) {
+    this.setState((state) => ({
+      email: state.email,
+      password: newPassword,
+    }));
+  }
 
-  let { userType, fullName } = route.params;
+  _hasSpecialCharacters() {
+    const specialCharacters = [
+      " ",
+      "!",
+      '"',
+      "#",
+      "$",
+      "%",
+      "&",
+      "`",
+      "(",
+      ")",
+      "*",
+      "+",
+      ",",
+      "-",
+      ".",
+      "/",
+      ":",
+      ";",
+      "<",
+      ">",
+      "=",
+      "?",
+      "@",
+      "[",
+      "]",
+      "^",
+      "_",
+      "`",
+      "{",
+      "}",
+      "|",
+      "~",
+    ];
 
-  return (
-    <View>
-      <TextInput onChangeText={setEmail} value={email} placeholder="Email" />
+    for (let i = 0; i < this.state.password.length; i += 1) {
+      let char = this.state.password[i];
 
-      <TextInput
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Password"
-      />
+      if (specialCharacters.includes(char)) {
+        return true;
+      }
+    }
 
-      {email !== "" && password !== "" && isPasswordSufficient(password) && (
-        <TouchableOpacity>
-          <Text>Next</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-};
+    return false;
+  }
+
+  _hasNumericCharacters() {
+    const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    for (let i = 0; i < this.state.password.length; i += 1) {
+      let char = this.state.password[i];
+
+      if (numbers.includes(char)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  _isPasswordSufficient() {
+    return (
+      this._hasNumericCharacters() &&
+      this._hasSpecialCharacters() &&
+      this.state.password.length >= 8
+    );
+  }
+
+  render() {
+    return (
+      <View>
+        <TextInput
+          onChangeText={this._setEmail}
+          value={this.state.email}
+          autoCompleteType="email"
+          placeholder="Email"
+        />
+
+        <TextInput
+          onChangeText={this._setPassword}
+          value={this.state.password}
+          autoCompleteType="password"
+          secureTextEntry={true}
+          placeholder="Password"
+        />
+
+        {this.state.email !== "" &&
+          this.state.password !== "" &&
+          this._isPasswordSufficient() && (
+            <TouchableOpacity>
+              <Text>Next</Text>
+            </TouchableOpacity>
+          )}
+      </View>
+    );
+  }
+}
 export default EmailPassScreen;
