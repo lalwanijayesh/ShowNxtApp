@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import {
   View,
   Text,
@@ -7,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { ATHLETE, COACH } from "../constants/enums";
 
 class EmailPassScreen extends React.Component {
   constructor(props) {
