@@ -129,19 +129,19 @@ class EmailPassScreen extends React.Component {
           <Text>password must include the following:</Text>
 
           {this.state.password.length >= 8 ? (
-            <Text>CHECK at least 8 characters</Text>
+            <Text>✓ at least 8 characters</Text>
           ) : (
             <Text>X at least 8 characters</Text>
           )}
 
           {this._hasNumericCharacters() ? (
-            <Text>CHECK 1 numeric character</Text>
+            <Text>✓ 1 numeric character</Text>
           ) : (
             <Text>X 1 numeric character</Text>
           )}
 
           {this._hasSpecialCharacters() ? (
-            <Text>CHECK 1 special character</Text>
+            <Text>✓ 1 special character</Text>
           ) : (
             <Text>X 1 special character</Text>
           )}
