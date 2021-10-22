@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { ATHLETE, COACH } from "../constants/enums";
+
 
 const isPasswordSufficient = (password) => {
   let hasSpecial = false;
@@ -65,21 +66,101 @@ const EmailPassScreen = ({ route, navigation }) => {
   let { userType, fullName } = route.params;
 
   return (
-    <View>
-      <TextInput onChangeText={setEmail} value={email} placeholder="Email" />
+    <View style={styles.container}>
+      <TextInput 
+      style={styles.emailInput}
+      onChangeText={setEmail} 
+      value={email} 
+      placeholder="Email" />
+
 
       <TextInput
+        style={styles.passwordInput}
         onChangeText={setPassword}
         value={password}
         placeholder="Password"
       />
 
+
+
+
+<Text style={styles.passwordRequirements}>Password must include the following:</Text>
+<Text style={styles.passwordRequirements1}>at least 8 charaters</Text>
+<Text style={styles.passwordRequirements1}>numeric symbol</Text>
+<Text style={styles.passwordRequirements1}>special character</Text>
+
       {email !== "" && password !== "" && isPasswordSufficient(password) && (
-        <TouchableOpacity>
-          <Text>Next</Text>
+        <TouchableOpacity style={styles.buttonReady}
+        onPress={() => {navigation.navigate("VerificationScreen", { COACH, fullName });
+        }}>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       )}
+
+
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100%",
+  },
+
+  emailInput: {
+    width: 237,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 100,
+  },
+
+  passwordInput: {
+    width: 237,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 10,
+  },
+
+  buttonReady: {
+    display: "flex",
+    alignItems: "center",
+    borderColor: "black",
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 10,
+    margin: 20,
+    width: 237,
+    backgroundColor: "#fff",
+  },
+
+  passwordRequirements: {
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
+  },
+
+  passwordRequirements1: {
+    fontWeight: "normal",
+    textAlign: "right",
+    marginTop: 10,
+  },
+
+  buttonText: {
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+
+
+});
+
 export default EmailPassScreen;
