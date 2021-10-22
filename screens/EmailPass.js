@@ -1,6 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { ATHLETE, COACH } from "../constants/enums";
 
 class EmailPassScreen extends React.Component {
@@ -121,6 +127,28 @@ class EmailPassScreen extends React.Component {
           placeholder="Password"
         />
 
+        <View style={style.passwordRequirementsContainer}>
+          <Text>password must include the following:</Text>
+
+          {this.state.password.length >= 8 ? (
+            <Text>CHECK at least 8 characters</Text>
+          ) : (
+            <Text>X at least 8 characters</Text>
+          )}
+
+          {this._hasNumericCharacters() ? (
+            <Text>CHECK 1 numeric character</Text>
+          ) : (
+            <Text>X 1 numeric character</Text>
+          )}
+
+          {this._hasSpecialCharacters() ? (
+            <Text>CHECK 1 special character</Text>
+          ) : (
+            <Text>X 1 special character</Text>
+          )}
+        </View>
+
         {this.state.email !== "" &&
           this.state.password !== "" &&
           this._isPasswordSufficient() && (
@@ -132,4 +160,13 @@ class EmailPassScreen extends React.Component {
     );
   }
 }
+
+const style = StyleSheet.create({
+  passwordRequirementsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+});
+
 export default EmailPassScreen;
