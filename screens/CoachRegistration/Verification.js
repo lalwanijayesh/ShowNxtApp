@@ -1,9 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { ATHLETE, COACH } from "../constants/enums";
-
-// todo: make this a class component
+// import { ATHLETE, COACH } from "../../../constants/enums";
 
 class VerificationScreen extends React.Component {
   constructor(props) {

@@ -155,11 +155,15 @@ class EmailPassScreen extends React.Component {
           this._isPasswordSufficient() && (
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate("Verification", {
-                  fullName: this.fullName,
-                  email: this.state.email,
-                  password: this.state.password,
-                });
+                if (this.userType === COACH) {
+                  this.props.navigation.navigate("Verification", {
+                    fullName: this.fullName,
+                    email: this.state.email,
+                    password: this.state.password,
+                  });
+                } else {
+                  // TODO: redirect to next Athlete screen
+                }
               }}
             >
               <Text>Next</Text>

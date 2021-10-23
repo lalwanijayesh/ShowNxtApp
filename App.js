@@ -6,10 +6,11 @@ import WelcomeScreen from "./screens/Welcome";
 import AthleteCoachSelection from "./screens/AthleteCoachSelection";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CoachRegisterScreen from "./screens/CoachRegister";
 import EmailPassScreen from "./screens/EmailPass";
-import VerificationScreen from "./screens/Verification";
-import CoachInfoRegistration from "./screens/CoachInfoRegistration";
+
+import VerificationScreen from "./screens/CoachRegistration/Verification";
+import CoachInfoRegistration from "./screens/CoachRegistration/CoachInfoRegistration";
+import CoachPositionSelection from "./screens/CoachRegistration/CoachPositionSelection";
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +59,14 @@ export default function App() {
           component={CoachInfoRegistration}
           options={{
             title: "Register",
+          }}
+        />
+
+        <Stack.Screen
+          name="CoachPositionSelection"
+          component={CoachPositionSelection}
+          options={{
+            title: "Select Positions",
           }}
         />
       </Stack.Navigator>
