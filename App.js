@@ -9,8 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CoachRegisterScreen from "./screens/CoachRegister";
 import EmailPassScreen from "./screens/EmailPass";
 import VerificationScreen from "./screens/Verification";
-import CoachInfoRegistration from "./screens/CoachInfoRegistration"
-
+import CoachInfoRegistration from "./screens/CoachInfoRegistration";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,23 +46,20 @@ export default function App() {
         />
 
         <Stack.Screen
-          name="VerificationScreen"
+          name="Verification"
           component={VerificationScreen}
           options={{
             title: "Register",
           }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="CoachInfoRegistration"
           component={CoachInfoRegistration}
           options={{
             title: "Register",
           }}
         />
-
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );

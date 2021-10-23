@@ -1,59 +1,14 @@
 import React from "react";
-<<<<<<< HEAD
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { ATHLETE, COACH } from "../constants/enums";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 
-
-const isPasswordSufficient = (password) => {
-  let hasSpecial = false;
-  let hasNumeric = false;
-
-  const specialCharacters = [
-    " ",
-    "!",
-    '"',
-    "#",
-    "$",
-    "%",
-    "&",
-    "`",
-    "(",
-    ")",
-    "*",
-    "+",
-    ",",
-    "-",
-    ".",
-    "/",
-    ":",
-    ";",
-    "<",
-    ">",
-    "=",
-    "?",
-    "@",
-    "[",
-    "]",
-    "^",
-    "_",
-    "`",
-    "{",
-    "}",
-    "|",
-    "~",
-  ];
-
-  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-  for (let i = 0; i < password.length; i += 1) {
-    let char = password[i];
-
-    if (specialCharacters.includes(char)) {
-      hasSpecial = true;
-=======
-import { render } from "react-dom";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import { ATHLETE, COACH } from "../constants/enums";
+import { COACH, ATHLETE } from "../constants/enums";
 
 class EmailPassScreen extends React.Component {
   constructor(props) {
@@ -128,7 +83,6 @@ class EmailPassScreen extends React.Component {
       if (specialCharacters.includes(char)) {
         return true;
       }
->>>>>>> 626e6e8916b1c8775c02dcd324d0c62110419fbd
     }
 
     return false;
@@ -148,115 +102,6 @@ class EmailPassScreen extends React.Component {
     return false;
   }
 
-<<<<<<< HEAD
-  return hasSpecial && hasNumeric && password.length >= 8;
-};
-
-const EmailPassScreen = ({ route, navigation }) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-
-  let { userType, fullName } = route.params;
-
-  return (
-    <View style={styles.container}>
-      <TextInput 
-      style={styles.emailInput}
-      onChangeText={setEmail} 
-      value={email} 
-      placeholder="Email" />
-
-
-      <TextInput
-        style={styles.passwordInput}
-        onChangeText={setPassword}
-        value={password}
-        placeholder="Password"
-      />
-
-
-
-
-<Text style={styles.passwordRequirements}>Password must include the following:</Text>
-<Text style={styles.passwordRequirements1}>at least 8 charaters</Text>
-<Text style={styles.passwordRequirements1}>numeric symbol</Text>
-<Text style={styles.passwordRequirements1}>special character</Text>
-
-      {email !== "" && password !== "" && isPasswordSufficient(password) && (
-        <TouchableOpacity style={styles.buttonReady}
-        onPress={() => {navigation.navigate("VerificationScreen", { COACH, fullName });
-        }}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      )}
-
-
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "100%",
-  },
-
-  emailInput: {
-    width: 237,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 100,
-  },
-
-  passwordInput: {
-    width: 237,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 10,
-  },
-
-  buttonReady: {
-    display: "flex",
-    alignItems: "center",
-    borderColor: "black",
-    borderRadius: 8,
-    borderWidth: 1,
-    padding: 10,
-    margin: 20,
-    width: 237,
-    backgroundColor: "#fff",
-  },
-
-  passwordRequirements: {
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 10,
-  },
-
-  passwordRequirements1: {
-    fontWeight: "normal",
-    textAlign: "right",
-    marginTop: 10,
-  },
-
-  buttonText: {
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-
-
-
-});
-
-=======
   _isPasswordSufficient() {
     return (
       this._hasNumericCharacters() &&
@@ -283,10 +128,40 @@ const styles = StyleSheet.create({
           placeholder="Password"
         />
 
+        <View style={style.passwordRequirementsContainer}>
+          <Text>password must include the following:</Text>
+
+          {this.state.password.length >= 8 ? (
+            <Text>✓ at least 8 characters</Text>
+          ) : (
+            <Text>X at least 8 characters</Text>
+          )}
+
+          {this._hasNumericCharacters() ? (
+            <Text>✓ 1 numeric character</Text>
+          ) : (
+            <Text>X 1 numeric character</Text>
+          )}
+
+          {this._hasSpecialCharacters() ? (
+            <Text>✓ 1 special character</Text>
+          ) : (
+            <Text>X 1 special character</Text>
+          )}
+        </View>
+
         {this.state.email !== "" &&
           this.state.password !== "" &&
           this._isPasswordSufficient() && (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("Verification", {
+                  fullName: this.fullName,
+                  email: this.state.email,
+                  password: this.state.password,
+                });
+              }}
+            >
               <Text>Next</Text>
             </TouchableOpacity>
           )}
@@ -294,5 +169,13 @@ const styles = StyleSheet.create({
     );
   }
 }
->>>>>>> 626e6e8916b1c8775c02dcd324d0c62110419fbd
+
+const style = StyleSheet.create({
+  passwordRequirementsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+});
+
 export default EmailPassScreen;

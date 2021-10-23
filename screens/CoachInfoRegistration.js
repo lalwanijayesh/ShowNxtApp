@@ -11,9 +11,9 @@ const CoachInfoRegistration = ({ navigation }) => {
         value={jobTitle}
         placeholder="Enter your Job Title"></TextInput>
 
-    </View>
-  );
-};
+  
+  </View>);
+}
 
 const styles = StyleSheet.create({
   
