@@ -16,7 +16,7 @@ const AthleteCoachSelection = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
+      <TextInput 
         style={styles.nameInput}
         onChangeText={setFullName}
         value={fullName}

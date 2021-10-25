@@ -60,9 +60,9 @@ class CoachInfoRegistration extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Picker
-          // style={styles.typePicker}
+          style={styles.typePicker}
           mode="dropdown"
           selectedValue={this.state.school}
           onValueChange={(itemValue, itemIndex) => {
@@ -83,11 +83,12 @@ class CoachInfoRegistration extends React.Component {
         </Picker>
 
         <Picker
-          // style={styles.typePicker}
+           style={styles.typePicker}
           mode="dropdown"
           selectedValue={this.state.school}
           onValueChange={(itemValue, itemIndex) => {
             this._setSport(itemValue);
+          
           }}
         >
           <Picker.Item label="Select Sport" enabled={false} value="none" />
@@ -113,7 +114,7 @@ class CoachInfoRegistration extends React.Component {
         {this.state.school !== "none" &&
           this.state.sport !== "none" &&
           this.state.jobTitle !== "" && (
-            <TouchableOpacity
+            <TouchableOpacity style={styles.buttonReady}
               onPress={() => {
                 this.props.navigation.navigate(
                   "CoachPositionSelection",
@@ -121,7 +122,7 @@ class CoachInfoRegistration extends React.Component {
                 );
               }}
             >
-              <Text>Next</Text>
+              <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
           )}
       </View>
@@ -139,6 +140,41 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 100,
   },
+
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100%",
+    margin: 29,
+  },
+
+  buttonReady: {
+    display: "flex",
+    alignItems: "center",
+    borderColor: "black",
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 10,
+    margin: 30,
+    width: 237,
+    backgroundColor: "#fff",
+  },
+
+  buttonText: {
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+
+  typePicker: {
+    width: 237,
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 20,
+  },
+
 });
 
 export default CoachInfoRegistration;

@@ -10,7 +10,7 @@ class VerificationScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>You have just been sent a verification to your email!</Text>
         <TouchableOpacity
           style={styles.buttonReady}
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
+    margin: 90,
   },
 
   buttonReady: {
