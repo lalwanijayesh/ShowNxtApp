@@ -116,10 +116,14 @@ class CoachInfoRegistration extends React.Component {
           this.state.jobTitle !== "" && (
             <TouchableOpacity style={styles.buttonReady}
               onPress={() => {
-                this.props.navigation.navigate(
-                  "CoachPositionSelection",
-                  this.props.route.params
-                );
+                this.props.navigation.navigate("CoachPositionSelection", {
+                  fullName: this.props.route.params.fullName,
+                  email: this.props.route.params.email,
+                  password: this.props.route.params.password,
+                  school: this.state.school,
+                  sport: this.state.sport,
+                  jobTitle: this.state.jobTitle,
+                });
               }}
             >
               <Text style={styles.buttonText}>Next</Text>
