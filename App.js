@@ -40,54 +40,6 @@ export default function App() {
         />
       </Stack.Navigator>
 
-        <Stack.Screen
-          name="Welcome"
-          component={WelcomeScreen}
-          options={{
-            title: "Welcome",
-          }}
-        />
-
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{
-            title: "Register",
-          }}
-        />
-
-        <Stack.Screen
-          name="CoachRegister"
-          component={CoachRegisterScreen}
-          options={{
-            title: "Coach Registration",
-          }}
-        />
-
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            title: "Login",
-          }}
-        />
-
-        <Stack.Screen
-          name="AthleteRegister"
-          component={AthleteRegisterScreen}
-          options={{
-            title: "Athlete Registration",
-          }}
-        />
-
-        <Stack.Screen
-          name="EmailPass"
-          component={EmailPassScreen}
-          options={{
-            title: "EmailPass",
-          }}
-        />
-      </Stack.Navigator> */}
     </NavigationContainer>
   );
 }
