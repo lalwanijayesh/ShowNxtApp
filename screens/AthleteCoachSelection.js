@@ -53,7 +53,7 @@ const AthleteCoachSelection = ({ navigation }) => {
             }
           }}
         >
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.nextButton}>Next</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  buttonReady: {
+  nextButton: {
     display: "flex",
     alignItems: "center",
     borderColor: "black",
