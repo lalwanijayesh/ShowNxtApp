@@ -12,17 +12,18 @@ for (let i = 0; i < symbols.length; i++) {
 // numbers array
 const numArray = ['1','2','3','4','5','6','7','8','9'];
 
-const UsernamePassword = ({navigation}) => {
+// TODO: Firebase to store and auth email
+const EmailPassword = ({navigation}) => {
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   /**
-   * Check if the input username is valid
+   * Check if the input email is valid
    * @returns {boolean} true if the length > 0
    */
-  const isValidUsername = () => {
-    return username.length > 0;
+  const isValidEmail = () => {
+    return email.length > 0;
   }
 
   /**
@@ -55,49 +56,48 @@ const UsernamePassword = ({navigation}) => {
       </TouchableOpacity>
 
       <Text style={styles.register}>{"REGISTER"}</Text>
-      <Text>{username.length > 0}</Text>
 
-      <TextInput placeholder="Choose Username" 
+      <TextInput placeholder="Enter Email" 
                   autoCapitalize="none"
                   autoCorrect={false}
-                  value = {username}
-                  onChangeText={setUsername}
+                  value = {email}
+                  onChangeText={setEmail}
                   style={[styles.box, styles.textBox, styles.spacingBetweenHeader]} />
 
       <View style={styles.checkContainer}>
-        <Text>{"x username must not include..."}</Text>
+        <Text>{"Please use a valid email"}</Text>
       </View>
       
-
       <TextInput placeholder="Password"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={true}
-                  style={[styles.box, styles.textBox, styles.spacingBetweenBoxes]} />
+                 autoCapitalize="none"
+                 autoCorrect={false}
+                 value={password}
+                 onChangeText={setPassword}
+                 secureTextEntry={true}
+                 style={[styles.box, styles.textBox, styles.spacingBetweenBoxes]} />
                   
       <View style={styles.checkContainer}>
-        <Text>{"password must include following:"}</Text>
-        <Text>{"x at least 8 characters"}</Text>
-        <Text>{"x numeric characters"}</Text>
-        <Text>{"x special characters"}</Text>
+        <Text>{"Password must include following:"}</Text>
+        <Text>{password.length >= 8 ? "✓ at least 8 characters" : "x at least 8 characters"}</Text>
+        <Text>{isIncluded(numArray) ? "✓ 1 numeric characters" : "x 1 numeric characters"}</Text>
+        <Text>{isIncluded(symbolsArray) ? "✓ 1 special characters" : "x 1 special characters"}</Text>
       </View>
 
-      {isValidUsername() && isValidPassword() &&
-        <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.ATHLETE_SPORT_INFO)} 
-                          style={styles.nextContainer}>
-          <Text>{"Next >"}</Text>
+      {//isValidEmail() && isValidPassword() &&
+        <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.EMAIL_CONFIRMATION)} 
+                          style={[styles.box, styles.nextBtn, {flexDirection: 'row'}]}>
+          <Text style={styles.nextText}>{"Next"}</Text>
         </TouchableOpacity>}
     </View>
   );
 }
 
-export default UsernamePassword;
+export default EmailPassword;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   backContainer: {
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 69,
     paddingLeft: 17,
+    backgroundColor: '#FFFFFF',
   },
 
   box: {
@@ -147,16 +148,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 72,
   },
 
-  nextContainer: {
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 6,
-    height: 37,
-    width: 150,
+  nextBtn: {
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 30,
-  }
+    textAlign: 'center',
+    marginHorizontal: 69,
+    marginTop: 312,
+    backgroundColor: '#000000',
+    height: 40,
+  },
 
+  nextText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16,
+  },
 })
