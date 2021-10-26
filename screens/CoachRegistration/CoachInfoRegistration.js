@@ -9,130 +9,86 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
-class CoachInfoRegistration extends React.Component {
-  constructor(props) {
-    super(props);
+const getSchools = () => {
+  return ["Northeastern", "Harvard", "Boston University", "Idk something"];
+};
 
-    // let { fullName, email, password } = props.route.params;
+const getSports = () => {
+  return ["Squash", "Soccer", "Football", "Hockey", "Croquet", "Bowling"];
+};
 
-    this.state = {
-      school: "",
-      sport: "",
-      jobTitle: "",
-    };
+const CoachInfoRegistration = (props) => {
+  let [school, setSchool] = React.useState("");
+  let [sport, setSport] = React.useState("");
+  let [jobTitle, setJobTitle] = React.useState("");
 
-    this._setSchool = this._setSchool.bind(this);
-    this._setSport = this._setSport.bind(this);
-    this._setJobTitle = this._setJobTitle.bind(this);
-  }
+  return (
+    <View style={styles.container}>
+      <Picker
+        style={styles.typePicker}
+        mode="dropdown"
+        selectedValue={school}
+        onValueChange={(itemValue, itemIndex) => {
+          setSchool(itemValue);
+        }}
+      >
+        <Picker.Item label="Select University" enabled={false} value="none" />
 
-  _setSchool(newSchool) {
-    this.setState((state) => ({
-      school: newSchool,
-      sport: state.sport,
-      jobTitle: state.jobTitle,
-    }));
-  }
+        {getSchools().map((schoolName) => {
+          return (
+            <Picker.Item
+              label={schoolName}
+              value={schoolName}
+              key={schoolName}
+            />
+          );
+        })}
+      </Picker>
 
-  _setSport(newSport) {
-    this.setState((state) => ({
-      school: state.school,
-      sport: newSport,
-      jobTitle: state.jobTitle,
-    }));
-  }
+      <Picker
+        style={styles.typePicker}
+        mode="dropdown"
+        selectedValue={school}
+        onValueChange={(itemValue, itemIndex) => {
+          setSport(itemValue);
+        }}
+      >
+        <Picker.Item label="Select Sport" enabled={false} value="none" />
 
-  _setJobTitle(newJobTitle) {
-    this.setState((state) => ({
-      school: state.school,
-      sport: state.sport,
-      jobTitle: newJobTitle,
-    }));
-  }
+        {getSports().map((sportName) => {
+          return (
+            <Picker.Item label={sportName} value={sportName} key={sportName} />
+          );
+        })}
+      </Picker>
 
-  _getSchools() {
-    return ["Northeastern", "Harvard", "Boston University", "Idk something"];
-  }
+      <TextInput
+        style={styles.jobInput}
+        onChangeText={setJobTitle}
+        value={jobTitle}
+        placeholder="Enter your Job Title"
+      />
 
-  _getSports() {
-    return ["Squash", "Soccer", "Football", "Hockey", "Croquet", "Bowling"];
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Picker
-          style={styles.typePicker}
-          mode="dropdown"
-          selectedValue={this.state.school}
-          onValueChange={(itemValue, itemIndex) => {
-            this._setSchool(itemValue);
+      {school !== "none" && sport !== "none" && jobTitle !== "" && (
+        <TouchableOpacity
+          style={styles.buttonReady}
+          onPress={() => {
+            props.navigation.navigate("CoachPositionSelection", {
+              fullName: props.route.params.fullName,
+              email: props.route.params.email,
+              password: props.route.params.password,
+              school: school,
+              sport: sport,
+              jobTitle: jobTitle,
+            });
           }}
         >
-          <Picker.Item label="Select University" enabled={false} value="none" />
-
-          {this._getSchools().map((schoolName) => {
-            return (
-              <Picker.Item
-                label={schoolName}
-                value={schoolName}
-                key={schoolName}
-              />
-            );
-          })}
-        </Picker>
-
-        <Picker
-           style={styles.typePicker}
-          mode="dropdown"
-          selectedValue={this.state.school}
-          onValueChange={(itemValue, itemIndex) => {
-            this._setSport(itemValue);
-          
-          }}
-        >
-          <Picker.Item label="Select Sport" enabled={false} value="none" />
-
-          {this._getSports().map((sportName) => {
-            return (
-              <Picker.Item
-                label={sportName}
-                value={sportName}
-                key={sportName}
-              />
-            );
-          })}
-        </Picker>
-
-        <TextInput
-          style={styles.jobInput}
-          onChangeText={this._setJobTitle}
-          value={this.state.jobTitle}
-          placeholder="Enter your Job Title"
-        />
-
-        {this.state.school !== "none" &&
-          this.state.sport !== "none" &&
-          this.state.jobTitle !== "" && (
-            <TouchableOpacity style={styles.buttonReady}
-              onPress={() => {
-                this.props.navigation.navigate("CoachPositionSelection", {
-                  fullName: this.props.route.params.fullName,
-                  email: this.props.route.params.email,
-                  password: this.props.route.params.password,
-                  school: this.state.school,
-                  sport: this.state.sport,
-                  jobTitle: this.state.jobTitle,
-                });
-              }}
-            >
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
-          )}
-      </View>
-    );
-  }
-}
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   jobInput: {
@@ -178,7 +134,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
   },
-
 });
 
 export default CoachInfoRegistration;

@@ -10,171 +10,157 @@ import {
 
 import { COACH, ATHLETE } from "../constants/enums";
 
-class EmailPassScreen extends React.Component {
-  constructor(props) {
-    super(props);
+const hasSpecialCharacters = (password) => {
+  const specialCharacters = [
+    " ",
+    "!",
+    '"',
+    "#",
+    "$",
+    "%",
+    "&",
+    "`",
+    "(",
+    ")",
+    "*",
+    "+",
+    ",",
+    "-",
+    ".",
+    "/",
+    ":",
+    ";",
+    "<",
+    ">",
+    "=",
+    "?",
+    "@",
+    "[",
+    "]",
+    "^",
+    "_",
+    "`",
+    "{",
+    "}",
+    "|",
+    "~",
+  ];
 
-    this._setEmail = this._setEmail.bind(this);
-    this._setPassword = this._setPassword.bind(this);
+  for (let i = 0; i < password.length; i += 1) {
+    let char = password[i];
 
-    this.state = {
-      email: "",
-      password: "",
-    };
-
-    let { userType, fullName } = props.route.params;
-    this.userType = userType;
-    this.fullName = fullName;
-  }
-
-  _setEmail(newEmail) {
-    this.setState((state) => ({
-      email: newEmail,
-      password: state.password,
-    }));
-  }
-
-  _setPassword(newPassword) {
-    this.setState((state) => ({
-      email: state.email,
-      password: newPassword,
-    }));
-  }
-
-  _hasSpecialCharacters() {
-    const specialCharacters = [
-      " ",
-      "!",
-      '"',
-      "#",
-      "$",
-      "%",
-      "&",
-      "`",
-      "(",
-      ")",
-      "*",
-      "+",
-      ",",
-      "-",
-      ".",
-      "/",
-      ":",
-      ";",
-      "<",
-      ">",
-      "=",
-      "?",
-      "@",
-      "[",
-      "]",
-      "^",
-      "_",
-      "`",
-      "{",
-      "}",
-      "|",
-      "~",
-    ];
-
-    for (let i = 0; i < this.state.password.length; i += 1) {
-      let char = this.state.password[i];
-
-      if (specialCharacters.includes(char)) {
-        return true;
-      }
+    if (specialCharacters.includes(char)) {
+      return true;
     }
-
-    return false;
   }
 
-  _hasNumericCharacters() {
-    const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  return false;
+};
 
-    for (let i = 0; i < this.state.password.length; i += 1) {
-      let char = this.state.password[i];
+const hasNumericCharacters = (password) => {
+  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-      if (numbers.includes(char)) {
-        return true;
-      }
+  for (let i = 0; i < password.length; i += 1) {
+    let char = password[i];
+
+    if (numbers.includes(char)) {
+      return true;
     }
-
-    return false;
   }
 
-  _isPasswordSufficient() {
-    return (
-      this._hasNumericCharacters() &&
-      this._hasSpecialCharacters() &&
-      this.state.password.length >= 8
-    );
-  }
+  return false;
+};
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <TextInput
+const isPasswordSufficient = (password) => {
+  return (
+    password.length >= 8 &&
+    hasNumericCharacters(password) &&
+    hasSpecialCharacters(password)
+  );
+};
+
+const EmailPassScreen = (props) => {
+  let [email, setEmail] = React.useState("");
+  let [password, setPassword] = React.useState("");
+
+  let { userType, fullName } = props.route.params;
+
+  return (
+    <View style={styles.container}>
+      <TextInput
         style={styles.emailInput}
-          onChangeText={this._setEmail}
-          value={this.state.email}
-          autoCompleteType="email"
-          placeholder="Email"
-        />
+        onChangeText={setEmail}
+        value={email}
+        autoCompleteType="email"
+        placeholder="Email"
+      />
 
-        <TextInput
+      <TextInput
         style={styles.passwordInput}
-          onChangeText={this._setPassword}
-          value={this.state.password}
-          autoCompleteType="password"
-          secureTextEntry={true}
-          placeholder="Password"
-        />
+        onChangeText={setPassword}
+        value={password}
+        autoCompleteType="password"
+        secureTextEntry={true}
+        placeholder="Password"
+      />
 
-        <View style={styles.passwordRequirementsContainer}>
-          <Text style={styles.passwordRequirements}>Password must include the following:</Text>
+      <View style={styles.passwordRequirementsContainer}>
+        <Text style={styles.passwordRequirements}>
+          Password must include the following:
+        </Text>
 
-          {this.state.password.length >= 8 ? (
-            <Text style={styles.passwordRequirements}>✅ at least 8 characters</Text>
-          ) : (
-            <Text style={styles.passwordRequirements}>❌ at least 8 characters</Text>
-          )}
+        {password.length >= 8 ? (
+          <Text style={styles.passwordRequirements}>
+            ✅ at least 8 characters
+          </Text>
+        ) : (
+          <Text style={styles.passwordRequirements}>
+            ❌ at least 8 characters
+          </Text>
+        )}
 
-          {this._hasNumericCharacters() ? (
-            <Text style={styles.passwordRequirements}>✅ 1 numeric character</Text>
-          ) : (
-            <Text style={styles.passwordRequirements}>❌ 1 numeric character</Text>
-          )}
+        {hasNumericCharacters(password) ? (
+          <Text style={styles.passwordRequirements}>
+            ✅ 1 numeric character
+          </Text>
+        ) : (
+          <Text style={styles.passwordRequirements}>
+            ❌ 1 numeric character
+          </Text>
+        )}
 
-          {this._hasSpecialCharacters() ? (
-            <Text style={styles.passwordRequirements}>✅ 1 special character</Text>
-          ) : (
-            <Text style={styles.passwordRequirements}>❌ 1 special character</Text>
-          )}
-        </View>
-
-        {this.state.email !== "" &&
-          this.state.password !== "" &&
-          this._isPasswordSufficient() && (
-            <TouchableOpacity
-            style={styles.buttonReady} onPress={() => {
-                if (this.userType === COACH) {
-                  this.props.navigation.navigate("Verification", {
-                    fullName: this.fullName,
-                    email: this.state.email,
-                    password: this.state.password,
-                  });
-                } else {
-                  // TODO: redirect to next Athlete screen
-                }
-              }}
-            >
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
-          )}
+        {hasSpecialCharacters(password) ? (
+          <Text style={styles.passwordRequirements}>
+            ✅ 1 special character
+          </Text>
+        ) : (
+          <Text style={styles.passwordRequirements}>
+            ❌ 1 special character
+          </Text>
+        )}
       </View>
-    );
-  }
-}
+
+      {email !== "" && password !== "" && isPasswordSufficient(password) && (
+        <TouchableOpacity
+          style={styles.buttonReady}
+          onPress={() => {
+            if (userType === COACH) {
+              props.navigation.navigate("Verification", {
+                fullName: fullName,
+                email: email,
+                password: password,
+              });
+            } else {
+              // TODO: redirect to next Athlete screen
+            }
+          }}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   passwordRequirementsContainer: {

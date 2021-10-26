@@ -3,30 +3,24 @@ import { render } from "react-dom";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 // import { ATHLETE, COACH } from "../../../constants/enums";
 
-class VerificationScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>You have just been sent a verification to your email!</Text>
-        <TouchableOpacity
-          style={styles.buttonReady}
-          onPress={() => {
-            this.props.navigation.navigate(
-              "CoachInfoRegistration",
-              this.props.route.params
-            );
-          }}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+const VerificationScreen = (props) => {
+  return (
+    <View style={styles.container}>
+      <Text>You have just been sent a verification to your email!</Text>
+      <TouchableOpacity
+        style={styles.buttonReady}
+        onPress={() => {
+          props.navigation.navigate(
+            "CoachInfoRegistration",
+            props.route.params
+          );
+        }}
+      >
+        <Text style={styles.buttonText}>Next</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

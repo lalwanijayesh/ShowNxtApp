@@ -10,13 +10,13 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { ATHLETE, COACH } from "../constants/enums";
 
-const AthleteCoachSelection = ({ navigation }) => {
+const AthleteCoachSelection = (props) => {
   const [fullName, setFullName] = React.useState("");
   const [selectedType, setType] = React.useState("none");
 
   return (
     <View style={styles.container}>
-      <TextInput 
+      <TextInput
         style={styles.nameInput}
         onChangeText={setFullName}
         value={fullName}
@@ -41,12 +41,12 @@ const AthleteCoachSelection = ({ navigation }) => {
           style={styles.buttonReady}
           onPress={() => {
             if (selectedType === "athlete") {
-              navigation.navigate("EmailPass", {
+              props.navigation.navigate("EmailPass", {
                 userType: ATHLETE,
                 fullName: fullName,
               });
             } else {
-              navigation.navigate("EmailPass", {
+              props.navigation.navigate("EmailPass", {
                 userType: COACH,
                 fullName: fullName,
               });

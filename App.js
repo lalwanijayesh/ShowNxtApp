@@ -11,7 +11,6 @@ import EmailPassScreen from "./screens/EmailPass";
 import VerificationScreen from "./screens/CoachRegistration/Verification";
 import CoachInfoRegistration from "./screens/CoachRegistration/CoachInfoRegistration";
 import CoachPositionSelection from "./screens/CoachRegistration/CoachPositionSelection";
-import CoachPositionNumbers from "./screens/CoachRegistration/CoachPositionNumbers";
 
 const Stack = createNativeStackNavigator();
 
@@ -66,14 +65,6 @@ export default function App() {
         <Stack.Screen
           name="CoachPositionSelection"
           component={CoachPositionSelection}
-          options={{
-            title: "Select Positions",
-          }}
-        />
-
-        <Stack.Screen
-          name="CoachPositionNumbers"
-          component={CoachPositionNumbers}
           options={{
             title: "Select Positions",
           }}
