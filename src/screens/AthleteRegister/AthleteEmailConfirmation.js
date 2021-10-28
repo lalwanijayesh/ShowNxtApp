@@ -2,9 +2,9 @@ import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import ScreenNames from '../ScreenNames';
 
+// TODO: store the email through Firebase -> send to user -> implement email here
+// currently this is a just simple view component
 const EmailConfirmation = ({navigation}) => {
-  // TODO: store the email through Firebase -> send to user -> implement email here
-  // currently this is a just simple view component
 
   return (
     <View>

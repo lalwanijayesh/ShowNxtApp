@@ -4,6 +4,9 @@ import ScreenNames from '../ScreenNames';
 
 const AthleteHeightWeight = ({navigation}) => {
 
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backContainer}
@@ -16,16 +19,24 @@ const AthleteHeightWeight = ({navigation}) => {
       <TextInput placeholder="Height" 
                  autoCapitalize="none"
                  autoCorrect={false}
+                 value={height}
+                 onChangeText={setHeight}
                  style={[styles.box, styles.textBox, styles.spacingBetweenHeader]} />
 
       <TextInput placeholder="Weight"
                  autoCapitalize="none"
                  autoCorrect={false}
+                 value={weight}
+                 onChangeText={setWeight}
                  style={[styles.box, styles.textBox, styles.spacingBetweenBoxes]} />
 
-      <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}
-                        style={styles.nextContainer}>
-        <Text>{"Next >"}</Text>
+      <TouchableOpacity onPress={() => {
+                          !!height && !!weight ?
+                          navigation.navigate(ScreenNames.ATHLETE_ACADEMIC) : 
+                          Alert.alert("Please enter your height and weight before moving to the next step!!")
+                        }}
+                        style={[styles.nextBtn, !!height && !!weight ? {backgroundColor: '#000000'} : {backgroundColor: '#888888'}]}>
+        <Text style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -82,16 +93,22 @@ const styles = StyleSheet.create({
     marginTop: 46,
   },
 
-  nextContainer: {
+  nextBtn: {
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 6,
-    height: 37,
-    width: 150,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 30,
-  }
+    textAlign: 'center',
+    marginHorizontal: 69,
+    marginTop: 312,
+    height: 40,
+  },
 
+  nextText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16,
+  },
 })

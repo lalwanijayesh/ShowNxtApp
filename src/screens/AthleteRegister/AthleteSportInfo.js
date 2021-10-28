@@ -1,23 +1,20 @@
 import React, {useCallback, useState} from 'react';
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ScreenNames from '../ScreenNames';
+import {generateSportList, generateListOfPositionBySport, generateInfo} from '../../datas/mockSports/generateMockSports';
 
 const AthleteSportInfo = ({navigation}) => {
 
   const [openSport, setOpenSport] = useState(false);
   const [openPosition, setOpenPosition] = useState(false);
+
   const [sport, setSport] = useState(null);
   const [position, setPosition] = useState(null);
-  
-  const [mockSport, setMockSports] = useState([
-    {label: 'Soccer', value:'soccer'},
-    {label: 'Football', value: 'football'},
-  ]);
-  const [mockPosition, setMockPositon] = useState([
-    {label: 'P1', value:'1'},
-    {label: 'P2', value: '2'},
-  ]);
+
+  const [mockSport, setMockSports] = useState(generateInfo(generateSportList()));
+  // TODO: find the ways to show positions depending on the sport.
+  const [mockPosition, setMockPositon] = useState(generateInfo(generateListOfPositionBySport(sport)));
 
   const handleSportOpen = useCallback(() => {
     setOpenSport(true);
@@ -32,7 +29,7 @@ const AthleteSportInfo = ({navigation}) => {
   return (
     <View style={styles.container}>
     <TouchableOpacity style={styles.backContainer}
-                      onPress={() => navigation.navigate(ScreenNames.USERNAME_PASSWORD)}>
+                      onPress={() => navigation.navigate(ScreenNames.EMAIL_CONFIRMATION)}>
       <Text style={styles.back}>{"<"}</Text>
     </TouchableOpacity>
 
@@ -51,8 +48,9 @@ const AthleteSportInfo = ({navigation}) => {
       setItems={setMockSports}
       zIndex={3000}
       zIndexInverse={1000}
-      style={[styles.spacingToHeader, styles.box]}
-      />
+      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
+      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+    />
 
     <DropDownPicker  
       searchable={true}
@@ -67,13 +65,20 @@ const AthleteSportInfo = ({navigation}) => {
       setOpen={setOpenPosition}
       setValue={setPosition}
       setItems={setMockPositon}
-      style={[styles.spacingBetween, styles.box]}/>
+      style={[styles.spacingBetween, styles.box, styles.pickleStyle]}
+      dropDownContainerStyle={[styles.spacingBetween, styles.pickleStyle]}
+    />
 
-    {!!sport && !!position && 
-      <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT)}
-                        style={styles.nextContainer}>
-        <Text>{"Next >"}</Text>
-      </TouchableOpacity>}
+    <Text style={styles.text}>{'Play more than one position or more than one sport? You can add more once you finish you profile.'}</Text>
+
+    <TouchableOpacity onPress={() => {
+                        !!position && !!sport ?
+                        navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT) : 
+                        Alert.alert("Please choose sport and position before moving to the next step!!")
+                      }}
+                      style={[styles.nextBtn, !!position && !!sport ? {backgroundColor: '#000000'} : {backgroundColor: '#888888'}]}>
+      <Text style={styles.nextText}>{"Next"}</Text>
+    </TouchableOpacity>
   </View>
   );
 };
@@ -83,6 +88,7 @@ export default AthleteSportInfo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   backContainer: {
@@ -104,26 +110,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  pickleContainer: {
+  nextBtn: {
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 6,
-    height: 37,
-    marginLeft: 69,
-    marginRight: 69,
-    justifyContent: 'center'
-  },
-
-  nextContainer: {
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 6,
-    height: 37,
-    width: 150,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 30,
+    textAlign: 'center',
+    marginHorizontal: 69,
+    marginTop: 312,
+    height: 40,
+  },
+
+  nextText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16,
   },
 
   spacingToHeader: {
@@ -135,12 +138,26 @@ const styles = StyleSheet.create({
     marginTop: 46,
   },
 
+  // TODO: think a better way to style this.
   box: {
     borderTopLeftRadius: 6, 
     borderTopRightRadius: 6,
     borderBottomLeftRadius: 6, 
     borderBottomRightRadius: 6,
     height: 37,
+  },
+
+  pickleStyle: {
+    width: Dimensions.get('screen').width - 69*2,
+    marginLeft: 69,
+  },
+
+  text: {
+    marginTop: 22,
+    marginHorizontal: 69,
+    fontSize: 8,
+    lineHeight: 11,
+    color: '#000000',
   }
 
 })
