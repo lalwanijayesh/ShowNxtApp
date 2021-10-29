@@ -14,7 +14,13 @@ const AthleteSportInfo = ({navigation}) => {
 
   const [mockSport, setMockSports] = useState(generateInfo(generateSportList()));
   // TODO: find the ways to show positions depending on the sport.
-  const [mockPosition, setMockPositon] = useState(generateInfo(generateListOfPositionBySport(sport)));
+  let k = generateInfo(generateListOfPositionBySport(sport));
+  const [mockPosition, setMockPositon] = useState();
+
+  // const handleSetSport = (sport) => {
+  //   setSport(sport); 
+  //   k = generateInfo(generateListOfPositionBySport(sport));
+  // }
 
   const handleSportOpen = useCallback(() => {
     setOpenSport(true);
@@ -44,7 +50,7 @@ const AthleteSportInfo = ({navigation}) => {
       items={mockSport}
       onOpen={handleSportOpen}
       setOpen={setOpenSport}
-      setValue={setSport}
+      setValue={handleSetSport}
       setItems={setMockSports}
       zIndex={3000}
       zIndexInverse={1000}

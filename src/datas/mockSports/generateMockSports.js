@@ -12,7 +12,10 @@ export const generateSportList = () => {
 export const generateListOfPositionBySport = (sportName) => {
   for (let i = 0; i < mockSports.length; i++) {
     const sport = mockSports[i].sport;
+    console.log(sport);
+    console.log(sportName);
     if (sportName === sport) {
+      console.log(mockSports[i]);
       return mockSports[i].positions;
     }
   }   
