@@ -6,7 +6,6 @@ import ScreenNames from './src/screens/ScreenNames';
 import AthleteSportInfo from './src/screens/AthleteRegister/AthleteSportInfo';
 import AthleteHeightWeight from './src/screens/AthleteRegister/AthleteHeightWeight';
 import AthleteAcademic from './src/screens/AthleteRegister/AthleteAcademic';
-import AtheleteComplte from './src/screens/AthleteRegister/AthleteCompleteRegister';
 import AthleteProfile from './src/screens/AthleteProfile/AthleteProfile';
 import EmailPassword from './src/screens/AthleteRegister/EmailPassword';
 import EmailConfirmation from './src/screens/AthleteRegister/AthleteEmailConfirmation';
@@ -31,9 +30,6 @@ export default function App() {
                       options={{ headerShown: false }} />
         <Stack.Screen name={ScreenNames.ATHLETE_ACADEMIC} 
                       component={AthleteAcademic} 
-                      options={{ headerShown: false }} />
-        <Stack.Screen name={ScreenNames.ATHLETE_COMPLETE_REGISTER} 
-                      component={AtheleteComplte} 
                       options={{ headerShown: false }} />
         <Stack.Screen name={ScreenNames.ATHLETE_PROFILE} 
                       component={AthleteProfile} 

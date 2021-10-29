@@ -1,8 +1,8 @@
 import React, {useState, useCallback} from 'react';
-import { TouchableOpacity, Text, TextInput, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, TextInput, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ScreenNames from '../ScreenNames';
-import years from '../../datas/years';
+import years from '../../data/years';
 
 const AthleteAcademic = ({navigation}) => {
 
@@ -53,7 +53,8 @@ const AthleteAcademic = ({navigation}) => {
                       onOpen={handleSchoolOpen}
                       zIndex={3000}
                       zIndexInverse={1000}
-                      style={[styles.dropdown, {marginTop: 126}]}/>
+                      style={[styles.spacingBetweenHeader, styles.box, styles.pickleStyle]}
+                      dropDownContainerStyle={[styles.spacingBetweenHeader, styles.pickleStyle]}/>
 
       <DropDownPicker searchable={true}
                       searchPlaceholder="Search..."
@@ -67,20 +68,24 @@ const AthleteAcademic = ({navigation}) => {
                       onOpen={handleYearOpen}
                       zIndex={2000}
                       zIndexInverse={2000}
-                      style={[styles.dropdown, styles.spacingBetweenBoxes]}/>
+                      style={[styles.spacingBetweenBoxes, styles.box, styles.pickleStyle]}
+                      dropDownContainerStyle={[styles.spacingBetweenBoxes, styles.pickleStyle]} />
       
       <TextInput placeholder="GPA"
                 autoCapitalize="none"
                 autoCorrect={false}
                 value={gpa}
                 onChangeText={setGPA}
-                style={[styles.box, styles.textBox, styles.spacingBetweenBoxes]} />
+                style={[styles.textBoxContainer, styles.textBox, styles.spacingBetweenBoxes]} />
 
-      {gpa != '' && !!year && !!school &&
-        <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.ATHLETE_COMPLETE_REGISTER)}
-                        style={styles.nextContainer}>
-        <Text>{"Next >"}</Text>
-      </TouchableOpacity>}
+        <TouchableOpacity onPress={() => {
+                            gpa != '' && !!school && !!year ?
+                            navigation.navigate(ScreenNames.ATHLETE_PROFILE) : 
+                            Alert.alert("Please enter school, year and your gpa before moving to the next step!!")
+                          }}
+                          style={[styles.nextBtn, gpa != '' && !!school && !!year ? {backgroundColor: '#000000'} : {backgroundColor: '#888888'}]}>
+        <Text  style={styles.nextText}>{"Next"}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
     paddingLeft: 17,
   },
 
-  box: {
+  textBoxContainer: {
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 6,
@@ -136,23 +141,36 @@ const styles = StyleSheet.create({
     marginTop: 46,
   },
 
-  nextContainer: {
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 6,
-    height: 37,
-    width: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    marginTop: 30,
-  },
-
-  dropdown: {
+  // TODO: think a better way to style this.
+  box: {
     borderTopLeftRadius: 6, 
     borderTopRightRadius: 6,
     borderBottomLeftRadius: 6, 
     borderBottomRightRadius: 6,
     height: 37,
+  },
+
+  pickleStyle: {
+    width: Dimensions.get('screen').width - 69*2,
+    marginLeft: 69,
+  },
+
+  nextBtn: {
+    borderColor: '#000000',
+    borderWidth: 1,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginHorizontal: 69,
+    marginTop: 312,
+    height: 40,
+  },
+
+  nextText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16,
   },
 })

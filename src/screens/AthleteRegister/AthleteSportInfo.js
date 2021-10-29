@@ -2,8 +2,9 @@ import React, {useCallback, useState} from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ScreenNames from '../ScreenNames';
-import {generateSportList, generateListOfPositionBySport, generateInfo} from '../../datas/mockSports/generateMockSports';
+import {generateSportList, generateListOfPositionBySport, generateInfo} from '../../data/mockSports/generateMockSports';
 
+// TODO: position will be inactive if the user does not select sport 
 const AthleteSportInfo = ({navigation}) => {
 
   const [openSport, setOpenSport] = useState(false);
@@ -13,17 +14,12 @@ const AthleteSportInfo = ({navigation}) => {
   const [position, setPosition] = useState(null);
 
   const [mockSport, setMockSports] = useState(generateInfo(generateSportList()));
-  // TODO: find the ways to show positions depending on the sport.
-  let k = generateInfo(generateListOfPositionBySport(sport));
-  const [mockPosition, setMockPositon] = useState();
-
-  // const handleSetSport = (sport) => {
-  //   setSport(sport); 
-  //   k = generateInfo(generateListOfPositionBySport(sport));
-  // }
+  const [mockPosition, setMockPositon] = useState([{
+    label: 'None', value: 'None'
+  }]);
 
   /**
-   * close the Position dropdown if it is opened when the sport dropdown is opened
+   * close the Position dropdown when the sport dropdown is opened.
    */
   const handleSportOpen = useCallback(() => {
     setOpenSport(true);
@@ -31,13 +27,15 @@ const AthleteSportInfo = ({navigation}) => {
   }, []);
 
   /**
-   * close the Sport dropdown if it is opened when the Position dropdown is opened
+   * close the Sport dropdown when the Position dropdown is opened.
    */
   const handlePositionOpen = useCallback(() => {
     setOpenSport(false);
     setOpenPosition(true);
-  }, []);
+    setMockPositon(generateInfo(generateListOfPositionBySport(sport)));
+  }, [sport]);
 
+  // TODO: fix when the user changes the sport the position will be changed as well and Next button will be disabled.
   return (
     <View style={styles.container}>
     <TouchableOpacity style={styles.backContainer}
@@ -56,7 +54,7 @@ const AthleteSportInfo = ({navigation}) => {
       items={mockSport}
       onOpen={handleSportOpen}
       setOpen={setOpenSport}
-      setValue={handleSetSport}
+      setValue={setSport}
       setItems={setMockSports}
       zIndex={3000}
       zIndexInverse={1000}

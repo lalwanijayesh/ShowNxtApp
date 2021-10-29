@@ -2,13 +2,26 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import ScreenNames from '../ScreenNames';
 
+// TODO: Replace image in the circle view
+// TODO: Implement propTypes, connect to backend to get user info, using Mock to test
 const AthleteProfile = ({navigation}) => {
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backContainer}
-                        onPress={() => navigation.navigate(ScreenNames.ATHLETE_COMPLETE_REGISTER)}>
+                        onPress={() => navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
+
+      <View>
+        <View></View>
+        <View>
+          <Text>{"Name LastName"}</Text>
+          <Text>{"Position"}</Text>
+          <Text>{"School in School Town, State"}</Text>
+        </View>
+        
+      </View>
 
       <Text style={styles.register}>{"COMPLETE PROFILE"}</Text>
     </View>

@@ -83,7 +83,7 @@ const EmailPassword = ({navigation}) => {
         <Text>{isIncluded(symbolsArray) ? "✓ 1 special characters" : "x 1 special characters"}</Text>
       </View>
 
-      {//isValidEmail() && isValidPassword() &&
+      {isValidEmail() && isValidPassword() &&
         <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.EMAIL_CONFIRMATION)} 
                           style={[styles.box, styles.nextBtn, {flexDirection: 'row'}]}>
           <Text style={styles.nextText}>{"Next"}</Text>

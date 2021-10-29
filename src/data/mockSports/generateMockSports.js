@@ -2,23 +2,32 @@ import {mockSports} from './mockSportsData';
 
 export const generateSportList = () => {
   const listOfSport = [];
-  for (let i = 0; i < mockSports.length; i++) {
-    let sport = mockSports[i].sport;
-    listOfSport.push(sport);
-  }
+  mockSports.forEach((value) => {
+    listOfSport.push(value.sport);
+  })
   return listOfSport;
 }
 
+const generateListOfAllPositions = () => {
+  const listOfPositions = [];
+  mockSports.forEach((value) => {
+    listOfPositions.push(...value.positions);
+  })
+  return listOfPositions;
+}
+
 export const generateListOfPositionBySport = (sportName) => {
+  if (sportName === null || sportName === undefined) {
+    return generateListOfAllPositions();
+  }
+  
   for (let i = 0; i < mockSports.length; i++) {
     const sport = mockSports[i].sport;
-    console.log(sport);
-    console.log(sportName);
     if (sportName === sport) {
-      console.log(mockSports[i]);
       return mockSports[i].positions;
     }
   }   
+  
   return ['None'];
 }
 

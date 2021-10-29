@@ -8,7 +8,7 @@ const EmailConfirmation = ({navigation}) => {
 
   return (
     <View>
-      <TouchableOpacity style={styles.backContainer} onPress={ScreenNames.EMAIL_PASSWORD}>
+      <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate(ScreenNames.EMAIL_PASSWORD)}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
 
