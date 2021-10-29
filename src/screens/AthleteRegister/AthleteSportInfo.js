@@ -22,11 +22,17 @@ const AthleteSportInfo = ({navigation}) => {
   //   k = generateInfo(generateListOfPositionBySport(sport));
   // }
 
+  /**
+   * close the Position dropdown if it is opened when the sport dropdown is opened
+   */
   const handleSportOpen = useCallback(() => {
     setOpenSport(true);
     setOpenPosition(false);
   }, []);
 
+  /**
+   * close the Sport dropdown if it is opened when the Position dropdown is opened
+   */
   const handlePositionOpen = useCallback(() => {
     setOpenSport(false);
     setOpenPosition(true);
