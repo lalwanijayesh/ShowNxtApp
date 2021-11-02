@@ -16,6 +16,7 @@ export default function App() {
   return(
     <NavigationContainer>
       <Stack.Navigator >
+      
         <Stack.Screen name={ScreenNames.EMAIL_PASSWORD} 
                       component={EmailPassword} 
                       options={{ headerShown: false }} />
