@@ -1,18 +1,27 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import {
   View,
   Text,
   StyleSheet,
+  Dimensions,
   TextInput,
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+//import { Picker } from "@react-native-picker/picker";
 import { ATHLETE, COACH } from "../constants/enums";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const AthleteCoachSelection = (props) => {
   const [fullName, setFullName] = React.useState("");
-  const [selectedType, setType] = React.useState("none");
+  //const [selectedType, setType] = React.useState("none");
+
+  const [userType, setUserType] = useState(false);
+  const [type, setType] = useState(null);
+  const [mockSport, setMockSports] = useState([
+    {label: 'Athlete', value: 'athlete'},
+    {label: 'Coach', value: 'coach'}
+  ]);
 
   return (
     <View style={styles.container}>
@@ -23,24 +32,28 @@ const AthleteCoachSelection = (props) => {
         placeholder="Enter full name"
       />
 
-      <Picker
-        style={styles.typePicker}
-        mode="dropdown"
-        selectedValue={selectedType}
-        onValueChange={(itemValue, itemIndex) => {
-          setType(itemValue);
-        }}
-      >
-        <Picker.Item label="Athlete or Coach?" enabled={false} value="none" />
-        <Picker.Item label="Athlete" value="athlete" />
-        <Picker.Item label="Coach" value="coach" />
-      </Picker>
+   
+   <DropDownPicker  
+      searchable={true}
+      searchPlaceholder="Search..."
+      placeholder="Athlete or Coach?"
+      open ={userType}
+      value={type}
+      items={mockSport}
+      setOpen={setUserType}
+      setValue={setType}
+      setItems={setMockSports}
+      zIndex={3000}
+      zIndexInverse={1000}
+      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
+      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+    />
 
-      {fullName !== "" && selectedType !== "none" && (
+      {fullName !== "" && type !== null && (
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            if (selectedType === "athlete") {
+            if (type === "athlete") {
               props.navigation.navigate("EmailPass", {
                 userType: ATHLETE,
                 fullName: fullName,
@@ -103,6 +116,75 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 20,
   },
+
+  backContainer: {
+    position: 'absolute',
+    left: 42,
+    top: 40,
+  },
+
+  back: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+
+  register: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16, 
+    marginTop: 54,
+    alignSelf: 'center',
+  },
+
+  nextBtn: {
+    borderColor: '#000000',
+    borderWidth: 1,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginHorizontal: 69,
+    marginTop: 312,
+    height: 40,
+  },
+
+  nextText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16,
+  },
+
+  spacingToHeader: {
+    marginTop: 126,
+    
+  },
+
+  spacingBetween: {
+    marginTop: 46,
+  },
+
+  box: {
+    borderTopLeftRadius: 6, 
+    borderTopRightRadius: 6,
+    borderBottomLeftRadius: 6, 
+    borderBottomRightRadius: 6,
+    height: 37,
+  },
+
+  pickleStyle: {
+    width: Dimensions.get('screen').width - 69*2,
+    marginLeft: 69,
+  },
+
+  text: {
+    marginTop: 22,
+    marginHorizontal: 69,
+    fontSize: 8,
+    lineHeight: 11,
+    color: '#000000',
+  }
+
 });
 
 export default AthleteCoachSelection;
