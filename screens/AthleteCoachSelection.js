@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 } from "react-native";
 //import { Picker } from "@react-native-picker/picker";
 import { ATHLETE, COACH } from "../constants/enums";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 
 const AthleteCoachSelection = (props) => {
   const [fullName, setFullName] = React.useState("");
@@ -19,8 +19,8 @@ const AthleteCoachSelection = (props) => {
   const [userType, setUserType] = useState(false);
   const [type, setType] = useState(null);
   const [mockSport, setMockSports] = useState([
-    {label: 'Athlete', value: 'athlete'},
-    {label: 'Coach', value: 'coach'}
+    { label: "Athlete", value: "athlete" },
+    { label: "Coach", value: "coach" },
   ]);
 
   return (
@@ -32,22 +32,21 @@ const AthleteCoachSelection = (props) => {
         placeholder="Enter full name"
       />
 
-   
-   <DropDownPicker  
-      searchable={true}
-      searchPlaceholder="Search..."
-      placeholder="Athlete or Coach?"
-      open ={userType}
-      value={type}
-      items={mockSport}
-      setOpen={setUserType}
-      setValue={setType}
-      setItems={setMockSports}
-      zIndex={3000}
-      zIndexInverse={1000}
-      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
-      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
-    />
+      <DropDownPicker
+        searchable={true}
+        searchPlaceholder="Search..."
+        placeholder="Athlete or Coach?"
+        open={userType}
+        value={type}
+        items={mockSport}
+        setOpen={setUserType}
+        setValue={setType}
+        setItems={setMockSports}
+        zIndex={3000}
+        zIndexInverse={1000}
+        style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
+        dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+      />
 
       {fullName !== "" && type !== null && (
         <TouchableOpacity
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 30,
+    margin: 375,
     width: 237,
     backgroundColor: "#fff",
   },
@@ -117,47 +116,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  backContainer: {
-    position: 'absolute',
-    left: 42,
-    top: 40,
-  },
-
-  back: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-
-  register: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    lineHeight: 16, 
-    marginTop: 54,
-    alignSelf: 'center',
-  },
-
-  nextBtn: {
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginHorizontal: 69,
-    marginTop: 312,
-    height: 40,
-  },
-
-  nextText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 14,
-    lineHeight: 16,
-  },
-
   spacingToHeader: {
-    marginTop: 126,
-    
+    marginTop: 35,
   },
 
   spacingBetween: {
@@ -165,26 +125,36 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    borderTopLeftRadius: 6, 
+    borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
-    borderBottomLeftRadius: 6, 
+    borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
     height: 37,
   },
 
   pickleStyle: {
-    width: Dimensions.get('screen').width - 69*2,
-    marginLeft: 69,
+    width: Dimensions.get("screen").width - 89 * 2,
+    marginLeft: 89,
   },
 
-  text: {
-    marginTop: 22,
+  nextBtn: {
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 6,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     marginHorizontal: 69,
-    fontSize: 8,
-    lineHeight: 11,
-    color: '#000000',
-  }
+    marginTop: 312,
+    height: 40,
+  },
 
+  nextText: {
+    color: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 14,
+    lineHeight: 16,
+  },
 });
 
 export default AthleteCoachSelection;

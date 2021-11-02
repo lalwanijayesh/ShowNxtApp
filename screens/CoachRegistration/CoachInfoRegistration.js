@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -8,55 +8,55 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 
 const CoachInfoRegistration = (props) => {
   let [jobTitle, setJobTitle] = React.useState("");
   const [uniType, setUniType] = useState(false);
   const [uni, setUni] = useState(null);
   const [mockUni, setMockUni] = useState([
-    {label: 'Northeastern', value: 'Northeastern'},
-    {label: 'Harvard', value: 'harvard'}
+    { label: "Northeastern", value: "Northeastern" },
+    { label: "Harvard", value: "harvard" },
   ]);
   const [sportType, setSportType] = useState(false);
   const [sport, setSport] = useState(null);
   const [mockSport, setMockSport] = useState([
-    {label: 'Squash', value: 'squash'},
-    {label: 'Soccer', value: 'soccer'}
+    { label: "Squash", value: "squash" },
+    { label: "Soccer", value: "soccer" },
   ]);
 
   return (
     <View style={styles.container}>
-      <DropDownPicker  
-      searchable={true}
-      searchPlaceholder="Search..."
-      placeholder="Find University"
-      open ={uniType}
-      value={uni}
-      items={mockUni}
-      setOpen={setUniType}
-      setValue={setUni}
-      setItems={setMockUni}
-      zIndex={3000}
-      zIndexInverse={1000}
-      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
-      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
-    />
-      <DropDownPicker  
-      searchable={true}
-      searchPlaceholder="Search..."
-      placeholder="Coaching Sport"
-      open ={sportType}
-      value={sport}
-      items={mockSport}
-      setOpen={setSportType}
-      setValue={setSport}
-      setItems={setMockSport}
-      zIndex={3000}
-      zIndexInverse={1000}
-      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
-      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
-    />
+      <DropDownPicker
+        searchable={true}
+        searchPlaceholder="Search..."
+        placeholder="Find University"
+        open={uniType}
+        value={uni}
+        items={mockUni}
+        setOpen={setUniType}
+        setValue={setUni}
+        setItems={setMockUni}
+        zIndex={3000}
+        zIndexInverse={1000}
+        style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
+        dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+      />
+      <DropDownPicker
+        searchable={true}
+        searchPlaceholder="Search..."
+        placeholder="Coaching Sport"
+        open={sportType}
+        value={sport}
+        items={mockSport}
+        setOpen={setSportType}
+        setValue={setSport}
+        setItems={setMockSport}
+        zIndex={3000}
+        zIndexInverse={1000}
+        style={[styles.spacingToHeader1, styles.box, styles.pickleStyle]}
+        dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+      />
 
       <TextInput
         style={styles.jobInput}
@@ -77,7 +77,6 @@ const CoachInfoRegistration = (props) => {
               sport: sport,
               jobTitle: jobTitle,
             });
-          
           }}
         >
           <Text style={styles.buttonText}>Next</Text>
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 100,
+    marginTop: 55,
   },
 
   container: {
@@ -169,46 +168,49 @@ const styles = StyleSheet.create({
   },
 
   backContainer: {
-    position: 'absolute',
+    position: "absolute",
     left: 42,
     top: 40,
   },
 
   back: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   register: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 14,
-    lineHeight: 16, 
+    lineHeight: 16,
     marginTop: 54,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 
   nextBtn: {
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderWidth: 1,
     borderRadius: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     marginHorizontal: 69,
     marginTop: 312,
     height: 40,
   },
 
   nextText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: "#FFFFFF",
+    fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
   },
 
   spacingToHeader: {
-    marginTop: 126,
-    
+    marginTop: 70,
+  },
+
+  spacingToHeader1: {
+    marginTop: 50,
   },
 
   spacingBetween: {
@@ -216,16 +218,16 @@ const styles = StyleSheet.create({
   },
 
   box: {
-    borderTopLeftRadius: 6, 
+    borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
-    borderBottomLeftRadius: 6, 
+    borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
     height: 37,
   },
 
   pickleStyle: {
-    width: Dimensions.get('screen').width - 69*2,
-    marginLeft: 69,
+    width: Dimensions.get("screen").width - 89 * 2,
+    marginLeft: 89,
   },
 
   text: {
@@ -233,10 +235,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 69,
     fontSize: 8,
     lineHeight: 11,
-    color: '#000000',
-  }
-
-
+    color: "#000000",
+  },
 });
 
 export default CoachInfoRegistration;
