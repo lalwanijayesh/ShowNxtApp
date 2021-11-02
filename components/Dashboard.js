@@ -1,3 +1,7 @@
+/**
+ * Those components is just temporary. It is an example the real firebase set up will be integrated in the register screens.
+ */
+
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import firebase from "../database/firebase";

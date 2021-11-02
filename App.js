@@ -1,13 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-
-import WelcomeScreen from "./screens/Welcome";
-import RegisterScreen from "./screens/Register";
-import LoginScreen from "./screens/Login";
-import EmailPassScreen from "./screens/EmailPass";
-import CoachRegisterScreen from "./screens/CoachRegister";
-import AthleteRegisterScreen from "./screens/AthleteRegister";
+import { StyleSheet} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -39,7 +31,6 @@ export default function App() {
           options={({ title: "Dashboard" }, { headerLeft: null })}
         />
       </Stack.Navigator>
-
     </NavigationContainer>
   );
 }
