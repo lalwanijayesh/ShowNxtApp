@@ -1,10 +1,44 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import ScreenNames from '../ScreenNames';
 
 // TODO: Replace image in the circle view
+// TODO: find the way to let the user upload videos into react-native
 // TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data. 
 const AthleteProfile = ({navigation}) => {
+
+  const testData = [
+    {
+      id: '1',
+      title: 'First Video',
+    },
+    {
+      id: '2',
+      title: 'Second Video',
+    },
+    {
+      id: '3',
+      title: 'Third Video',
+    },
+    {
+      id: '4',
+      title: 'Fourth Video',
+    },
+    {
+      id: '5',
+      title: 'Fifth Video',
+    },
+    {
+      id: '6',
+      title: 'Sixth Video',
+    },
+  ];
+
+  const renderItem = ({ title }) => (
+    <View style={styles.videoStyle}>
+      <Text>{title}</Text>
+    </View>
+  );
   
   return (
     <View style={styles.container}>
@@ -25,6 +59,14 @@ const AthleteProfile = ({navigation}) => {
       </View>
 
       <Text style={styles.videoTitle}>{"Videos"}</Text>
+
+      <View style={{borderColor: 'red', borderWidth: 1}}>
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      </View>
 
     </View>
   )
@@ -96,5 +138,14 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: '#000000',
     marginLeft: 34,
+  },
+
+  videoStyle: {
+    width: 125,
+    height: 271,
+    backgroundColor: '#EEEEEE',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#EEEEEE',
   }
 })
