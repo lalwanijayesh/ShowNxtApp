@@ -23,6 +23,13 @@ const AthleteCoachSelection = (props) => {
     { label: "Coach", value: "coach" },
   ]);
 
+  /**
+   * close the Position dropdown when the sport dropdown is opened.
+   */
+  const handleSportOpen = useCallback(() => {
+    setUserType(true);
+  }, []);
+
   return (
     <View style={styles.container}>
       <TextInput

@@ -17,6 +17,7 @@ const CoachInfoRegistration = (props) => {
   const [mockUni, setMockUni] = useState([
     { label: "Northeastern", value: "Northeastern" },
     { label: "Harvard", value: "harvard" },
+    { label: "Bu", value: "bu" },
   ]);
   const [sportType, setSportType] = useState(false);
   const [sport, setSport] = useState(null);
@@ -150,15 +151,6 @@ const styles = StyleSheet.create({
     marginTop: 100,
   },
 
-  typePicker: {
-    width: 237,
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 20,
-  },
-
   register: {
     fontWeight: "bold",
     fontSize: 14,
@@ -175,11 +167,11 @@ const styles = StyleSheet.create({
   },
 
   spacingToHeader: {
-    marginTop: 70,
+    marginTop: 126,
   },
 
   spacingToHeader1: {
-    marginTop: 50,
+    marginTop: 60,
   },
 
   spacingBetween: {
@@ -196,7 +188,7 @@ const styles = StyleSheet.create({
 
   pickleStyle: {
     width: Dimensions.get("screen").width - 89 * 2,
-    marginLeft: 89,
+    marginLeft: 60,
   },
 
   text: {

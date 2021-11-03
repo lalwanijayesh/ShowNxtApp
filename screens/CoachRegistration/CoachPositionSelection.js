@@ -12,96 +12,29 @@ import {
 
 const CoachPositionSelection = (props) => {
   return (
-    <View>
-      <Text>Hello</Text>
+    <View style={styles.container}>
+      <Text style={styles.startText}>Positions recruitng for Fall 2022</Text>
     </View>
+
+    <View>
+    <Text>Positions recruitng for Fall 2022</Text>
+    </View>
+
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    height: "100%",
-    width: "100%",
-  },
-
-  selectedPositionsContainer: {
+  container: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: 200,
-    width: "80%",
+    height: "100%",
   },
 
-  selectedPositionsScroll: {
-    height: 300,
-    width: "100%",
-  },
-
-  selectedPositionContainer: {
-    width: 120,
-    height: 35,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 8,
-    borderWidth: 1,
-    marginLeft: 30,
-  },
-
-  selectedPositionLabel: {
-    // width: 80,
-    height: 30,
-    paddingLeft: 10,
-  },
-
-  unselectButton: {
-    display: "flex",
-    alignItems: "center",
-    borderColor: "black",
-    borderRadius: 8,
-    borderWidth: 1,
-    // padding: 10,
-    margin: 30,
-    width: 20,
-    height: 20,
-    // backgroundColor: "#fff",
-    paddingRight: 10,
-  },
-
-  unselectLabel: {
-    // textAlign: "center",
-  },
-
-  commonPositionsContainer: {
-    height: 150,
-    marginTop: 20,
-    borderRadius: 8,
-    borderWidth: 1,
-    width: "80%",
-  },
-
-  commonPositionsScroll: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-
-  button: {
-    display: "flex",
-    alignItems: "center",
-    borderColor: "black",
-    borderRadius: 8,
-    borderWidth: 1,
-    padding: 10,
-    margin: 30,
-    width: 237,
-    backgroundColor: "#fff",
-  },
-
-  buttonText: {
+  startText: {
     fontWeight: "bold",
     textAlign: "center",
+    margin: 90,
   },
 });
 
