@@ -65,7 +65,7 @@ const AthleteCoachSelection = (props) => {
             }
           }}
         >
-          <Text style={styles.nextButton}>Next</Text>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -137,23 +137,29 @@ const styles = StyleSheet.create({
     marginLeft: 89,
   },
 
-  nextBtn: {
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 6,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    marginHorizontal: 69,
-    marginTop: 312,
-    height: 40,
-  },
-
   nextText: {
     color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
+  },
+
+  buttonReady: {
+    display: "flex",
+    alignItems: "center",
+    borderColor: "black",
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 10,
+    margin: 370,
+    width: 237,
+    backgroundColor: "#000000",
+  },
+
+  buttonText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
   },
 });
 

@@ -203,9 +203,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 20,
+    margin: 370,
     width: 237,
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
   },
 
   passwordRequirements: {
@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: "bold",
     textAlign: "center",
+    color: "white",
   },
 });
 

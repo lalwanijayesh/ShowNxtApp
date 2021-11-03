@@ -25,6 +25,11 @@ const CoachInfoRegistration = (props) => {
     { label: "Soccer", value: "soccer" },
   ]);
 
+  const handleSportOpen = useCallback(() => {
+    setJobTitle(true);
+    setUniTitle(false);
+  }, []);
+
   return (
     <View style={styles.container}>
       <DropDownPicker
@@ -39,7 +44,7 @@ const CoachInfoRegistration = (props) => {
         setItems={setMockUni}
         zIndex={3000}
         zIndexInverse={1000}
-        style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
+        style={[styles.spacingToHeader1, styles.box, styles.pickleStyle]}
         dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
       />
       <DropDownPicker
@@ -73,9 +78,9 @@ const CoachInfoRegistration = (props) => {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
-              school: school,
-              sport: sport,
-              jobTitle: jobTitle,
+              school: props.route.paramsschool,
+              sport: props.route.paramssport,
+              jobTitle: props.route.paramsjobTitle,
             });
           }}
         >
@@ -112,23 +117,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 30,
+    margin: 370,
     width: 237,
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
   },
 
   buttonText: {
     fontWeight: "bold",
     textAlign: "center",
-  },
-
-  typePicker: {
-    width: 237,
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 20,
+    color: "white",
   },
 
   nextButton: {
@@ -141,11 +138,6 @@ const styles = StyleSheet.create({
     margin: 30,
     width: 237,
     backgroundColor: "#fff",
-  },
-
-  buttonText: {
-    fontWeight: "bold",
-    textAlign: "center",
   },
 
   nameInput: {
@@ -167,35 +159,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  backContainer: {
-    position: "absolute",
-    left: 42,
-    top: 40,
-  },
-
-  back: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-
   register: {
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
     marginTop: 54,
     alignSelf: "center",
-  },
-
-  nextBtn: {
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 6,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    marginHorizontal: 69,
-    marginTop: 312,
-    height: 40,
   },
 
   nextText: {
