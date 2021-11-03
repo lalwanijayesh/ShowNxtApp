@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import firebase from "../database/firebase";
-import "firebase/auth";
 
 export default class RegisterCom extends Component {
   constructor() {
