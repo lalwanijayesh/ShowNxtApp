@@ -11,58 +11,78 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 
 const CoachInfoRegistration = (props) => {
-  let [jobTitle, setJobTitle] = React.useState("");
-  const [uniType, setUniType] = useState(false);
+  const [uniVisible, setUniVisible] = useState(false);
   const [uni, setUni] = useState(null);
   const [mockUni, setMockUni] = useState([
     { label: "Northeastern", value: "Northeastern" },
     { label: "Harvard", value: "harvard" },
     { label: "Bu", value: "bu" },
   ]);
-  const [sportType, setSportType] = useState(false);
+
+  const [sportVisible, setSportVisible] = useState(false);
   const [sport, setSport] = useState(null);
   const [mockSport, setMockSport] = useState([
     { label: "Squash", value: "squash" },
     { label: "Soccer", value: "soccer" },
   ]);
 
-  const handleSportOpen = useCallback(() => {
-    setJobTitle(true);
-    setUniTitle(false);
+  let [jobTitle, setJobTitle] = React.useState("");
+
+  const onUniOpen = useCallback(() => {
+    setSportVisible(false);
+  }, []);
+
+  const onSportOpen = useCallback(() => {
+    setUniVisible(false);
   }, []);
 
   return (
     <View style={styles.container}>
-      <DropDownPicker
-        searchable={true}
-        searchPlaceholder="Search..."
-        placeholder="Find University"
-        open={uniType}
-        value={uni}
-        items={mockUni}
-        setOpen={setUniType}
-        setValue={setUni}
-        setItems={setMockUni}
-        zIndex={3000}
-        zIndexInverse={1000}
-        style={[styles.spacingToHeader1, styles.box, styles.pickleStyle]}
-        dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
-      />
-      <DropDownPicker
-        searchable={true}
-        searchPlaceholder="Search..."
-        placeholder="Coaching Sport"
-        open={sportType}
-        value={sport}
-        items={mockSport}
-        setOpen={setSportType}
-        setValue={setSport}
-        setItems={setMockSport}
-        zIndex={3000}
-        zIndexInverse={1000}
-        style={[styles.spacingToHeader1, styles.box, styles.pickleStyle]}
-        dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
-      />
+      <View style={styles.spacingToSportPicker}>
+        <DropDownPicker
+          searchable={true}
+          searchPlaceholder="Search..."
+          placeholder="Find University"
+          open={uniVisible}
+          value={uni}
+          items={mockUni}
+          setOpen={setUniVisible}
+          setValue={setUni}
+          setItems={setMockUni}
+          zIndex={3001}
+          zIndexInverse={1001}
+          onOpen={onUniOpen}
+          style={[styles.spacingToUniPicker, styles.box, styles.pickleStyle]}
+          dropDownContainerStyle={[
+            styles.spacingToUniDropdown,
+            styles.pickleStyle,
+          ]}
+        />
+      </View>
+
+      <View style={styles.pickerSeparator} />
+
+      <View style={styles.spacingToUniPicker}>
+        <DropDownPicker
+          searchable={true}
+          searchPlaceholder="Search..."
+          placeholder="Coaching Sport"
+          open={sportVisible}
+          value={sport}
+          items={mockSport}
+          setOpen={setSportVisible}
+          setValue={setSport}
+          setItems={setMockSport}
+          zIndex={3000}
+          zIndexInverse={1000}
+          onOpen={onSportOpen}
+          style={[styles.spacingToSportPicker, styles.box, styles.pickleStyle]}
+          dropDownContainerStyle={[
+            styles.spacingtoSportDropdown,
+            styles.pickleStyle,
+          ]}
+        />
+      </View>
 
       <TextInput
         style={styles.jobInput}
@@ -148,14 +168,14 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 100,
+    // marginTop: 100,
   },
 
   register: {
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
-    marginTop: 54,
+    // marginTop: 54,
     alignSelf: "center",
   },
 
@@ -166,17 +186,25 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 
-  spacingToHeader: {
-    marginTop: 126,
+  pickerSeparator: {
+    height: 50,
   },
 
-  spacingToHeader1: {
-    marginTop: 60,
+  spacingToUniPicker: {
+    // marginTop: 50,
   },
 
-  spacingBetween: {
-    marginTop: 46,
+  // spacingToUniDropdown: {
+  //   // marginTop: 125,
+  // },
+
+  spacingToSportPicker: {
+    // marginTop: 100,
   },
+
+  // spacingtoSportDropdown: {
+  //   marginTop: 160,
+  // },
 
   box: {
     borderTopLeftRadius: 6,
@@ -188,11 +216,11 @@ const styles = StyleSheet.create({
 
   pickleStyle: {
     width: Dimensions.get("screen").width - 89 * 2,
-    marginLeft: 60,
+    // marginLeft: 60,
   },
 
   text: {
-    marginTop: 22,
+    // marginTop: 22,
     marginHorizontal: 69,
     fontSize: 8,
     lineHeight: 11,

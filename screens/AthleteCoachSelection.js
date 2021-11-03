@@ -40,7 +40,7 @@ const AthleteCoachSelection = (props) => {
       />
 
       <DropDownPicker
-        searchable={true}
+        searchable={false}
         searchPlaceholder="Search..."
         placeholder="Athlete or Coach?"
         open={userType}

@@ -15,11 +15,6 @@ const CoachPositionSelection = (props) => {
     <View style={styles.container}>
       <Text style={styles.startText}>Positions recruitng for Fall 2022</Text>
     </View>
-
-    <View>
-    <Text>Positions recruitng for Fall 2022</Text>
-    </View>
-
   );
 };
 
