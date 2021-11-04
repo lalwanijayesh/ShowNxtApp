@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import ScreenNames from '../ScreenNames';
 
 // TODO: Replace image in the circle view
@@ -34,10 +34,14 @@ const AthleteProfile = ({navigation}) => {
     },
   ];
 
-  const renderItem = ({ title }) => (
-    <View style={styles.videoStyle}>
-      <Text>{title}</Text>
-    </View>
+
+  const renderItem = (item) => (
+    <View style={styles.videoStyle}
+    >   
+      <TouchableOpacity>
+        <Text>{item.title}</Text>
+      </TouchableOpacity>  
+    </View> 
   );
   
   return (
@@ -60,14 +64,21 @@ const AthleteProfile = ({navigation}) => {
 
       <Text style={styles.videoTitle}>{"Videos"}</Text>
 
-      <View style={{borderColor: 'red', borderWidth: 1}}>
+      <View style={{marginHorizontal: 34, marginTop: 23}}>
         <FlatList
-          data={DATA}
-          renderItem={renderItem}
+          data={testData}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item}) => renderItem(item)}
           keyExtractor={item => item.id}
         />
       </View>
 
+      <Text style={styles.text}>{"Place the most explosive video first in line for the best result."}</Text>
+
+      <TouchableOpacity style={styles.nextBtn}>
+        <Text style={styles.nextText}>{"Start Exploring"}</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -77,6 +88,7 @@ export default AthleteProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   backContainer: {
@@ -147,5 +159,34 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: '#EEEEEE',
-  }
+    marginRight: 17,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  text: {
+    marginTop: 22,
+    marginLeft: 34,
+    fontSize: 8,
+    lineHeight: 11,
+    color: '#000000',
+  },
+
+  nextBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginHorizontal: 69,
+    marginTop: 71,
+    backgroundColor: '#000000',
+    height: 40,
+    borderRadius: 6,
+  },
+
+  nextText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 14,
+    lineHeight: 16,
+  },
 })

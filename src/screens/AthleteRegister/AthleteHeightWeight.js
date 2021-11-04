@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { TouchableOpacity, Text, TextInput, View, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, Text, TextInput, View, StyleSheet, Alert, Keyboard } from 'react-native';
 import ScreenNames from '../ScreenNames';
 
 const AthleteHeightWeight = ({navigation}) => {
 
-  const [height, setHeight] = useState(null);
+  const [ft, setFn] = useState(null);
+  const [inch, setInch] = useState(null);
   const [weight, setWeight] = useState(null);
 
   return (
@@ -16,26 +17,54 @@ const AthleteHeightWeight = ({navigation}) => {
 
       <Text style={styles.register}>{"REGISTER"}</Text>
 
-      <TextInput placeholder="Height" 
-                 autoCapitalize="none"
-                 autoCorrect={false}
-                 value={height}
-                 onChangeText={setHeight}
-                 style={[styles.box, styles.textBox, styles.spacingBetweenHeader]} />
+      <View style={[styles.spacingBetweenHeader, styles.margin]}>
+        <Text style={styles.text}>{"Height"}</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <TextInput style={[styles.text, styles.spacingBetweenText, styles.textBox]}
+                     keyboardType={"numeric"}
+                     returnKeyLabel='Done' 
+                     returnKeyType='done' 
+                     onSubmitEditing={Keyboard.dismiss}
+                     autoCapitalize="none"
+                     autoCorrect={false}
+                     value={ft}
+                     onChangeText={setFn} />
+          <Text style={[styles.text, styles.spacingBetweenText]}>{"ft"}</Text>
+          <TextInput style={[styles.text, styles.spacingBetweenText, styles.textBox]}
+                     keyboardType={"numeric"}
+                     returnKeyLabel='Done' 
+                     returnKeyType='done' 
+                     onSubmitEditing={Keyboard.dismiss}
+                     autoCapitalize="none"
+                     autoCorrect={false}
+                     value={inch}
+                     onChangeText={setInch} />
+          <Text style={styles.text}>{"in"}</Text>
+        </View>
+      </View>
 
-      <TextInput placeholder="Weight"
-                 autoCapitalize="none"
-                 autoCorrect={false}
-                 value={weight}
-                 onChangeText={setWeight}
-                 style={[styles.box, styles.textBox, styles.spacingBetweenBoxes]} />
+      <View style={[styles.spacingBetweenBoxes, styles.margin]}>
+        <Text style={styles.text}>{"Weight"}</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <TextInput style={[styles.text, styles.spacingBetweenText, styles.textBox]}
+                   keyboardType={"numeric"}
+                   returnKeyLabel='Done' 
+                   returnKeyType='done' 
+                   onSubmitEditing={Keyboard.dismiss}
+                   autoCapitalize="none"
+                   autoCorrect={false}
+                   value={weight}
+                   onChangeText={setWeight} />
+          <Text style={styles.text}>{"lbs"}</Text>
+        </View>
+      </View>
 
       <TouchableOpacity onPress={() => {
-                          !!height && !!weight ?
-                          navigation.navigate(ScreenNames.ATHLETE_ACADEMIC) : 
+                          ft && inch && weight ?
+                          navigation.navigate(ScreenNames.ATHLETE_ACADEMIC) :
                           Alert.alert("Please enter your height and weight before moving to the next step!!")
                         }}
-                        style={[styles.nextBtn, !!height && !!weight ? {backgroundColor: '#000000'} : {backgroundColor: '#888888'}]}>
+                        style={[styles.nextBtn, ft && inch && weight ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
         <Text style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>
     </View>
@@ -47,6 +76,7 @@ export default AthleteHeightWeight;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   backContainer: {
@@ -68,21 +98,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  textBox: {
-    color: '#555555',
+  text: {
+    color: '#000000',
     fontSize: 14,
     lineHeight: 16,
     fontWeight: 'bold',
-    marginHorizontal: 69,
-    paddingLeft: 17,
+    textAlign: 'center',
+    paddingHorizontal: 6,
+    paddingVertical: 5,
   },
 
-  box: {
+  textBox: {
     borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 6,
-    height: 37,
-    backgroundColor: '#FFFFFF',
+    borderWidth: 0.5,
+  },
+
+  margin: {
+    marginHorizontal: 69,
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  spacingBetweenText: {
+    marginRight: 5,
   },
 
   spacingBetweenHeader: {
@@ -94,14 +133,13 @@ const styles = StyleSheet.create({
   },
 
   nextBtn: {
-    borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
     marginHorizontal: 69,
-    marginTop: 312,
+    marginTop: 390,
     height: 40,
   },
 

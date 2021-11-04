@@ -4,34 +4,52 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import ScreenNames from '../ScreenNames';
 import {generateSportList, generateListOfPositionBySport, generateInfo} from '../../data/mockSports/generateMockSports';
 
-// TODO: position will be inactive if the user does not select sport 
 const AthleteSportInfo = ({navigation}) => {
 
+  const [openGender, setOpenGender] = useState(false);
   const [openSport, setOpenSport] = useState(false);
   const [openPosition, setOpenPosition] = useState(false);
 
+  const [gender, setGender] = useState(null);
   const [sport, setSport] = useState(null);
   const [position, setPosition] = useState(null);
 
+  const [genderItem, setGenderItem] = useState([
+    {label: 'Male', value: 'male'},
+    {label: 'Female', value: 'female'},
+    {label: 'Other', value: 'other'},
+  ]);
+  // TODO: rename those mock 
   const [mockSport, setMockSports] = useState(generateInfo(generateSportList()));
   const [mockPosition, setMockPositon] = useState([{
     label: 'None', value: 'None'
   }]);
 
   /**
-   * close the Position dropdown when the sport dropdown is opened.
+   * close other dropdowns when the gender is opened.
+   */
+   const handleGenderOpen = useCallback(() => {
+    setOpenGender(true);
+    setOpenPosition(false);
+    setOpenSport(false);
+  }, []);
+
+  /**
+   * close other dropdowns when the sport is opened.
    */
   const handleSportOpen = useCallback(() => {
     setOpenSport(true);
     setOpenPosition(false);
+    setOpenGender(false);
   }, []);
 
   /**
-   * close the Sport dropdown when the Position dropdown is opened.
+   * close other dropdowns when the position is opened.
    */
   const handlePositionOpen = useCallback(() => {
     setOpenSport(false);
     setOpenPosition(true);
+    setOpenGender(false);
     setMockPositon(generateInfo(generateListOfPositionBySport(sport)));
   }, [sport]);
 
@@ -46,6 +64,21 @@ const AthleteSportInfo = ({navigation}) => {
     <Text style={styles.register}>{"REGISTER"}</Text>
 
     <DropDownPicker  
+      placeholder="Gender"
+      open={openGender}
+      value={gender}
+      items={genderItem}
+      onOpen={handleGenderOpen}
+      setOpen={setOpenGender}
+      setValue={setGender}
+      setItems={setGenderItem}
+      zIndex={3000}
+      zIndexInverse={1000}
+      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
+      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+    />
+
+    <DropDownPicker  
       searchable={true}
       searchPlaceholder="Search..."
       placeholder="Sport"
@@ -56,17 +89,17 @@ const AthleteSportInfo = ({navigation}) => {
       setOpen={setOpenSport}
       setValue={setSport}
       setItems={setMockSports}
-      zIndex={3000}
-      zIndexInverse={1000}
-      style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
-      dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+      zIndex={2000}
+      zIndexInverse={2000}
+      style={[styles.spacingBetween, styles.box, styles.pickleStyle]}
+      dropDownContainerStyle={[styles.spacingBetween, styles.pickleStyle]}
     />
 
     <DropDownPicker  
       searchable={true}
       searchPlaceholder="Search..."
-      zIndex={2000}
-      zIndexInverse={2000}
+      zIndex={1000}
+      zIndexInverse={3000}
       placeholder="Position"
       open={openPosition}
       value={position}
@@ -82,11 +115,11 @@ const AthleteSportInfo = ({navigation}) => {
     <Text style={styles.text}>{'Play more than one position or more than one sport? You can add more once you finish you profile.'}</Text>
 
     <TouchableOpacity onPress={() => {
-                        !!position && !!sport ?
-                        navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT) : 
-                        Alert.alert("Please choose sport and position before moving to the next step!!")
+                        gender && position && sport ?
+                        navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT) :
+                        Alert.alert("Please choose gender, sport and position before moving to the next step!!")
                       }}
-                      style={[styles.nextBtn, !!position && !!sport ? {backgroundColor: '#000000'} : {backgroundColor: '#888888'}]}>
+                      style={[styles.nextBtn, gender && position && sport ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
       <Text style={styles.nextText}>{"Next"}</Text>
     </TouchableOpacity>
   </View>
@@ -121,14 +154,13 @@ const styles = StyleSheet.create({
   },
 
   nextBtn: {
-    borderColor: '#000000',
     borderWidth: 1,
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
     marginHorizontal: 69,
-    marginTop: 312,
+    marginTop: 265,
     height: 40,
   },
 

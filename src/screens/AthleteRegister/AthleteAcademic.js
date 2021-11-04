@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import { TouchableOpacity, Text, TextInput, View, StyleSheet, Dimensions, Alert } from 'react-native';
+import { TouchableOpacity, Text, TextInput, View, StyleSheet, Dimensions, Alert, Keyboard } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ScreenNames from '../ScreenNames';
 import years from '../../data/years';
@@ -72,18 +72,22 @@ const AthleteAcademic = ({navigation}) => {
                       dropDownContainerStyle={[styles.spacingBetweenBoxes, styles.pickleStyle]} />
       
       <TextInput placeholder="GPA"
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={gpa}
-                onChangeText={setGPA}
-                style={[styles.textBoxContainer, styles.textBox, styles.spacingBetweenBoxes]} />
+                 keyboardType={"numeric"}
+                 returnKeyLabel='Done' 
+                 returnKeyType='done' 
+                 onSubmitEditing={Keyboard.dismiss}
+                 autoCapitalize="none"
+                 autoCorrect={false}
+                 value={gpa}
+                 onChangeText={setGPA}
+                 style={[styles.textBoxContainer, styles.textBox, styles.spacingBetweenBoxes]} />
 
         <TouchableOpacity onPress={() => {
                             gpa != '' && !!school && !!year ?
-                            navigation.navigate(ScreenNames.ATHLETE_PROFILE) : 
+                            navigation.navigate(ScreenNames.ATHLETE_PROFILE) :
                             Alert.alert("Please enter school, year and your gpa before moving to the next step!!")
                           }}
-                          style={[styles.nextBtn, gpa != '' && !!school && !!year ? {backgroundColor: '#000000'} : {backgroundColor: '#888888'}]}>
+                          style={[styles.nextBtn, gpa != '' && !!school && !!year ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
         <Text  style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>
     </View>
@@ -95,6 +99,7 @@ export default AthleteAcademic;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   backContainer: {

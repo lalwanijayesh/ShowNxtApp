@@ -7,7 +7,7 @@ import ScreenNames from '../ScreenNames';
 const EmailConfirmation = ({navigation}) => {
 
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate(ScreenNames.EMAIL_PASSWORD)}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
@@ -17,7 +17,7 @@ const EmailConfirmation = ({navigation}) => {
       <Text style={styles.mail}>{"Use the verification link at the provided email."}</Text>
 
       <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.ATHLETE_SPORT_INFO)} 
-                        style={[styles.box, styles.nextBtn, {flexDirection: 'row'}]}>
+                        style={styles.nextBtn}>
         <Text style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>
       
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     marginTop: 312,
     backgroundColor: '#000000',
     height: 40,
+    borderRadius: 6,
   },
 
   nextText: {
