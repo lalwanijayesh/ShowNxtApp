@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Text, TextInput, View, StyleSheet} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { 
+  TouchableOpacity, 
+  Text, 
+  TextInput, 
+  View, 
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
+import firebase from '../../../database/firebase';
 import ScreenNames from '../ScreenNames';
 
 // special character array 
@@ -12,11 +21,11 @@ for (let i = 0; i < symbols.length; i++) {
 // numbers array
 const numArray = ['0','1','2','3','4','5','6','7','8','9'];
 
-// TODO: Firebase to store and auth email
 const EmailPassword = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const isLoading = useRef(false);
 
   /**
    * Check if the input email is valid
@@ -49,8 +58,29 @@ const EmailPassword = ({navigation}) => {
     return password.length >= 8 && isIncluded(symbolsArray) && isIncluded(numArray);
   }
 
-  return (
-    <View style={styles.container}>
+  const registerUser = () => {
+    if (!isValidEmail && !isValidPassword) {
+      Alert.alert("Please enter valid email and password.");
+    } else {
+      isLoading.current = true;
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+        console.log("User registered successfully");
+        isLoading.current = false;
+        navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
+      }).catch((error) => Alert.alert(error.message));
+    }
+  };
+  
+  // TODO: find the way to implement loading inddicator when it is navigating to the emailpass screen.
+  const renderLoadingIndicator = () => {
+    <View style={styles.preloader}>
+      <ActivityIndicator size="large" color="#9E9E9E" />
+    </View>
+  };
+
+  const renderRegisterScreen = () => {
+    return (
+      <View style={styles.container}>
       <TouchableOpacity style={styles.backContainer}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
@@ -84,11 +114,16 @@ const EmailPassword = ({navigation}) => {
       </View>
 
       {isValidEmail() && isValidPassword() &&
-        <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.EMAIL_CONFIRMATION)} 
+        <TouchableOpacity onPress={registerUser} 
                           style={[styles.box, styles.nextBtn, {flexDirection: 'row'}]}>
           <Text style={styles.nextText}>{"Next"}</Text>
         </TouchableOpacity>}
     </View>
+    )
+  };
+   
+  return (
+    renderRegisterScreen()
   );
 }
 
@@ -163,5 +198,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     lineHeight: 16,
+  },
+
+  preloader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
 })
