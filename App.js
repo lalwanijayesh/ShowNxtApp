@@ -22,11 +22,7 @@ export default function App() {
           name="Welcome"
           component={WelcomeScreen}
           options={{
-            title: "Welcome",
-            // headerStyle: {
-            //   backgroundColor: "red",
-            // },
-            // headerTintColor: "fff",
+            headerShown: false,
           }}
         />
 
@@ -34,7 +30,7 @@ export default function App() {
           name="AthleteCoachSelection"
           component={AthleteCoachSelection}
           options={{
-            title: "Register",
+            headerShown: false,
           }}
         />
 
@@ -42,7 +38,7 @@ export default function App() {
           name="EmailPass"
           component={EmailPassScreen}
           options={{
-            title: "Register",
+            headerShown: false,
           }}
         />
 
@@ -50,7 +46,7 @@ export default function App() {
           name="Verification"
           component={VerificationScreen}
           options={{
-            title: "Register",
+            headerShown: false,
           }}
         />
 
@@ -58,7 +54,7 @@ export default function App() {
           name="CoachInfoRegistration"
           component={CoachInfoRegistration}
           options={{
-            title: "Register",
+            headerShown: false,
           }}
         />
 
@@ -66,7 +62,7 @@ export default function App() {
           name="CoachPositionSelection"
           component={CoachPositionSelection}
           options={{
-            title: "Select Positions",
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
