@@ -38,51 +38,47 @@ const CoachInfoRegistration = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.spacingToSportPicker}>
-        <DropDownPicker
-          searchable={true}
-          searchPlaceholder="Search..."
-          placeholder="Find University"
-          open={uniVisible}
-          value={uni}
-          items={mockUni}
-          setOpen={setUniVisible}
-          setValue={setUni}
-          setItems={setMockUni}
-          zIndex={3001}
-          zIndexInverse={1001}
-          onOpen={onUniOpen}
-          style={[styles.spacingToUniPicker, styles.box, styles.pickleStyle]}
-          dropDownContainerStyle={[
-            styles.spacingToUniDropdown,
-            styles.pickleStyle,
-          ]}
-        />
-      </View>
+      <DropDownPicker
+        searchable={true}
+        searchPlaceholder="Search..."
+        placeholder="Find University"
+        open={uniVisible}
+        value={uni}
+        items={mockUni}
+        setOpen={setUniVisible}
+        setValue={setUni}
+        setItems={setMockUni}
+        zIndex={3001}
+        zIndexInverse={1001}
+        onOpen={onUniOpen}
+        style={[styles.spacingToUniPicker, styles.box, styles.pickleStyle]}
+        dropDownContainerStyle={[
+          styles.spacingToUniDropdown,
+          styles.pickleStyle,
+        ]}
+      />
 
       <View style={styles.pickerSeparator} />
 
-      <View style={styles.spacingToUniPicker}>
-        <DropDownPicker
-          searchable={true}
-          searchPlaceholder="Search..."
-          placeholder="Coaching Sport"
-          open={sportVisible}
-          value={sport}
-          items={mockSport}
-          setOpen={setSportVisible}
-          setValue={setSport}
-          setItems={setMockSport}
-          zIndex={3000}
-          zIndexInverse={1000}
-          onOpen={onSportOpen}
-          style={[styles.spacingToSportPicker, styles.box, styles.pickleStyle]}
-          dropDownContainerStyle={[
-            styles.spacingtoSportDropdown,
-            styles.pickleStyle,
-          ]}
-        />
-      </View>
+      <DropDownPicker
+        searchable={true}
+        searchPlaceholder="Search..."
+        placeholder="Coaching Sport"
+        open={sportVisible}
+        value={sport}
+        items={mockSport}
+        setOpen={setSportVisible}
+        setValue={setSport}
+        setItems={setMockSport}
+        zIndex={3000}
+        zIndexInverse={1000}
+        onOpen={onSportOpen}
+        style={[styles.spacingToSportPicker, styles.box, styles.pickleStyle]}
+        dropDownContainerStyle={[
+          styles.spacingtoSportDropdown,
+          styles.pickleStyle,
+        ]}
+      />
 
       <TextInput
         style={styles.jobInput}
