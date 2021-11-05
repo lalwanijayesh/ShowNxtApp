@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   ScrollView,
   View,
@@ -12,48 +12,87 @@ import {
 } from "react-native";
 
 const CoachPositionSelection = (props) => {
+  let positions = [
+    "Goalkeeper",
+    "Defender",
+    "Quarterback",
+    "Fullback",
+    "Left Offensive Guard",
+    "Center",
+    "Right Offensive Guard",
+    "Left Offensive Tackle",
+    "Right Offensive Tackle",
+    "Tight End",
+    "Wide Receiver",
+    "Shooting Guard",
+    "Power Forward",
+    "Small Forward",
+    "Point Guard",
+    "Goalie",
+    "Winger",
+    "Third Base",
+  ];
+
+  let initialCounters = [];
+  for (let i = 0; i < positions.length; i += 1) {
+    initialCounters.push(0);
+  }
+
+  const [counters, setCounters] = React.useState(initialCounters);
+
+  const incrementValue = (i) => {
+    let currentCounters = {};
+    Object.assign(currentCounters, counters);
+
+    currentCounters[i] += 1;
+
+    setCounters(currentCounters);
+  };
+
+  const decrementValue = (i) => {
+    let currentCounters = {};
+    Object.assign(currentCounters, counters);
+
+    currentCounters[i] = Math.max(currentCounters[i] - 1, 0);
+
+    setCounters(currentCounters);
+  };
+
   return (
     <View style={styles.containerTitle}>
       <Text style={styles.startText}>Positions recruiting for Fall 2022</Text>
+
       <View style={styles.container}>
         <FlatList
-          data={[
-            { key: "Goalkeeper" },
-            { key: "Defender" },
-            { key: "Quarterback" },
-            { key: "Fullback" },
-            { key: "Left Offensive Guard" },
-            { key: "Center" },
-            { key: "Right Offensive Guard" },
-            { key: "Right Offensive Tackle" },
-            { key: "Left Offensive Tackle" },
-            { key: "Tight End" },
-            { key: "Wide Receiver" },
-            { key: "shooting guard" },
-            { key: "power forward" },
-            { key: "small forward" },
-            { key: "point guard" },
-            { key: "Goalie" },
-            { key: "Defensemen" },
-            { key: "Winger" },
-            { key: "Third Base" },
-          ]}
+          data={positions.map((element, i) => {
+            return { key: i };
+          })}
           renderItem={({ item }) => {
             return (
               <View style={styles.itemContainer}>
                 <View style={styles.itemLabelContainer}>
-                  <Text style={styles.itemLabel}>{item.key}</Text>
+                  <Text style={styles.itemLabel}>{positions[item.key]}</Text>
                 </View>
 
                 <View style={styles.itemIncrementContainer}>
-                  <TouchableOpacity style={styles.itemButton}>
-                    <Text style={styles.itemButtonPlus}>+</Text>
+                  <TouchableOpacity
+                    style={styles.itemButton}
+                    onPress={() => {
+                      decrementValue(item.key);
+                    }}
+                  >
+                    <Text style={styles.itemButtonMinus}>-</Text>
                   </TouchableOpacity>
 
-                  <Text style={styles.itemCounter}>0</Text>
+                  <Text style={styles.itemCounter}>{counters[item.key]}</Text>
 
-                  <TouchableOpacity style={styles.itemButton}>
-                    <Text style={styles.itemButtonMinus}>-</Text>
+                  <TouchableOpacity
+                    style={styles.itemButton}
+                    onPress={() => {
+                      incrementValue(item.key);
+                    }}
+                  >
+                    <Text style={styles.itemButtonPlus}>+</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -69,8 +108,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    width: "100%",
     width: "80%",
+    height: "50%",
   },
   containerTitle: {
     flexDirection: "column",
@@ -90,7 +129,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     height: 50,
-    backgroundColor: "teal",
   },
 
   itemLabelContainer: {
