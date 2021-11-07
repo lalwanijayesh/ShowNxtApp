@@ -58,6 +58,16 @@ const CoachPositionSelection = (props) => {
     setCounters(currentCounters);
   };
 
+  const isReadyToProceed = () => {
+    for (let i = 0; i < positions.length; i += 1) {
+      if (counters[i] > 0) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   return (
     <View style={styles.containerTitle}>
       <Text style={styles.startText}>Positions recruiting for Fall 2022</Text>
@@ -65,31 +75,33 @@ const CoachPositionSelection = (props) => {
       <View style={styles.container}>
         <FlatList
           data={positions.map((element, i) => {
-            return { key: i };
+            return { key: i.toString() };
           })}
           renderItem={({ item }) => {
+            let id = parseInt(item.key);
+
             return (
               <View style={styles.itemContainer}>
                 <View style={styles.itemLabelContainer}>
-                  <Text style={styles.itemLabel}>{positions[item.key]}</Text>
+                  <Text style={styles.itemLabel}>{positions[id]}</Text>
                 </View>
 
                 <View style={styles.itemIncrementContainer}>
                   <TouchableOpacity
                     style={styles.itemButton}
                     onPress={() => {
-                      decrementValue(item.key);
+                      decrementValue(id);
                     }}
                   >
                     <Text style={styles.itemButtonMinus}>-</Text>
                   </TouchableOpacity>
 
-                  <Text style={styles.itemCounter}>{counters[item.key]}</Text>
+                  <Text style={styles.itemCounter}>{counters[id]}</Text>
 
                   <TouchableOpacity
                     style={styles.itemButton}
                     onPress={() => {
-                      incrementValue(item.key);
+                      incrementValue(id);
                     }}
                   >
                     <Text style={styles.itemButtonPlus}>+</Text>
@@ -100,6 +112,12 @@ const CoachPositionSelection = (props) => {
           }}
         />
       </View>
+
+      {isReadyToProceed() && (
+        <TouchableOpacity>
+          <Text>Next</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
