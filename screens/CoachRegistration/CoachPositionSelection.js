@@ -174,6 +174,8 @@ const styles = StyleSheet.create({
     borderRadius: 30 / 2,
     backgroundColor: "mediumseagreen",
     margin: 5,
+    display: "flex",
+    alignItems: "center",
   },
 
   circle1: {
