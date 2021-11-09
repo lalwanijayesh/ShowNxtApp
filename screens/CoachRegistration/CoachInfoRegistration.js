@@ -87,6 +87,27 @@ const CoachInfoRegistration = (props) => {
         placeholder="Enter your Job Title"
       />
 
+      <View style={styles.progressContainer}>
+        <View style={styles.circle}>
+          <Text style={styles.oneText}>1</Text>
+        </View>
+
+        <View style={styles.dash}></View>
+
+        <View style={styles.circle2}>
+          <Text style={styles.oneText}>2</Text>
+        </View>
+      </View>
+
+      <View style={styles.textUnderCircles}>
+        <View>
+          <Text style={styles.SandRText}>Sports</Text>
+        </View>
+        <View>
+          <Text style={styles.SandRText}>Position</Text>
+        </View>
+      </View>
+
       {uni !== null && sport !== null && jobTitle !== "" && (
         <TouchableOpacity
           style={styles.buttonReady}
@@ -109,6 +130,54 @@ const CoachInfoRegistration = (props) => {
 };
 
 const styles = StyleSheet.create({
+  progressContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 400,
+  },
+
+  textUnderCircles: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    margin: -415,
+  },
+  circle: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: "grey",
+    margin: 5,
+  },
+
+  circle2: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: "silver",
+    margin: 5,
+  },
+  oneText: {
+    fontWeight: "bold",
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  dash: {
+    width: 30,
+    height: 2,
+    backgroundColor: "silver",
+    textAlign: "center",
+  },
+
+  SandRText: {
+    color: "black",
+    fontSize: 10,
+    textAlign: "center",
+    margin: 20,
+  },
+
   jobInput: {
     width: 237,
     height: 40,
@@ -134,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 370,
+    margin: 415,
     width: 237,
     backgroundColor: "#000000",
   },

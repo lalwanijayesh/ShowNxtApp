@@ -113,26 +113,108 @@ const CoachPositionSelection = (props) => {
         />
       </View>
 
+      <View style={styles.progressContainer}>
+        <View style={styles.circle}>
+          <Text style={styles.oneText}>1</Text>
+        </View>
+
+        <View style={styles.dash}></View>
+
+        <View style={styles.circle1}>
+          <Text style={styles.oneText}>2</Text>
+        </View>
+      </View>
+
+      <View style={styles.textUnderCircles}>
+        <View>
+          <Text style={styles.SandRText}>Sports</Text>
+        </View>
+        <View>
+          <Text style={styles.SandRText}>Position</Text>
+        </View>
+      </View>
+
       {isReadyToProceed() && (
-        <TouchableOpacity>
-          <Text>Next</Text>
+        <TouchableOpacity
+          style={styles.buttonReady}
+          onPress={() => {
+            props.navigation.navigate("CompleteProfile1", {
+              fullName: props.route.params.fullName,
+              email: props.route.params.email,
+              password: props.route.params.password,
+              school: props.route.paramsschool,
+              sport: props.route.paramssport,
+              jobTitle: props.route.paramsjobTitle,
+            });
+          }}
+        >
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       )}
     </View>
   );
 };
 const styles = StyleSheet.create({
+  progressContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 50,
+  },
+
+  textUnderCircles: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    margin: -65,
+  },
+  circle: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: "mediumseagreen",
+    margin: 5,
+  },
+
+  circle1: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: "grey",
+    margin: 5,
+  },
+  oneText: {
+    fontWeight: "bold",
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  dash: {
+    width: 30,
+    height: 2,
+    backgroundColor: "mediumseagreen",
+    textAlign: "center",
+  },
+
+  SandRText: {
+    color: "black",
+    fontSize: 10,
+    textAlign: "center",
+    margin: 20,
+  },
+
   container: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     width: "80%",
-    height: "50%",
+    height: "40%",
   },
   containerTitle: {
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
+    margin: 30,
   },
   startText: {
     fontWeight: "bold",
@@ -182,6 +264,24 @@ const styles = StyleSheet.create({
 
   itemButtonMinus: {
     fontSize: 45,
+  },
+
+  buttonText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
+  },
+
+  buttonReady: {
+    display: "flex",
+    alignItems: "center",
+    borderColor: "black",
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 10,
+    margin: 70,
+    width: 237,
+    backgroundColor: "#000000",
   },
 });
 
