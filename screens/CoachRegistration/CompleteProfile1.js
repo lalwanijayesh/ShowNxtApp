@@ -5,25 +5,22 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 const CompleteProfile1 = (props) => {
   return (
     <View style={styles.circle}>
-      <Text style={styles.oneText}>1</Text>
+      <Text style={styles.oneText}>Complete Profile Page!</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   circle: {
-    width: 30,
-    height: 30,
-    borderRadius: 30 / 2,
-    backgroundColor: "grey",
-    margin: 80,
+    display: "flex",
+    margin: 60,
   },
+
   oneText: {
     fontWeight: "bold",
     textAlign: "center",
-    color: "white",
+    color: "black",
     fontSize: 20,
-    margin: 3,
   },
 });
 
