@@ -115,7 +115,7 @@ const CoachPositionSelection = (props) => {
 
       <View style={styles.progressContainer}>
         <View style={styles.circle}>
-          <Text style={styles.oneText}>1</Text>
+          <Text style={styles.oneText}>✓</Text>
         </View>
 
         <View style={styles.dash}></View>
