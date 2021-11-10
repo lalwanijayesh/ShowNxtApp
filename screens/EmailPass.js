@@ -95,6 +95,8 @@ const EmailPassScreen = (props) => {
         placeholder="Email"
       />
 
+      <Text style={styles.emailvalid}>Please use a valid email.</Text>
+
       <TextInput
         style={styles.passwordInput}
         onChangeText={setPassword}
@@ -111,32 +113,24 @@ const EmailPassScreen = (props) => {
 
         {password.length >= 8 ? (
           <Text style={styles.passwordRequirements}>
-            ✅ at least 8 characters
+            ✓ at least 8 characters
           </Text>
         ) : (
           <Text style={styles.passwordRequirements}>
-            ❌ at least 8 characters
+            ✕ at least 8 characters
           </Text>
         )}
 
         {hasNumericCharacters(password) ? (
-          <Text style={styles.passwordRequirements}>
-            ✅ 1 numeric character
-          </Text>
+          <Text style={styles.passwordRequirements}>✓ 1 numeric character</Text>
         ) : (
-          <Text style={styles.passwordRequirements}>
-            ❌ 1 numeric character
-          </Text>
+          <Text style={styles.passwordRequirements}>✕ 1 numeric character</Text>
         )}
 
         {hasSpecialCharacters(password) ? (
-          <Text style={styles.passwordRequirements}>
-            ✅ 1 special character
-          </Text>
+          <Text style={styles.passwordRequirements}>✓ 1 special character</Text>
         ) : (
-          <Text style={styles.passwordRequirements}>
-            ❌ 1 special character
-          </Text>
+          <Text style={styles.passwordRequirements}>✕ 1 special character</Text>
         )}
       </View>
 
@@ -183,7 +177,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 100,
+    marginTop: 170,
   },
 
   passwordInput: {
@@ -193,7 +187,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 10,
+    marginTop: 30,
   },
 
   buttonReady: {
@@ -203,17 +197,22 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 370,
+    margin: 330,
     width: 237,
     backgroundColor: "#000000",
   },
 
   passwordRequirements: {
-    fontWeight: "bold",
+    //fontWeight: "bold",
     textAlign: "center",
     marginTop: 10,
   },
 
+  emailvalid: {
+    textAlign: "left",
+    marginTop: 5,
+    fontSize: 12,
+  },
   passwordRequirements1: {
     fontWeight: "normal",
     textAlign: "right",

@@ -38,6 +38,8 @@ const CoachInfoRegistration = (props) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.marginTop1} />
+
       <DropDownPicker
         searchable={true}
         searchPlaceholder="Search..."
@@ -134,14 +136,14 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    margin: 400,
+    margin: 255,
   },
 
   textUnderCircles: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    margin: -415,
+    margin: -275,
   },
   circle: {
     width: 30,
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
-    margin: 29,
+    margin: 89,
   },
 
   buttonReady: {
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 415,
+    margin: 280,
     width: 237,
     backgroundColor: "#000000",
   },
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    // marginTop: 100,
+    //marginTop: 100,
   },
 
   register: {
@@ -255,6 +257,10 @@ const styles = StyleSheet.create({
 
   pickerSeparator: {
     height: 50,
+  },
+
+  marginTop1: {
+    height: 100,
   },
 
   spacingToUniPicker: {

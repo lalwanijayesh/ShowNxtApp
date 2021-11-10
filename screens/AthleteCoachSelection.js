@@ -38,7 +38,6 @@ const AthleteCoachSelection = (props) => {
         value={fullName}
         placeholder="Enter full name"
       />
-
       <DropDownPicker
         searchable={false}
         searchPlaceholder="Search..."
@@ -79,12 +78,15 @@ const AthleteCoachSelection = (props) => {
   );
 };
 
+// trying to add little arrow on next button
+// <Text style={styles.buttonTextArrow}>›</Text>
+
 const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "100%",
+    height: "1000%",
   },
 
   nextButton: {
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 375,
+    margin: 370,
     width: 237,
     backgroundColor: "#fff",
   },
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 100,
+    marginTop: 175,
   },
 
   typePicker: {
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
   },
 
   spacingToHeader: {
-    marginTop: 35,
+    marginTop: 60,
   },
 
   spacingBetween: {
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 370,
+    margin: 410,
     width: 237,
     backgroundColor: "#000000",
   },
@@ -167,6 +169,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "white",
+  },
+
+  buttonTextArrow: {
+    fontWeight: "bold",
+    textAlign: "right",
+    color: "black",
+    fontSize: 20,
   },
 });
 
