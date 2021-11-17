@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from "./screens/Welcome";
 import AthleteCoachSelection from "./screens/AthleteCoachSelection";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import EmailPassScreen from "./screens/EmailPass";
 
