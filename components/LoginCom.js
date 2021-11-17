@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import firebase from "../database/firebase";
-import "firebase/auth";
 
 export default class Login extends Component {
   constructor() {
