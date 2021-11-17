@@ -1,7 +1,10 @@
+/**
+ * Those components is just temporary. It is an example the real firebase set up will be integrated in the register screens.
+ */
+
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import firebase from "../database/firebase";
-import "firebase/auth";
 
 export default class Dashboard extends Component {
   constructor() {
@@ -23,8 +26,8 @@ export default class Dashboard extends Component {
 
   render() {
     this.state = {
-      displayName: app.auth().currentUser.displayName,
-      uid: app.auth().currentUser.uid,
+      displayName: firebase.auth().currentUser.displayName,
+      uid: firebase.auth().currentUser.uid,
     };
     return (
       <View style={styles.container}>
