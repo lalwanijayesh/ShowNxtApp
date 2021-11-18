@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import DropDownPicker from "react-native-dropdown-picker";
 import {
   View,
   Text,
@@ -8,9 +9,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-//import { Picker } from "@react-native-picker/picker";
 import { ATHLETE, COACH } from "../constants/enums";
-import DropDownPicker from "react-native-dropdown-picker";
+import ScreenNames from "../constants/ScreenNames";
 
 const AthleteCoachSelection = (props) => {
   const [fullName, setFullName] = React.useState("");
@@ -59,7 +59,7 @@ const AthleteCoachSelection = (props) => {
           style={styles.buttonReady}
           onPress={() => {
             if (type === "athlete") {
-              props.navigation.navigate("EmailPass", {
+              props.navigation.navigate(ScreenNames.EMAIL_PASSWORD, {
                 userType: ATHLETE,
                 fullName: fullName,
               });

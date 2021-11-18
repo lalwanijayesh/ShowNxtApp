@@ -5,10 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
 } from "react-native";
 
-import { COACH, ATHLETE } from "../constants/enums";
+import firebase from '../../firebase/firebase';
+import { COACH } from "../../constants/enums";
 
 const hasSpecialCharacters = (password) => {
   const specialCharacters = [
@@ -85,6 +85,21 @@ const EmailPassScreen = (props) => {
 
   let { userType, fullName } = props.route.params;
 
+  const registerUser = () => {
+    if (email && !isPasswordSufficient(password)) {
+      Alert.alert("Please enter valid email and password.");
+    } else {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+        console.log("User registered successfully");
+        props.navigation.navigate("Verification", {
+          fullName: fullName,
+          email: email,
+          password: password,
+        });
+      }).catch((error) => Alert.alert(error.message));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -139,11 +154,7 @@ const EmailPassScreen = (props) => {
           style={styles.buttonReady}
           onPress={() => {
             if (userType === COACH) {
-              props.navigation.navigate("Verification", {
-                fullName: fullName,
-                email: email,
-                password: password,
-              });
+              registerUser();
             } else {
               // TODO: redirect to next Athlete screen
             }

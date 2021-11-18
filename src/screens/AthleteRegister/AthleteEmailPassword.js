@@ -8,8 +8,8 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import firebase from '../../../database/firebase';
-import ScreenNames from '../ScreenNames';
+import firebase from '../../firebase/firebase';
+import ScreenNames from '../../constants/ScreenNames';
 
 // special character array 
 const symbols = '"~`!@#$%^&*()-_=+[{]}|;:,<>.?/"';
@@ -21,7 +21,7 @@ for (let i = 0; i < symbols.length; i++) {
 // numbers array
 const numArray = ['0','1','2','3','4','5','6','7','8','9'];
 
-const EmailPassword = ({navigation}) => {
+const AthleteEmailPassword = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -81,7 +81,7 @@ const EmailPassword = ({navigation}) => {
   const renderRegisterScreen = () => {
     return (
       <View style={styles.container}>
-      <TouchableOpacity style={styles.backContainer}>
+      <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate('AthleteCoachSelection')}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
 
@@ -127,7 +127,7 @@ const EmailPassword = ({navigation}) => {
   );
 }
 
-export default EmailPassword;
+export default AthleteEmailPassword;
 
 const styles = StyleSheet.create({
   container: {

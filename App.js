@@ -1,22 +1,22 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import WelcomeScreen from "./screens/Welcome";
-import AthleteCoachSelection from "./screens/AthleteCoachSelection";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import EmailPassScreen from "./screens/EmailPass";
 
-import VerificationScreen from "./screens/CoachRegistration/Verification";
-import CoachInfoRegistration from "./screens/CoachRegistration/CoachInfoRegistration";
-import CoachPositionSelection from "./screens/CoachRegistration/CoachPositionSelection";
-import CompleteProfile1 from "./screens/CoachRegistration/CompleteProfile1";
+import ScreenNames from './src/constants/ScreenNames';
 
-import ScreenNames from './src/screens/ScreenNames';
+// Screen imports
+import WelcomeScreen from "./src/screens/WelcomeScreen";
+import AthleteCoachSelection from "./src/screens/AthleteCoachSelection";
+import EmailPassScreen from './src/screens/CoachRegistration/CoachEmailPass';
+import VerificationScreen from "./src/screens/CoachRegistration/Verification";
+import CoachInfoRegistration from "./src/screens/CoachRegistration/CoachInfoRegistration";
+import CoachPositionSelection from "./src/screens/CoachRegistration/CoachPositionSelection";
+import CompleteProfile1 from "./src/screens/CoachRegistration/CompleteProfile1";
 import AthleteSportInfo from './src/screens/AthleteRegister/AthleteSportInfo';
 import AthleteHeightWeight from './src/screens/AthleteRegister/AthleteHeightWeight';
 import AthleteAcademic from './src/screens/AthleteRegister/AthleteAcademic';
 import AthleteProfile from './src/screens/AthleteProfile/AthleteProfile';
-import EmailPassword from './src/screens/AthleteRegister/EmailPassword';
+import AthleteEmailPassword from './src/screens/AthleteRegister/AthleteEmailPassword';
 import EmailConfirmation from './src/screens/AthleteRegister/AthleteEmailConfirmation';
 
 const Stack = createNativeStackNavigator();
@@ -82,8 +82,8 @@ export default function App() {
           }}
         />
 
-         <Stack.Screen name={ScreenNames.EMAIL_PASSWORD} 
-                      component={EmailPassword} 
+        <Stack.Screen name={ScreenNames.EMAIL_PASSWORD} 
+                      component={AthleteEmailPassword} 
                       options={{ headerShown: false }} />
         <Stack.Screen name={ScreenNames.EMAIL_CONFIRMATION} 
                       component={EmailConfirmation} 

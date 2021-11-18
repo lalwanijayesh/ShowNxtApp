@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
-import ScreenNames from '../ScreenNames';
+import ScreenNames from '../../constants/ScreenNames';
 
 // TODO: Replace image in the circle view
 // TODO: find the way to let the user upload videos into react-native
