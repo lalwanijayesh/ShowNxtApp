@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { Alert } from "react-native";
 
 const firebaseConfig = {
   apiKey: "EnterYourApiKeyHere",
@@ -10,6 +11,7 @@ const firebaseConfig = {
   measurementId: "MeasurementId"
 };
 
+
 firebase.initializeApp(firebaseConfig);
 
-export default firebase
+export default firebase;

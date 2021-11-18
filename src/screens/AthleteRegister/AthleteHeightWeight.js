@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { TouchableOpacity, Text, TextInput, View, StyleSheet, Alert, Keyboard } from 'react-native';
-import ScreenNames from '../ScreenNames';
+import ScreenNames from '../../constants/ScreenNames';
 
 const AthleteHeightWeight = ({navigation}) => {
 

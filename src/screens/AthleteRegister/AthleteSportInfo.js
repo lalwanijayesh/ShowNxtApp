@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import ScreenNames from '../ScreenNames';
+import ScreenNames from '../../constants/ScreenNames';
 import {generateSportList, generateListOfPositionBySport, generateInfo} from '../../data/mockSports/generateMockSports';
 
 const AthleteSportInfo = ({navigation}) => {

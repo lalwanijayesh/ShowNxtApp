@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import { TouchableOpacity, Text, TextInput, View, StyleSheet, Dimensions, Alert, Keyboard } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import ScreenNames from '../ScreenNames';
+import ScreenNames from '../../constants/ScreenNames';
 import years from '../../data/years';
 
 const AthleteAcademic = ({navigation}) => {
