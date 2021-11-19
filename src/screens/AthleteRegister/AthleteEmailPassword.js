@@ -25,7 +25,6 @@ const AthleteEmailPassword = ({navigation}) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const isLoading = useRef(false);
 
   /**
    * Check if the input email is valid
@@ -62,10 +61,8 @@ const AthleteEmailPassword = ({navigation}) => {
     if (!isValidEmail && !isValidPassword) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      isLoading.current = true;
-      firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-        console.log("User registered successfully");
-        isLoading.current = false;
+      firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
+        userCredential.user.sendEmailVerification();
         navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
       }).catch((error) => Alert.alert(error.message));
     }

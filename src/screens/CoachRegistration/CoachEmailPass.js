@@ -89,8 +89,8 @@ const EmailPassScreen = (props) => {
     if (email && !isPasswordSufficient(password)) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-        console.log("User registered successfully");
+      firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
+        userCredential.user.sendEmailVerification();
         props.navigation.navigate("Verification", {
           fullName: fullName,
           email: email,
