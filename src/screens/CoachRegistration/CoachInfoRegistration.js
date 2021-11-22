@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 const CoachInfoRegistration = (props) => {
   const [uniVisible, setUniVisible] = useState(false);
   const [uni, setUni] = useState(null);
+  // TODO update below uni list with fetch schools response
   const [mockUni, setMockUni] = useState([
     { label: "Northeastern", value: "Northeastern" },
     { label: "Harvard", value: "harvard" },
@@ -35,6 +36,28 @@ const CoachInfoRegistration = (props) => {
   const onSportOpen = useCallback(() => {
     setUniVisible(false);
   }, []);
+
+  useEffect(() => {
+    // TODO move the server url out to constants
+    fetch('http://10.0.0.1:3000/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query : `
+          query Query {
+            schools {
+              schoolId
+              name
+              location
+            }
+          }
+        `,
+      }),
+    }).then((res) => res.json())
+        .then((result) => console.log(result.data));
+  });
 
   return (
     <View style={styles.container}>
