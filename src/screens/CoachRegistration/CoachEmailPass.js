@@ -5,9 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 
-import firebase from '../../firebase/firebase';
+import firebase from "../../firebase/firebase";
 import { COACH } from "../../constants/enums";
 
 const hasSpecialCharacters = (password) => {
@@ -89,14 +90,18 @@ const EmailPassScreen = (props) => {
     if (email && !isPasswordSufficient(password)) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-        console.log("User registered successfully");
-        props.navigation.navigate("Verification", {
-          fullName: fullName,
-          email: email,
-          password: password,
-        });
-      }).catch((error) => Alert.alert(error.message));
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log("User registered successfully");
+          props.navigation.navigate("Verification", {
+            fullName: fullName,
+            email: email,
+            password: password,
+          });
+        })
+        .catch((error) => Alert.alert(error.message));
     }
   };
 

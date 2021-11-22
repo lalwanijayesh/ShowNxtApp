@@ -24,6 +24,13 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("CompleteProfile1")}
+      >
+        <Text style={styles.buttonText}>SKIP</Text>
+      </TouchableOpacity>
     </View>
   );
 };

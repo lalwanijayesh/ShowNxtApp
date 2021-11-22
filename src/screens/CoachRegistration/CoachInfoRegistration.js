@@ -288,7 +288,8 @@ const styles = StyleSheet.create({
   },
 
   pickleStyle: {
-    width: Dimensions.get("screen").width - 89 * 2,
+    width: 10,
+    // width: Dimensions.get("screen").width - 89 * 2,
     // marginLeft: 60,
   },
 
