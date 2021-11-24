@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Text, View, TextInput, Image, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-const GET_SCHOOLS = gql`
-  query GetSchools {
-    schools {
+const SCHOOL_SEARCH = gql`
+  query SchoolSearch($term: String!) {
+    schoolsSearch(term: $term) {
       schoolId
       name
       location
@@ -14,8 +14,20 @@ const GET_SCHOOLS = gql`
   }
 `;
 
+// const SCHOOL_SEARCH = gql`
+//   query SchoolSearch {
+//     schoolsSearch(name: "ha") {
+//       schoolId
+//       name
+//       location
+//     }
+//   }
+// `;
+
 const SchoolsList = (props) => {
-  const { loading, error, data } = useQuery(GET_SCHOOLS);
+  const { loading, error, data } = useQuery(SCHOOL_SEARCH, {
+    variables: { term: props.term },
+  });
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error</Text>;
@@ -35,8 +47,8 @@ const SchoolsList = (props) => {
 
   return (
     <ScrollView style={styles.schoolsContainer}>
-      {data.schools
-        .filter((school) => school.name.includes(props.term))
+      {data.schoolsSearch
+        // .filter((school) => school.name.includes(props.term))
         .map(({ schoolId, name, location }) => (
           <View key={schoolId} style={styles.schoolContainer}>
             <Image
@@ -76,10 +88,17 @@ const styles = StyleSheet.create({
 
   searchInput: {
     marginTop: "30%",
+    width: 237,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 8,
+    padding: 10,
   },
 
   schoolsContainer: {
     marginTop: "5%",
+    width: "90%",
   },
 
   schoolContainer: {
