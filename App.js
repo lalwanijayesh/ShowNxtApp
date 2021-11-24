@@ -35,7 +35,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName={ScreenNames.WELCOME}>
           <Stack.Screen
             name={ScreenNames.WELCOME}
             component={WelcomeScreen}
