@@ -25,7 +25,7 @@ import SchoolSearch from "./src/screens/SchoolSearch";
 
 const Stack = createNativeStackNavigator();
 
-// TODO: move out to its own file
+// TODO: move out to its own file, but it didn't work when I tried to do it
 const client = new ApolloClient({
   uri: serverUrl,
   cache: new InMemoryCache(),
@@ -34,100 +34,88 @@ const client = new ApolloClient({
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <SchoolSearch />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Screen
+            name={ScreenNames.WELCOME}
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.ATHLETE_COACH_SELECTION}
+            component={AthleteCoachSelection}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COACH_EMAIL_PASS}
+            component={EmailPassScreen}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COACH_VERIFICATION}
+            component={VerificationScreen}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COACH_INFO_REGISTRATION}
+            component={CoachInfoRegistration}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COACH_POSITION_SELECTION}
+            component={CoachPositionSelection}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="CompleteProfile1"
+            component={CompleteProfile1}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.EMAIL_PASSWORD}
+            component={AthleteEmailPassword}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.EMAIL_CONFIRMATION}
+            component={EmailConfirmation}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.ATHLETE_SPORT_INFO}
+            component={AthleteSportInfo}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.ATHLETE_HEIGHT_WEIGHT}
+            component={AthleteHeightWeight}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.ATHLETE_ACADEMIC}
+            component={AthleteAcademic}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.ATHLETE_PROFILE}
+            component={AthleteProfile}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.SCHOOL_SEARCH}
+            component={SchoolSearch}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </ApolloProvider>
-
-    // <ApolloProvider client={client}>
-    //   <NavigationContainer>
-    //     <Stack.Navigator initialRouteName="Welcome">
-    //       <Stack.Screen
-    //         name="Welcome"
-    //         component={WelcomeScreen}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name="AthleteCoachSelection"
-    //         component={AthleteCoachSelection}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name="EmailPass"
-    //         component={EmailPassScreen}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name="Verification"
-    //         component={VerificationScreen}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name="CoachInfoRegistration"
-    //         component={CoachInfoRegistration}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name="CoachPositionSelection"
-    //         component={CoachPositionSelection}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name="CompleteProfile1"
-    //         component={CompleteProfile1}
-    //         options={{
-    //           headerShown: false,
-    //         }}
-    //       />
-
-    //       <Stack.Screen
-    //         name={ScreenNames.EMAIL_PASSWORD}
-    //         component={AthleteEmailPassword}
-    //         options={{ headerShown: false }}
-    //       />
-    //       <Stack.Screen
-    //         name={ScreenNames.EMAIL_CONFIRMATION}
-    //         component={EmailConfirmation}
-    //         options={{ headerShown: false }}
-    //       />
-    //       <Stack.Screen
-    //         name={ScreenNames.ATHLETE_SPORT_INFO}
-    //         component={AthleteSportInfo}
-    //         options={{ headerShown: false }}
-    //       />
-    //       <Stack.Screen
-    //         name={ScreenNames.ATHLETE_HEIGHT_WEIGHT}
-    //         component={AthleteHeightWeight}
-    //         options={{ headerShown: false }}
-    //       />
-    //       <Stack.Screen
-    //         name={ScreenNames.ATHLETE_ACADEMIC}
-    //         component={AthleteAcademic}
-    //         options={{ headerShown: false }}
-    //       />
-    //       <Stack.Screen
-    //         name={ScreenNames.ATHLETE_PROFILE}
-    //         component={AthleteProfile}
-    //         options={{ headerShown: false }}
-    //       />
-    //     </Stack.Navigator>
-    //   </NavigationContainer>
-    // </ApolloProvider>
   );
 }

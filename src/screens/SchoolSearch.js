@@ -6,23 +6,13 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const SCHOOL_SEARCH = gql`
   query SchoolSearch($term: String!) {
-    schoolsSearch(term: $term) {
+    schoolSearch(term: $term) {
       schoolId
       name
       location
     }
   }
 `;
-
-// const SCHOOL_SEARCH = gql`
-//   query SchoolSearch {
-//     schoolsSearch(name: "ha") {
-//       schoolId
-//       name
-//       location
-//     }
-//   }
-// `;
 
 const SchoolsList = (props) => {
   const { loading, error, data } = useQuery(SCHOOL_SEARCH, {
@@ -32,22 +22,12 @@ const SchoolsList = (props) => {
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Error</Text>;
 
-  // <ScrollView style={styles.schoolsContainer}>
-  //   {schools.map(({ schoolName, schoolImg }) => (
-  //     <View style={styles.schoolContainer}>
-  //       <Image style={styles.schoolImage} source={{ uri: schoolImg }} />
-  //     </View>
-  //   ))}
-  // </ScrollView>
-
   const PLACEHOLDER_IMG =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Northeastern_University.jpg/220px-Northeastern_University.jpg";
 
-  // console.log(data.schools);
-
   return (
     <ScrollView style={styles.schoolsContainer}>
-      {data.schoolsSearch
+      {data.schoolSearch
         // .filter((school) => school.name.includes(props.term))
         .map(({ schoolId, name, location }) => (
           <View key={schoolId} style={styles.schoolContainer}>

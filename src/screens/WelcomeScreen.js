@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import ScreenNames from "../constants/ScreenNames";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -20,7 +21,7 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("AthleteCoachSelection")}
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)}
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
