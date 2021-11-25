@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,10 +9,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import serverUrl from "../../constants/graphql";
+import ScreenNames from "../../constants/ScreenNames";
 
 const CoachInfoRegistration = (props) => {
   const [uniVisible, setUniVisible] = useState(false);
   const [uni, setUni] = useState(null);
+  // TODO update below uni list with fetch schools response
   const [mockUni, setMockUni] = useState([
     { label: "Northeastern", value: "Northeastern" },
     { label: "Harvard", value: "harvard" },
@@ -35,6 +38,28 @@ const CoachInfoRegistration = (props) => {
   const onSportOpen = useCallback(() => {
     setUniVisible(false);
   }, []);
+
+  useEffect(() => {
+    fetch(serverUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `
+          query Query {
+            schools {
+              schoolId
+              name
+              location
+            }
+          }
+        `,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => console.log(result.data));
+  });
 
   return (
     <View style={styles.container}>
@@ -114,7 +139,7 @@ const CoachInfoRegistration = (props) => {
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            props.navigation.navigate("CoachPositionSelection", {
+            props.navigation.navigate(ScreenNames.COACH_POSITION_SELECTION, {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,

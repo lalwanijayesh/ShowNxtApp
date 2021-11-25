@@ -64,7 +64,7 @@ const AthleteCoachSelection = (props) => {
                 fullName: fullName,
               });
             } else {
-              props.navigation.navigate("EmailPass", {
+              props.navigation.navigate(ScreenNames.COACH_EMAIL_PASS, {
                 userType: COACH,
                 fullName: fullName,
               });

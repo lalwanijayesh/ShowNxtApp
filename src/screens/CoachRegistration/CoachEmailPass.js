@@ -5,10 +5,12 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 
-import firebase from '../../firebase/firebase';
+import firebase from "../../firebase/firebase";
 import { COACH } from "../../constants/enums";
+import ScreenNames from "../../constants/ScreenNames";
 
 const hasSpecialCharacters = (password) => {
   const specialCharacters = [
@@ -89,14 +91,18 @@ const EmailPassScreen = (props) => {
     if (email && !isPasswordSufficient(password)) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
-        userCredential.user.sendEmailVerification();
-        props.navigation.navigate("Verification", {
-          fullName: fullName,
-          email: email,
-          password: password,
-        });
-      }).catch((error) => Alert.alert(error.message));
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          userCredential.user.sendEmailVerification();
+          props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
+            fullName: fullName,
+            email: email,
+            password: password,
+          });
+        })
+        .catch((error) => Alert.alert(error.message));
     }
   };
 
