@@ -78,7 +78,7 @@ const CompleteProfile1 = (props) => {
         <Text style={styles.doneText}>Done</Text>
       </TouchableOpacity>
       <View style={styles.containerPhoto}>
-      <!-- dfghjkl -->
+        {/* jkjvdjfjdjg */}
         <View style={styles.circle}></View>
         <TouchableOpacity>
           <Text>add photo</Text>
