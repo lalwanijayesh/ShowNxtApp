@@ -22,6 +22,7 @@ import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirm
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
+import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,12 @@ export default function App() {
           <Stack.Screen
             name="CompleteProfile1"
             component={CompleteProfile1}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
+            component={DisplayAthleteDeclineAccept}
             options={{ headerShown: false }}
           />
 

@@ -14,5 +14,6 @@ export default ScreenNames = {
   COACH_POSITION_SELECTION: "coach_position_selection",
   COACH_VERIFICATION: "coach_verification",
 
+  DISPLAY_ATHLETE_DECLINE_ACCEPT: "display_athlete_decline_accept",
   SCHOOL_SEARCH: "school_search",
 };
