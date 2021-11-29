@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Text, View, Platform, StyleSheet} from 'react-native';
+import {Button, View, Platform, StyleSheet, Alert} from 'react-native';
 import {Video} from 'expo-av';
 import * as ImagePicker from 'expo-image-picker';
 import firebase from '../firebase/firebase';
@@ -56,7 +56,7 @@ export default function ImagePickerExample() {
         });
 
         fileRef.put(blob).then((snapshot) => {
-            console.log('Uploaded video successfully!');
+            Alert.alert('Uploaded video successfully!');
             blob.close();
         });
     }

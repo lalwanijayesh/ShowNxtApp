@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ApolloProvider } from "@apollo/client";
-
+import { LogBox } from 'react-native';
 import ScreenNames from "./src/constants/ScreenNames";
 
 // Screen imports
@@ -23,6 +23,8 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
 import VideoUpload from "./src/screens/VideoUpload"
+
+LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
 const Stack = createNativeStackNavigator();
 
