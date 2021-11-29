@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Button, Text, View, Platform, StyleSheet} from 'react-native';
 import {Video} from 'expo-av';
 import * as ImagePicker from 'expo-image-picker';
+import firebase from '../firebase/firebase';
 import sampleVideo from '../../assets/video/sample.mp4'
 
 export default function ImagePickerExample() {
@@ -37,14 +38,37 @@ export default function ImagePickerExample() {
         }
     };
 
+    const uploadVideo = async () => {
+        const storageRef = firebase.storage().ref();
+        const fileRef = storageRef.child('videos/upload1.mp4');
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function (e) {
+                console.log(e);
+                reject(new TypeError("Network request failed"));
+            };
+            xhr.responseType = "blob";
+            xhr.open("GET", video, true);
+            xhr.send(null);
+        });
+
+        fileRef.put(blob).then((snapshot) => {
+            console.log('Uploaded video successfully!');
+            blob.close();
+        });
+    }
+
     return (
         <View style={styles.container}>
-            {sampleVideo &&
+            {video &&
             <Video
                 ref={videoRef}
                 style={styles.video}
-                // source={{uri: video}}
-                source={sampleVideo}
+                source={{uri: video}}
+                // source={sampleVideo}
                 useNativeControls
                 resizeMode="contain"
                 onPlaybackStatusUpdate={status => setStatus(() => status)}
@@ -59,7 +83,7 @@ export default function ImagePickerExample() {
                         status.isPlaying ? videoRef.current.pauseAsync() : videoRef.current.playAsync()
                     }
                 />
-                <Button title="Upload"/>
+                <Button title="Upload" onPress={uploadVideo}/>
             </View>
         </View>
     );
