@@ -22,6 +22,7 @@ import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirm
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
+import VideoUpload from "./src/screens/VideoUpload"
 
 const Stack = createNativeStackNavigator();
 
@@ -112,6 +113,11 @@ export default function App() {
           <Stack.Screen
             name={ScreenNames.SCHOOL_SEARCH}
             component={SchoolSearch}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.VIDEO_UPLOAD}
+            component={VideoUpload}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
