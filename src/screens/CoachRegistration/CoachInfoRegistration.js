@@ -314,6 +314,7 @@ const styles = StyleSheet.create({
 
   pickleStyle: {
     width: Dimensions.get("screen").width - 89 * 2,
+    // width: Dimensions.get("screen").width - 89 * 2,
     // marginLeft: 60,
   },
 

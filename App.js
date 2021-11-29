@@ -23,6 +23,8 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
 import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
+import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
+import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +84,18 @@ export default function App() {
           <Stack.Screen
             name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
             component={DisplayAthleteDeclineAccept}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COMMUNICATION_PAGE}
+            component={CommunicationPage}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.PROFILE_PAGE_COACH}
+            component={ProfilePageCoach}
             options={{ headerShown: false }}
           />
 
