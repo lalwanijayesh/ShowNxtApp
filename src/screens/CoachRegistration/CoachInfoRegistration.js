@@ -173,8 +173,8 @@ const CoachInfoRegistration = (props) => {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
-              school: currentUni,
-              sport: currentSport,
+              schoolId: currentUni,
+              sportId: currentSport,
               jobTitle: jobTitle,
             });
           }}
