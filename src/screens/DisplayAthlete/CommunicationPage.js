@@ -7,14 +7,58 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 //import ScreenNames from "../constants/ScreenNames";
+import Icon from "react-native-ico-material-design";
 
 const CommunicationPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.buttonText}>
-        Welcome to the Communication page! (that is out of scope)
-      </Text>
+      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
+      <View style={styles.navContainer}>
+        <Text style={styles.buttonText}>
+          Welcome to the Communication Page!
+        </Text>
+        <View style={styles.navBar}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+          >
+            <Icon
+              name="searching-magnifying-glass"
+              height="40"
+              width="40"
+              color="white"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() =>
+              navigation.navigate(ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT)
+            }
+          >
+            <Icon name="home-button" height="40" width="40" color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => navigation.navigate(ScreenNames.COMMUNICATION_PAGE)}
+          >
+            <Icon
+              name="black-envelope-email-symbol"
+              height="40"
+              width="40"
+              color="white"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
+          >
+            <Icon name="two-men" height="40" width="40" color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
     </View>
   );
 };
@@ -26,12 +70,41 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
   },
+  containerForGradient: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 500,
+    bottom: 0,
+  },
+  icon: {
+    padding: 14,
+  },
 
   buttonText: {
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center",
-    margin: 90,
+    margin: 120,
+  },
+  navBar: {
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: `#000000`,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  navContainer: {
+    position: "absolute",
+    alignItems: "center",
+    bottom: 0,
+    color: `#000000`,
   },
 });
 

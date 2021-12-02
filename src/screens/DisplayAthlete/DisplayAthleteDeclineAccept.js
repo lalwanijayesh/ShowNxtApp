@@ -15,12 +15,19 @@ import { Video } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import sampleVideo from "../../../assets/video/sample.mp4";
 import sampleVideoDog from "../../../assets/video/dogvid.mp4";
+import { LinearGradient } from "expo-linear-gradient";
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
 
 const DisplayAthlete = ({ navigation }) => {
+  constructor;
+
   const videoRef = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const [visible, setVisible] = React.useState(false);
+
+  // write a function that changes the state
+
   return (
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
@@ -109,6 +116,27 @@ const DisplayAthlete = ({ navigation }) => {
         <Text style={styles.textLocation}> 📍 Boston, MA</Text>
       </View>
       {/* LOCATION OF ATHLETE */}
+      {/* TOP DROPDOWN BUTTON */}
+      <TouchableOpacity
+        style={styles.dropdownButton}
+        onPress={() => setVisible(true)}
+      >
+        <Text style={styles.symbolText}>V</Text>
+      </TouchableOpacity>
+      {/* TOP DROPDOWN BUTTON */}
+      {/* ATHLETE INFO */}
+      <View style={visible ? styles.atheleteInfoBar : styles.hidden}>
+        <Text style={styles.textLocation}> </Text>
+        <Text style={styles.textLocation}> </Text>
+        <Text style={styles.textInfoAthlete}> Height: 6'2"</Text>
+        <Text style={styles.textInfoAthlete}> Weight: 170lbs</Text>
+        <Text style={styles.textInfoAthlete}> GPA: 3.5</Text>
+        <Text style={styles.textInfoAthlete}> SAT: 1500</Text>
+        <TouchableOpacity onPress={() => setVisible(false)}>
+          <Text style={styles.symbolText}>^</Text>
+        </TouchableOpacity>
+      </View>
+      {/* ATHLETE INFO */}
     </View>
   );
 };
@@ -132,7 +160,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "blue",
   },
-
   navBar: {
     flexDirection: "row",
     width: "100%",
@@ -148,7 +175,7 @@ const styles = StyleSheet.create({
   },
   buttonsBar: {
     flexDirection: "row",
-    width: "100%",
+    width: "105%",
     // backgroundColor: `#000000`,
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -191,6 +218,16 @@ const styles = StyleSheet.create({
     bottom: 253,
     alignItems: "flex-start",
   },
+  dropdownButton: {
+    flexDirection: "row",
+    width: "90%",
+    //backgroundColor: `pink`,
+    //alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: 60,
+    alignItems: "center",
+  },
 
   icon: {
     padding: 14,
@@ -231,14 +268,52 @@ const styles = StyleSheet.create({
   },
   textLocation: {
     // fontWeight: "bold",
-    color: "black",
+    color: "white",
     fontSize: 25,
+  },
+
+  textInfoAthlete: {
+    //fontWeight: "bold",
+    color: "white",
+    fontSize: 26,
   },
 
   textName: {
     fontWeight: "bold",
-    color: "black",
+    color: "white",
     fontSize: 35,
+  },
+
+  atheleteInfoBar: {
+    position: "absolute",
+    alignItems: "center",
+    top: 0,
+    color: `#000000`,
+    height: 280,
+    flexDirection: "column",
+    width: "100%",
+    backgroundColor: `#4b0082`,
+    justifyContent: "space-evenly",
+    opacity: 0.8,
+    borderRadius: 10,
+  },
+
+  containerForGradient: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 500,
+    bottom: 0,
+  },
+
+  hidden: {
+    display: "none",
   },
 });
 
