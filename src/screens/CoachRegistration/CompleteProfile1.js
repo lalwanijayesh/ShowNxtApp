@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import DropDownPicker from "react-native-dropdown-picker";
+import styled, { css } from "styled-components";
 
 const CompleteProfile1 = (props) => {
   const [name, setName] = React.useState("");
@@ -75,10 +76,9 @@ const CompleteProfile1 = (props) => {
   return (
     <ScrollView>
       <TouchableOpacity style={styles.containerDone}>
-        <Text style={styles.doneText}>Done</Text>
+        <Text style={styles.doneText}> </Text>
       </TouchableOpacity>
       <View style={styles.containerPhoto}>
-        {/* jkjvdjfjdjg */}
         <View style={styles.circle}></View>
         <TouchableOpacity>
           <Text>add photo</Text>
@@ -89,8 +89,8 @@ const CompleteProfile1 = (props) => {
         <TextInput
           multiline={true}
           style={styles.bioInput}
-          onChangeText={setName}
-          value={name}
+          onChangeText={setBio}
+          value={bio}
           placeholder="Give recruits background about yourself"
         />
       </View>
@@ -109,8 +109,8 @@ const CompleteProfile1 = (props) => {
           <Text>Last Name</Text>
           <TextInput
             style={styles.nameInput}
-            onChangeText={setName}
-            value={name}
+            onChangeText={setLastName}
+            value={lastName}
             placeholder="LastName"
           />
         </View>
@@ -132,15 +132,7 @@ const CompleteProfile1 = (props) => {
             zIndex={3000}
             zIndexInverse={1000}
             onOpen={onSportOpen}
-            style={[
-              styles.spacingToSportPicker,
-              styles.box,
-              styles.pickleStyle,
-            ]}
-            dropDownContainerStyle={[
-              styles.spacingtoSportDropdown,
-              styles.pickleStyle,
-            ]}
+            style={[styles.box]}
           />
         </View>
 
@@ -159,16 +151,13 @@ const CompleteProfile1 = (props) => {
             zIndex={3001}
             zIndexInverse={1001}
             onOpen={onUniOpen}
-            style={[styles.spacingToUniPicker, styles.box, styles.pickleStyle]}
-            dropDownContainerStyle={[
-              styles.spacingToUniDropdown,
-              styles.pickleStyle,
-            ]}
+            style={[styles.spacingToUniPicker, styles.box]}
+            dropDownContainerStyle={[styles.spacingToUniDropdown]}
           />
         </View>
       </View>
 
-      <View style={styles.container2column1}>
+      <View style={styles.container2column2}>
         <Text>University</Text>
         <DropDownPicker
           searchable={true}
@@ -183,11 +172,8 @@ const CompleteProfile1 = (props) => {
           zIndex={3001}
           zIndexInverse={1001}
           onOpen={onUniOpen}
-          style={[styles.spacingToUniPicker, styles.box, styles.pickleStyle]}
-          dropDownContainerStyle={[
-            styles.spacingToUniDropdown,
-            styles.pickleStyle,
-          ]}
+          style={[styles.spacingToUniPicker, styles.box]}
+          dropDownContainerStyle={[styles.spacingToUniDropdown]}
         />
       </View>
 
@@ -207,15 +193,7 @@ const CompleteProfile1 = (props) => {
             zIndex={3000}
             zIndexInverse={1000}
             onOpen={onSportOpen}
-            style={[
-              styles.spacingToSportPicker,
-              styles.box,
-              styles.pickleStyle,
-            ]}
-            dropDownContainerStyle={[
-              styles.spacingtoSportDropdown,
-              styles.pickleStyle,
-            ]}
+            style={[styles.box]}
           />
         </View>
 
@@ -229,19 +207,45 @@ const CompleteProfile1 = (props) => {
           />
         </View>
       </View>
+      <View style={styles.findRecruitsButtonContainer}>
+        <TouchableOpacity style={styles.buttonReady}>
+          <Text style={styles.buttonText}>Find Recruits</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonReady: {
+    display: "flex",
+    alignItems: "center",
+    borderColor: "black",
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 10,
+    margin: 280,
+    width: 200,
+    backgroundColor: "black",
+  },
+  buttonText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "white",
+  },
+
+  findRecruitsButtonContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   jobInput: {
-    width: 237,
-    height: 40,
+    width: 150,
+    height: 37,
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 55,
   },
   box: {
     borderTopLeftRadius: 6,
@@ -255,8 +259,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    margin: 70,
-    backgroundColor: "yellow",
+    margin: 50,
   },
   containerBio: {
     display: "flex",
@@ -278,12 +281,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     margin: 70,
   },
+
+  container2column2: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    margin: 80,
+    //backgroundColor: "yellow",
+  },
   containerfields: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    margin: 70,
+    margin: 100,
+    //height: "0.5%",
     backgroundColor: "yellow",
   },
 
@@ -292,7 +304,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    margin: 70,
+    margin: 90,
+    backgroundColor: "yellow",
   },
 
   bioInput: {

@@ -30,7 +30,8 @@
     "react-native-screens": "~3.4.0",
     "react-native-smooth-picker": "^1.1.5",
     "react-native-web": "~0.13.12",
-    "react-test-renderer": "^18.0.0-beta-149b420f6-20211119"
+    "react-test-renderer": "^18.0.0-beta-149b420f6-20211119",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
