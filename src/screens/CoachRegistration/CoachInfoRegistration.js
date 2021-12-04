@@ -69,28 +69,6 @@ const CoachInfoRegistration = (props) => {
     );
   }
 
-  // useEffect(() => {
-  //   fetch(serverUrl, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       query: `
-  //         query Query {
-  //           schools {
-  //             schoolId
-  //             name
-  //             location
-  //           }
-  //         }
-  //       `,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((result) => console.log(result.data));
-  // });
-
   return (
     <View style={styles.container}>
       <View style={styles.marginTop1} />
