@@ -22,6 +22,7 @@ import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirm
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
+import SchoolInfo from "./src/screens/ApplyToSchool/SchoolInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -79,8 +80,8 @@ export default function App() {
           />
 
           <Stack.Screen
-            name={ScreenNames.EMAIL_PASSWORD}
-            component={AthleteEmailPassword}
+            name={ScreenNames.SCHOOL_INFO}
+            component={SchoolInfo}
             options={{ headerShown: false }}
           />
           <Stack.Screen

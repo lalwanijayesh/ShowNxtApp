@@ -15,4 +15,5 @@ export default ScreenNames = {
   COACH_VERIFICATION: "coach_verification",
 
   SCHOOL_SEARCH: "school_search",
+  SCHOOL_INFO: "school_info",
 };

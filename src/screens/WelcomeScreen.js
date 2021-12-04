@@ -21,9 +21,15 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)}
+        onPress={() => navigation.navigate(ScreenNames.SCHOOL_INFO)}
       >
         <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate(ScreenNames.SCHOOL_INFO)}
+      >
+        <Text style={styles.buttonText}>SKIP</Text>
       </TouchableOpacity>
     </View>
   );
