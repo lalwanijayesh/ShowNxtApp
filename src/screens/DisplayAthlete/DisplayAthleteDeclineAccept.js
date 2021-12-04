@@ -15,9 +15,19 @@ import { Video } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import sampleVideo from "../../../assets/video/sample.mp4";
 import sampleVideoDog from "../../../assets/video/dogvid.mp4";
+import sampleTree from "../../../assets/video/tree.mp4";
 import { LinearGradient } from "expo-linear-gradient";
+import { GestureHandler } from "expo";
+//const { Swipeable } = GestureHandler;
+import Swipeable from "react-native-gesture-handler/Swipeable";
+export const assets = [
+  require("../../../assets/video/sample.mp4"),
+  require("../../../assets/video/dogvid.mp4"),
+  require("../../../assets/video/tree.mp4"),
+];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
+const { width, height } = Dimensions.get("window");
 
 const DisplayAthlete = ({ navigation }) => {
   constructor;
@@ -26,7 +36,7 @@ const DisplayAthlete = ({ navigation }) => {
   const [status, setStatus] = React.useState({});
   const [visible, setVisible] = React.useState(false);
 
-  // write a function that changes the state
+  const { width, height } = Dimensions.get("window");
 
   return (
     <View style={styles.container}>
@@ -36,7 +46,6 @@ const DisplayAthlete = ({ navigation }) => {
           <Video
             ref={videoRef}
             style={styles.video}
-            // source={{uri: video}}
             source={sampleVideoDog}
             useNativeControls
             isLooping
@@ -45,6 +54,20 @@ const DisplayAthlete = ({ navigation }) => {
           />
         )}
       </View>
+
+      {/* <View style={styles.containerVid}>
+        {sampleVideo && (
+          <Video
+            ref={videoRef}
+            style={styles.video}
+            source={sampleVideo}
+            useNativeControls
+            isLooping
+            resizeMode="contain"
+            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+          />
+        )}
+      </View> */}
       {/* DISPLAYING THE VIDEO  */}
 
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
@@ -52,7 +75,7 @@ const DisplayAthlete = ({ navigation }) => {
         <View style={styles.navBar}>
           <TouchableOpacity
             style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
           >
             <Icon
               name="searching-magnifying-glass"
@@ -101,7 +124,13 @@ const DisplayAthlete = ({ navigation }) => {
 
       {/* NAME/AGE OF ATHLETE */}
       <View style={styles.nameAgeBar}>
-        <Text style={styles.textName}> Jake Smith, 19</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate(ScreenNames.DISPLAY_ATHLETE_PROFILE)
+          }
+        >
+          <Text style={styles.textName}> Jake Smith, 19</Text>
+        </TouchableOpacity>
       </View>
       {/* NAME/AGE OF ATHLETE */}
 
@@ -137,6 +166,14 @@ const DisplayAthlete = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       {/* ATHLETE INFO */}
+      <View style={styles.buttonChangeVidContainer}>
+        <TouchableOpacity
+          style={styles.buttonChangeVidRect1}
+        ></TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonChangeVidRect2}
+        ></TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -149,16 +186,15 @@ const styles = StyleSheet.create({
   },
   video: {
     alignSelf: "center",
-    //width: 640 * 1.3,
-    //height: 400 * 1.3,
-    width: 640 * 2.3,
-    height: 400 * 2.3,
+    width: width,
+    height: height * 1.8,
+    //width: 640 * 2.3,
+    // height: 400 * 2.3,
   },
   container: {
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "blue",
   },
   navBar: {
     flexDirection: "row",
@@ -172,6 +208,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     bottom: 0,
     color: `#000000`,
+  },
+
+  buttonChangeVidContainer: {
+    flexDirection: "row",
+    backgroundColor: "pink",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  buttonChangeVidRect1: {
+    height: "100%",
+    width: "50%",
+    position: "absolute",
+    alignItems: "center",
+    bottom: 0,
+    color: "red",
+  },
+  buttonChangeVidRect2: {
+    height: "100%",
+    width: "50%",
+    position: "absolute",
+    alignItems: "center",
+    bottom: 0,
+    color: "blue",
   },
   buttonsBar: {
     flexDirection: "row",

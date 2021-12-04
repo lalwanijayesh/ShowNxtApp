@@ -13,15 +13,13 @@ import Icon from "react-native-ico-material-design";
 const ProfilePageCoach = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Text style={styles.buttonText}>Welcome to the Coach Profile Page!</Text>
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
       <View style={styles.navContainer}>
-        <Text style={styles.buttonText}>
-          Welcome to the Coach Profile Page!
-        </Text>
         <View style={styles.navBar}>
           <TouchableOpacity
             style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
           >
             <Icon
               name="searching-magnifying-glass"
@@ -49,10 +47,7 @@ const ProfilePageCoach = ({ navigation }) => {
               color="white"
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
-          >
+          <TouchableOpacity style={styles.icon}>
             <Icon name="two-men" height="40" width="40" color="white" />
           </TouchableOpacity>
         </View>

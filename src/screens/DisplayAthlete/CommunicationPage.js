@@ -14,15 +14,16 @@ import Icon from "react-native-ico-material-design";
 const CommunicationPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <View style={styles.buttonHalfScreenContainer}>
+        <TouchableOpacity style={styles.buttonHalfScreen}></TouchableOpacity>
+      </View>
+      <Text style={styles.buttonText}>Welcome to the Communication Page!</Text>
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
       <View style={styles.navContainer}>
-        <Text style={styles.buttonText}>
-          Welcome to the Communication Page!
-        </Text>
         <View style={styles.navBar}>
           <TouchableOpacity
             style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
           >
             <Icon
               name="searching-magnifying-glass"
@@ -39,10 +40,7 @@ const CommunicationPage = ({ navigation }) => {
           >
             <Icon name="home-button" height="40" width="40" color="white" />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.COMMUNICATION_PAGE)}
-          >
+          <TouchableOpacity style={styles.icon}>
             <Icon
               name="black-envelope-email-symbol"
               height="40"
@@ -70,10 +68,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
   },
-  containerForGradient: {
-    flex: 1,
+  buttonHalfScreenContainer: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+  },
+  buttonHalfScreen: {
+    position: "absolute",
+    top: 0,
+    height: "100%",
+    width: "50%",
+    color: "blue",
+    color: "blue",
   },
 
   background: {

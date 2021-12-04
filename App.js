@@ -25,6 +25,8 @@ import SchoolSearch from "./src/screens/SchoolSearch";
 import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
 import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
 import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
+import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
+import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -75,15 +77,27 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
+          {/* NEW, NOT SURE IF WORKS */}
           <Stack.Screen
-            name="CompleteProfile1"
+            name={ScreenNames.COMPLETE_PROFILE_1}
             component={CompleteProfile1}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.DISPLAY_ATHLETE_PROFILE}
+            component={DisplayAthleteProfile}
             options={{ headerShown: false }}
           />
 
           <Stack.Screen
             name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
             component={DisplayAthleteDeclineAccept}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.SEARCH_FOR_COACH}
+            component={SearchForCoach}
             options={{ headerShown: false }}
           />
 
