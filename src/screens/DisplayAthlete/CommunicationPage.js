@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 //import ScreenNames from "../constants/ScreenNames";
 import Icon from "react-native-ico-material-design";
 

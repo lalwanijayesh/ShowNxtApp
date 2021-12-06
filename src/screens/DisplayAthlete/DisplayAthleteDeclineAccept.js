@@ -16,6 +16,10 @@ import * as ImagePicker from "expo-image-picker";
 import sampleVideo from "../../../assets/video/sample.mp4";
 import sampleVideoDog from "../../../assets/video/dogvid.mp4";
 import sampleTree from "../../../assets/video/tree.mp4";
+<<<<<<< HEAD
+=======
+import { LinearGradient } from "expo-linear-gradient";
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
 import { GestureHandler } from "expo";
 //const { Swipeable } = GestureHandler;
 import Swipeable from "react-native-gesture-handler/Swipeable";
@@ -34,6 +38,7 @@ const DisplayAthlete = ({ navigation }) => {
   const videoRef = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [visible, setVisible] = React.useState(false);
+<<<<<<< HEAD
   const [visibleButton1, setVisibleButton1] = React.useState(true);
 
   const changeVisibility = () => {
@@ -45,6 +50,8 @@ const DisplayAthlete = ({ navigation }) => {
     setVisible(false);
     setVisibleButton1(true);
   };
+=======
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
 
   const { width, height } = Dimensions.get("window");
 
@@ -56,7 +63,11 @@ const DisplayAthlete = ({ navigation }) => {
           <Video
             ref={videoRef}
             style={styles.video}
+<<<<<<< HEAD
             source={sampleVideo}
+=======
+            source={sampleVideoDog}
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
             useNativeControls
             isLooping
             resizeMode="contain"
@@ -64,6 +75,23 @@ const DisplayAthlete = ({ navigation }) => {
           />
         )}
       </View>
+<<<<<<< HEAD
+=======
+
+      {/* <View style={styles.containerVid}>
+        {sampleVideo && (
+          <Video
+            ref={videoRef}
+            style={styles.video}
+            source={sampleVideo}
+            useNativeControls
+            isLooping
+            resizeMode="contain"
+            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+          />
+        )}
+      </View> */}
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
       {/* DISPLAYING THE VIDEO  */}
 
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
@@ -143,8 +171,13 @@ const DisplayAthlete = ({ navigation }) => {
       {/* LOCATION OF ATHLETE */}
       {/* TOP DROPDOWN BUTTON */}
       <TouchableOpacity
+<<<<<<< HEAD
         style={visibleButton1 ? styles.dropdownButton : styles.hidden}
         onPress={() => changeVisibility()}
+=======
+        style={styles.dropdownButton}
+        onPress={() => setVisible(true)}
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
       >
         <Text style={styles.symbolText}>V</Text>
       </TouchableOpacity>
@@ -157,7 +190,11 @@ const DisplayAthlete = ({ navigation }) => {
         <Text style={styles.textInfoAthlete}> Weight: 170lbs</Text>
         <Text style={styles.textInfoAthlete}> GPA: 3.5</Text>
         <Text style={styles.textInfoAthlete}> SAT: 1500</Text>
+<<<<<<< HEAD
         <TouchableOpacity onPress={() => changeVisibilitySwitch()}>
+=======
+        <TouchableOpacity onPress={() => setVisible(false)}>
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
           <Text style={styles.symbolText}>^</Text>
         </TouchableOpacity>
       </View>
@@ -182,7 +219,11 @@ const styles = StyleSheet.create({
   },
   video: {
     alignSelf: "center",
+<<<<<<< HEAD
     width: width * 1.25,
+=======
+    width: width,
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
     height: height * 1.8,
     //width: 640 * 2.3,
     // height: 400 * 2.3,
@@ -347,7 +388,11 @@ const styles = StyleSheet.create({
     height: 280,
     flexDirection: "column",
     width: "100%",
+<<<<<<< HEAD
     backgroundColor: "black",
+=======
+    backgroundColor: `#4b0082`,
+>>>>>>> ce11432ea3ad85f03a31258bb43c2c3577079572
     justifyContent: "space-evenly",
     opacity: 0.8,
     borderRadius: 10,
