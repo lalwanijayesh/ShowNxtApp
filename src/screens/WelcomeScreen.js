@@ -25,6 +25,14 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate(ScreenNames.COMPLETE_ATHLETE_PROFILE)
+        }
+      >
+        <Text style={styles.buttonText}>SKIP</Text>
+      </TouchableOpacity>
     </View>
   );
 };
