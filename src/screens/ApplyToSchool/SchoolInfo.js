@@ -14,6 +14,8 @@ import Icon from "react-native-ico-material-design";
 import college from "../../../assets/uni.jpg";
 
 const SchoolInfo = ({ navigation }) => {
+  const [visible, setVisible] = React.useState(false);
+
   return (
     <View style={styles.container}>
       <Image style={styles.photoContainer} source={college} />
@@ -33,14 +35,32 @@ const SchoolInfo = ({ navigation }) => {
       {/* POSITIONS  */}
       <View style={styles.containerPosition}>
         <Text style={styles.positionsText}>Men's Soccer Team</Text>
-        <TouchableOpacity style={styles.nextButton}>
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => setVisible(true)}
+        >
           <Text style={styles.positionsText}>Goalkeeper</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.containerPosition2}>
         <Text style={styles.positionsText}>Men's Soccer Team</Text>
-        <TouchableOpacity style={styles.nextButton}>
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => setVisible(true)}
+        >
           <Text style={styles.positionsText}>Striker</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={visible ? styles.applyView : styles.hidden}>
+        <Text style={styles.positionText}>GOALKEEPER</Text>
+        <Text style={styles.teamText}>Men's Soccer Team</Text>
+        <Text style={styles.oneReq}> ✓ Minimum 3.0 GPA</Text>
+        <Text style={styles.twoReq}> ✓ 1100+ SATs</Text>
+        <TouchableOpacity
+          style={styles.applyButton}
+          onPress={() => setVisible(false)}
+        >
+          <Text style={styles.applyText}>APPLY</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -48,6 +68,25 @@ const SchoolInfo = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  hidden: {
+    display: "none",
+  },
+  oneReq: {
+    marginTop: 60,
+    color: "black",
+    fontSize: 23,
+    fontWeight: "bold",
+  },
+  twoReq: {
+    color: "black",
+    fontSize: 23,
+    fontWeight: "bold",
+  },
+  applyText: {
+    color: "white",
+    //fontWeight: "bold",
+    fontSize: 25,
+  },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -61,6 +100,18 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     //backgroundColor: "yellow",
+  },
+
+  applyButton: {
+    borderColor: "black",
+    backgroundColor: "black",
+    borderRadius: 8,
+    padding: 5,
+    borderWidth: 1,
+    width: 280,
+    padding: 10,
+    alignItems: "center",
+    marginTop: 100,
   },
 
   containerDescription: {
@@ -114,6 +165,31 @@ const styles = StyleSheet.create({
   positionsText: {
     color: "black",
     fontSize: 18,
+  },
+
+  positionText: {
+    color: "black",
+    fontSize: 25,
+    marginTop: 45,
+    fontWeight: "bold",
+  },
+
+  teamText: {
+    color: "black",
+    fontSize: 17,
+    marginTop: 2,
+  },
+
+  applyView: {
+    width: "100%",
+    height: "50%",
+    position: "absolute",
+    bottom: 0,
+    opacity: 0.95,
+    backgroundColor: "#87cefa",
+    borderRadius: 39,
+    flexDirection: "column",
+    alignItems: "center",
   },
   //   descriptionText: {
   //     color: "black",
