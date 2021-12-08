@@ -10,62 +10,78 @@ import {
   TextInput,
   FlatList,
 } from "react-native";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_POSITIONS = gql`
+  query GetPositions($sportId: ID!) {
+    positions(sportId: $sportId) {
+      positionId
+      name
+    }
+  }
+`;
 
 const CoachPositionSelection = (props) => {
-  let positions = [
-    "Goalkeeper",
-    "Defender",
-    "Quarterback",
-    "Fullback",
-    "Left Offensive Guard",
-    "Center",
-    "Right Offensive Guard",
-    "Left Offensive Tackle",
-    "Right Offensive Tackle",
-    "Tight End",
-    "Wide Receiver",
-    "Shooting Guard",
-    "Power Forward",
-    "Small Forward",
-    "Point Guard",
-    "Goalie",
-    "Winger",
-    "Third Base",
-  ];
+  // let initialCounters = [];
+  // for (let i = 0; i < positions.length; i += 1) {
+  //   initialCounters.push(0);
+  // }
 
-  let initialCounters = [];
-  for (let i = 0; i < positions.length; i += 1) {
-    initialCounters.push(0);
-  }
-
-  const [counters, setCounters] = React.useState(initialCounters);
+  const [positions, setPositions] = React.useState([]);
+  // const [counters, setCounters] = React.useState([]);
+  const { loading, error, data } = useQuery(GET_POSITIONS, {
+    variables: { sportId: props.route.params.sportId },
+  });
 
   const incrementValue = (i) => {
-    let currentCounters = {};
-    Object.assign(currentCounters, counters);
+    let currentPositions = [...positions];
 
-    currentCounters[i] += 1;
+    currentPositions[i].counter += 1;
 
-    setCounters(currentCounters);
+    setPositions(currentPositions);
   };
 
   const decrementValue = (i) => {
-    let currentCounters = {};
-    Object.assign(currentCounters, counters);
+    let currentPositions = [...positions];
 
-    currentCounters[i] = Math.max(currentCounters[i] - 1, 0);
+    currentPositions[i].counter = Math.max(currentPositions[i].counter - 1, 0);
 
-    setCounters(currentCounters);
+    setPositions(currentPositions);
   };
+
+  if (positions.length == 0) {
+    if (loading) return <Text>Loading</Text>;
+    if (error) return <Text>Error</Text>;
+
+    setPositions(
+      data.positions.map(({ positionId, name }) => ({
+        positionId,
+        name,
+        counter: 0,
+      }))
+    );
+  }
 
   const isReadyToProceed = () => {
     for (let i = 0; i < positions.length; i += 1) {
-      if (counters[i] > 0) {
+      if (positions[i].counter > 0) {
         return true;
       }
     }
 
     return false;
+  };
+
+  const getFilledPositions = () => {
+    let res = [];
+
+    for (let i = 0; i < positions.length; i += 1) {
+      if (positions[i].counter > 0) {
+        res.push(positions[i]);
+      }
+    }
+
+    return res;
   };
 
   return (
@@ -74,16 +90,16 @@ const CoachPositionSelection = (props) => {
 
       <View style={styles.container}>
         <FlatList
-          data={positions.map((element, i) => {
-            return { key: i.toString() };
-          })}
+          data={positions.map((element, i) => ({
+            key: i.toString(),
+          }))}
           renderItem={({ item }) => {
             let id = parseInt(item.key);
 
             return (
               <View style={styles.itemContainer}>
                 <View style={styles.itemLabelContainer}>
-                  <Text style={styles.itemLabel}>{positions[id]}</Text>
+                  <Text style={styles.itemLabel}>{positions[id].name}</Text>
                 </View>
 
                 <View style={styles.itemIncrementContainer}>
@@ -96,7 +112,9 @@ const CoachPositionSelection = (props) => {
                     <Text style={styles.itemButtonMinus}>-</Text>
                   </TouchableOpacity>
 
-                  <Text style={styles.itemCounter}>{counters[id]}</Text>
+                  <Text style={styles.itemCounter}>
+                    {positions[id].counter}
+                  </Text>
 
                   <TouchableOpacity
                     style={styles.itemButton}
@@ -142,9 +160,10 @@ const CoachPositionSelection = (props) => {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
-              school: props.route.paramsschool,
-              sport: props.route.paramssport,
-              jobTitle: props.route.paramsjobTitle,
+              schoolId: props.route.params.schoolId,
+              sportId: props.route.params.sportId,
+              jobTitle: props.route.params.jobTitle,
+              positions: getFilledPositions(),
             });
           }}
         >
