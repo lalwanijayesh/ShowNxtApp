@@ -1,11 +1,9 @@
 import React, { useCallback } from "react";
-import { render } from "react-dom";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert,
   ScrollView,
   TextInput,
   Dimensions,
@@ -15,32 +13,35 @@ import {
 
 import DropDownPicker from "react-native-dropdown-picker";
 
-const CompleteProfile1 = ({navigation}) => {
+const splitName = (name) => {
+  const listOfStrings = name.split(" ");
+  return { 
+    firstName: listOfStrings[0],
+    lastName: listOfStrings[listOfStrings.length - 1]
+  }
+}
 
-  const [name, setName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+const CompleteProfile1 = (props) => {
+
+  const [firstName, setFirstName] = React.useState(splitName(props.route.params.fullName).firstName);
+  const [lastName, setLastName] = React.useState(splitName(props.route.params.fullName).lastName);
   const [bio, setBio] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [jobTitle, setJobTitle] = React.useState("");
+  const [jobTitle, setJobTitle] = React.useState(props.route.params.jobTitle);
 
-  const [uniVisible2, setUniVisible2] = React.useState(false);
-  const [uni2, setUni2] = React.useState(null);
-  const [mockUni2, setMockUni2] = React.useState([
+  const [uniVisible, setUniVisible] = React.useState(false);
+  const [uni, setUni] = React.useState(props.route.params.uni);
+  const [mockUni, setMockUni] = React.useState([
     { label: "Northeastern", value: "Northeastern" },
     { label: "Harvard", value: "harvard" },
     { label: "Bu", value: "bu" },
   ]);
 
-  const [sportVisible2, setSportVisible2] = React.useState(false);
-  const [sport2, setSport2] = React.useState(null);
-  const [mockSport2, setMockSport2] = React.useState([
+  const [sportVisible, setSportVisible] = React.useState(false);
+  const [sport, setSport] = React.useState(props.route.params.sport);
+  const [mockSport, setMockSport] = React.useState([
     { label: "Squash", value: "squash" },
     { label: "Soccer", value: "soccer" },
   ]);
-
-  const focus = () => {
-    return this.textInput && this.textInput.focus();
-  };
 
   const onUniOpen = useCallback(() => {
     setSportVisible2(false);
@@ -112,8 +113,8 @@ const CompleteProfile1 = ({navigation}) => {
               <TextInput
                 style={[styles.boxSmallBorder, styles.boxSmallDimensions]}
                 autoCorrect={false}
-                onChangeText={setName}
-                value={name}
+                onChangeText={setFirstName}
+                value={firstName}
                 placeholderTextColor={'#000000'}
                 placeholder="Name"
               />
@@ -137,13 +138,13 @@ const CompleteProfile1 = ({navigation}) => {
             <DropDownPicker
               searchable={true}
               searchPlaceholder="Search..."
-              placeholder="University"
-              open={uniVisible2}
-              value={uni2}
-              items={mockUni2}
-              setOpen={setUniVisible2}
-              setValue={setUni2}
-              setItems={setMockUni2}
+              placeholder={uni != null ? uni : "University"}
+              open={uniVisible}
+              value={uni}
+              items={mockUni}
+              setOpen={setUniVisible}
+              setValue={setUni}
+              setItems={setMockUni}
               onOpen={onUniOpen}
               style={[{height: 30}]}
               dropDownDirection="TOP"
@@ -156,13 +157,13 @@ const CompleteProfile1 = ({navigation}) => {
               <DropDownPicker
                 searchable={true}
                 searchPlaceholder="Search..."
-                placeholder="Sport"
-                open={sportVisible2}
-                value={sport2}
-                items={mockSport2}
-                setOpen={setSportVisible2}
-                setValue={setSport2}
-                setItems={setMockSport2}
+                placeholder={sport != null ? sport : "Sport"}
+                open={sportVisible}
+                value={sport}
+                items={mockSport}
+                setOpen={setSportVisible}
+                setValue={setSport}
+                setItems={setMockSport}
                 onOpen={onSportOpen}
                 style={[styles.boxSmallDimensions, {height: 30}]}
                 dropDownDirection="TOP" // there is a bug between DropDownPicker and ScrollView for IOS will find the alternative way later.

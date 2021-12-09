@@ -29,7 +29,7 @@ const CoachInfoRegistration = (props) => {
     { label: "Soccer", value: "soccer" },
   ]);
 
-  let [jobTitle, setJobTitle] = React.useState("");
+  const [jobTitle, setJobTitle] = React.useState("");
 
   const onUniOpen = useCallback(() => {
     setSportVisible(false);
@@ -139,13 +139,13 @@ const CoachInfoRegistration = (props) => {
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            props.navigation.navigate(ScreenNames.COACH_POSITION_SELECTION, {
+            props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
-              school: props.route.paramsschool,
-              sport: props.route.paramssport,
-              jobTitle: props.route.paramsjobTitle,
+              uni: uni,
+              sport: sport,
+              jobTitle: jobTitle,
             });
           }}
         >

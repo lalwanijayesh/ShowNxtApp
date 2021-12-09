@@ -5,7 +5,7 @@ import ScreenNames from '../../constants/ScreenNames';
 // TODO: Replace image in the circle view
 // TODO: find the way to let the user upload videos into react-native
 // TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data. 
-const AthleteProfile = ({navigation}) => {
+const AthleteComplete = ({navigation}) => {
 
   const testData = [
     {
@@ -83,7 +83,7 @@ const AthleteProfile = ({navigation}) => {
   )
 }
 
-export default AthleteProfile;
+export default AthleteComplete;
 
 const styles = StyleSheet.create({
   container: {
