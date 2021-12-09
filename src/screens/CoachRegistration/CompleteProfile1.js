@@ -138,7 +138,7 @@ const CompleteProfile1 = (props) => {
             <DropDownPicker
               searchable={true}
               searchPlaceholder="Search..."
-              placeholder={uni != null ? uni : "University"}
+              placeholder={"University"}
               open={uniVisible}
               value={uni}
               items={mockUni}
@@ -157,7 +157,7 @@ const CompleteProfile1 = (props) => {
               <DropDownPicker
                 searchable={true}
                 searchPlaceholder="Search..."
-                placeholder={sport != null ? sport : "Sport"}
+                placeholder={"Sport"}
                 open={sportVisible}
                 value={sport}
                 items={mockSport}
