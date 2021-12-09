@@ -23,6 +23,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
 import CompleteAthleteProfile from "./src/screens/AthleteProfile/CompleteAthleteProfile";
+import CommunicationAthlete from "./src/screens/AthleteFlow/CommunicationAthlete";
 
 const Stack = createNativeStackNavigator();
 
@@ -113,6 +114,12 @@ export default function App() {
           <Stack.Screen
             name={ScreenNames.COMPLETE_ATHLETE_PROFILE}
             component={CompleteAthleteProfile}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COMMUNICATION_ATHLETE}
+            component={CommunicationAthlete}
             options={{ headerShown: false }}
           />
 

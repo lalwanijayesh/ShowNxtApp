@@ -85,14 +85,11 @@ const AthleteProfile = ({ navigation }) => {
         {"Place the most explosive video first in line for the best result."}
       </Text>
 
-      <TouchableOpacity style={styles.nextBtn}>
-        <Text style={styles.nextText}>{"Start Exploring"}</Text>
-      </TouchableOpacity>
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.SCHOOL_INFO)}
+        style={styles.nextBtn}
+        onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
       >
-        <Text style={styles.buttonText}>SKIP</Text>
+        <Text style={styles.nextText}>{"Start Exploring"}</Text>
       </TouchableOpacity>
     </View>
   );
