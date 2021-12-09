@@ -7,6 +7,7 @@ import {
   FlatList,
 } from "react-native";
 import ScreenNames from "../../constants/ScreenNames";
+import Icon from "react-native-ico-material-design";
 
 // TODO: Replace image in the circle view
 // TODO: find the way to let the user upload videos into react-native
@@ -14,14 +15,14 @@ import ScreenNames from "../../constants/ScreenNames";
 const CommunicationAthlete = ({ navigation }) => {
   return (
     <View>
-      <Text style={styles.buttonText}> Communication </Text>
+      <Text style={styles.buttonText}> Communication page!</Text>
 
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
       <View style={styles.navContainer}>
         <View style={styles.navBar}>
           <TouchableOpacity
             style={styles.icon}
-            //onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+            onPress={() => navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
           >
             <Icon
               name="searching-magnifying-glass"
@@ -55,6 +56,23 @@ const CommunicationAthlete = ({ navigation }) => {
 export default CommunicationAthlete;
 
 const styles = StyleSheet.create({
+  icon: {
+    padding: 14,
+  },
+
+  navBar: {
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: `#000000`,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  navContainer: {
+    position: "absolute",
+    alignItems: "center",
+    bottom: -610,
+    color: `#000000`,
+  },
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",

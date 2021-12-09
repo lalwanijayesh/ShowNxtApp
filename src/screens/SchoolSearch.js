@@ -78,7 +78,7 @@ const SchoolSearch = (props) => {
           <TouchableOpacity
             style={styles.icon}
             onPress={() =>
-              navigation.navigate(ScreenNames.COMMUNICATION_ATHLETE)
+              props.navigation.navigate(ScreenNames.COMMUNICATION_ATHLETE)
             }
           >
             <Icon
