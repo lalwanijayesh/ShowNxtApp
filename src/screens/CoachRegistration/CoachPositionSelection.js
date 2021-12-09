@@ -142,9 +142,9 @@ const CoachPositionSelection = (props) => {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
-              school: props.route.paramsschool,
-              sport: props.route.paramssport,
-              jobTitle: props.route.paramsjobTitle,
+              uni: props.route.params.uni,
+              sport: props.route.param.ssport,
+              jobTitle: props.route.params.jobTitle,
             });
           }}
         >

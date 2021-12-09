@@ -139,7 +139,7 @@ const CoachInfoRegistration = (props) => {
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
+            props.navigation.navigate(ScreenNames.COACH_POSITION_SELECTION, {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
