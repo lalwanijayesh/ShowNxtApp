@@ -44,11 +44,11 @@ const CompleteProfile1 = (props) => {
   ]);
 
   const onUniOpen = useCallback(() => {
-    setSportVisible2(false);
+    setSportVisible(false);
   }, []);
 
   const onSportOpen = useCallback(() => {
-    setUniVisible2(false);
+    setUniVisible(false);
   }, []);
 
   let positions = [
