@@ -1,15 +1,13 @@
-import React, { useCallback } from "react";
+import React from "react";
 import {
-  ScrollView,
   View,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Alert,
-  Touchable,
-  TextInput,
   FlatList,
 } from "react-native";
+
+import ScreenNames from "../../constants/ScreenNames";
 
 const CoachPositionSelection = (props) => {
   let positions = [
@@ -138,12 +136,12 @@ const CoachPositionSelection = (props) => {
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            props.navigation.navigate("CompleteProfile1", {
+            props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
               uni: props.route.params.uni,
-              sport: props.route.param.ssport,
+              sport: props.route.params.sport,
               jobTitle: props.route.params.jobTitle,
             });
           }}
