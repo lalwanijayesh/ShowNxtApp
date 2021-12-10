@@ -40,7 +40,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreenNames.WELCOME}>
+        <Stack.Navigator initialRouteName={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}>
           <Stack.Screen
             name={ScreenNames.WELCOME}
             component={WelcomeScreen}

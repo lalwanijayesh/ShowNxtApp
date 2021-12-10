@@ -1,24 +1,8 @@
-import React, { Component, useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  Dimensions,
-  Alert,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Button,
-  Platform,
-} from "react-native";
+import React from "react";
+import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-ico-material-design";
-import { Video } from "expo-av";
-import * as ImagePicker from "expo-image-picker";
-import sampleVideo from "../../../assets/video/sample.mp4";
-import sampleVideoDog from "../../../assets/video/dogvid.mp4";
-import sampleTree from "../../../assets/video/tree.mp4";
-import { GestureHandler } from "expo";
-//const { Swipeable } = GestureHandler;
-import Swipeable from "react-native-gesture-handler/Swipeable";
+import {Video} from "expo-av";
+import {ScrollView} from "react-native-gesture-handler";
 export const assets = [
   require("../../../assets/video/sample.mp4"),
   require("../../../assets/video/dogvid.mp4"),
@@ -26,13 +10,11 @@ export const assets = [
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
 
 const DisplayAthlete = ({ navigation }) => {
   constructor;
 
-  const videoRef = React.useRef(null);
-  const [status, setStatus] = React.useState({});
   const [visible, setVisible] = React.useState(false);
   const [visibleButton1, setVisibleButton1] = React.useState(true);
 
@@ -46,23 +28,24 @@ const DisplayAthlete = ({ navigation }) => {
     setVisibleButton1(true);
   };
 
-  const { width, height } = Dimensions.get("window");
-
   return (
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
-        {sampleVideo && (
-          <Video
-            ref={videoRef}
-            style={styles.video}
-            source={sampleVideo}
-            useNativeControls
-            isLooping
-            resizeMode="contain"
-            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-          />
-        )}
+        <ScrollView horizontal disableIntervalMomentum={ true }
+                    snapToInterval={ width * 1.25 }>
+          {assets.map((source, index) => (
+              <Video
+                  key={index}
+                  style={styles.video}
+                  source={source}
+                  useNativeControls
+                  isLooping
+                  // shouldPlay
+                  resizeMode="contain"
+              />
+          ))}
+        </ScrollView>
       </View>
       {/* DISPLAYING THE VIDEO  */}
 
