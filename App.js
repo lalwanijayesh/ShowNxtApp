@@ -22,7 +22,11 @@ import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
 import AthleteComplete from './src/screens/AthleteRegister/AthleteComplete';
 import AthleteEmailPassword from "./src/screens/AthleteRegister/AthleteEmailPassword";
 import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirmation";
-
+import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
+import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
+import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
+import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
+import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
 const Stack = createNativeStackNavigator();
 
 // TODO: move out to its own file, but it didn't work when I tried to do it
@@ -72,9 +76,39 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
+          {/* NEW, NOT SURE IF WORKS */}
           <Stack.Screen
             name={ScreenNames.COACH_COMPLETE}
             component={CompleteProfile1}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.DISPLAY_ATHLETE_PROFILE}
+            component={DisplayAthleteProfile}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
+            component={DisplayAthleteDeclineAccept}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.SEARCH_FOR_COACH}
+            component={SearchForCoach}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COMMUNICATION_PAGE}
+            component={CommunicationPage}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.PROFILE_PAGE_COACH}
+            component={ProfilePageCoach}
             options={{ headerShown: false }}
           />
 

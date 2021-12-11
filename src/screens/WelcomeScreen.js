@@ -25,6 +25,14 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate(ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT)
+        }
+      >
+        <Text style={styles.buttonText}>SKIP</Text>
+      </TouchableOpacity>
     </View>
   );
 };

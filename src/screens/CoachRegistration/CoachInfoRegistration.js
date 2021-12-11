@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -12,15 +12,27 @@ import DropDownPicker from "react-native-dropdown-picker";
 import serverUrl from "../../constants/graphql";
 import ScreenNames from "../../constants/ScreenNames";
 
+import { gql, useQuery } from "@apollo/client";
+
+const GET_SCHOOLS_AND_SPORTS = gql`
+  query GetSchoolsAndSports {
+    schools {
+      schoolId
+      name
+    }
+
+    sports {
+      sportId
+      name
+      gender
+    }
+  }
+`;
+
 const CoachInfoRegistration = (props) => {
   const [uniVisible, setUniVisible] = useState(false);
-  const [uni, setUni] = useState(null);
-  // TODO update below uni list with fetch schools response
-  const [mockUni, setMockUni] = useState([
-    { label: "Northeastern", value: "Northeastern" },
-    { label: "Harvard", value: "harvard" },
-    { label: "Bu", value: "bu" },
-  ]);
+  const [currentUni, setCurrentUni] = useState(null);
+  const [uniList, setUniList] = useState([]);
 
   const [sportVisible, setSportVisible] = useState(false);
   const [sport, setSport] = useState(null);
@@ -30,6 +42,8 @@ const CoachInfoRegistration = (props) => {
   ]);
 
   const [jobTitle, setJobTitle] = React.useState("");
+  const [currentSport, setCurrentSport] = useState(null);
+  const [sportList, setSportList] = useState([]);
 
   const onUniOpen = useCallback(() => {
     setSportVisible(false);
@@ -39,27 +53,28 @@ const CoachInfoRegistration = (props) => {
     setUniVisible(false);
   }, []);
 
-  useEffect(() => {
-    fetch(serverUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `
-          query Query {
-            schools {
-              schoolId
-              name
-              location
-            }
-          }
-        `,
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => console.log(result.data));
-  });
+  let [jobTitle, setJobTitle] = React.useState("");
+
+  const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
+
+  if (uniList.length == 0) {
+    if (loading) return <Text>Loading</Text>;
+    if (error) return <Text>Error</Text>;
+
+    setUniList(
+      data.schools.map(({ schoolId, name }) => ({
+        label: name,
+        value: schoolId,
+      }))
+    );
+
+    setSportList(
+      data.sports.map(({ sportId, name, gender }) => ({
+        label: name + " [" + gender + "]",
+        value: sportId,
+      }))
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -70,11 +85,11 @@ const CoachInfoRegistration = (props) => {
         searchPlaceholder="Search..."
         placeholder="Find University"
         open={uniVisible}
-        value={uni}
-        items={mockUni}
+        value={currentUni}
+        items={uniList}
         setOpen={setUniVisible}
-        setValue={setUni}
-        setItems={setMockUni}
+        setValue={setCurrentUni}
+        setItems={setUniList}
         zIndex={3001}
         zIndexInverse={1001}
         onOpen={onUniOpen}
@@ -92,11 +107,11 @@ const CoachInfoRegistration = (props) => {
         searchPlaceholder="Search..."
         placeholder="Coaching Sport"
         open={sportVisible}
-        value={sport}
-        items={mockSport}
+        value={currentSport}
+        items={sportList}
         setOpen={setSportVisible}
-        setValue={setSport}
-        setItems={setMockSport}
+        setValue={setCurrentSport}
+        setItems={setSportList}
         zIndex={3000}
         zIndexInverse={1000}
         onOpen={onSportOpen}
@@ -135,7 +150,7 @@ const CoachInfoRegistration = (props) => {
         </View>
       </View>
 
-      {uni !== null && sport !== null && jobTitle !== "" && (
+      {currentUni !== null && currentSport !== null && jobTitle !== "" && (
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
@@ -143,8 +158,8 @@ const CoachInfoRegistration = (props) => {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,
-              uni: uni,
-              sport: sport,
+              schoolId: currentUni,
+              sportId: currentSport,
               jobTitle: jobTitle,
             });
           }}
@@ -314,6 +329,7 @@ const styles = StyleSheet.create({
 
   pickleStyle: {
     width: Dimensions.get("screen").width - 89 * 2,
+    // width: Dimensions.get("screen").width - 89 * 2,
     // marginLeft: 60,
   },
 
