@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import serverUrl from "../../constants/graphql";
 import ScreenNames from "../../constants/ScreenNames";
 
 import { gql, useQuery } from "@apollo/client";
@@ -35,12 +34,6 @@ const CoachInfoRegistration = (props) => {
   const [uniList, setUniList] = useState([]);
 
   const [sportVisible, setSportVisible] = useState(false);
-  const [sport, setSport] = useState(null);
-  const [mockSport, setMockSport] = useState([
-    { label: "Squash", value: "squash" },
-    { label: "Soccer", value: "soccer" },
-  ]);
-
   const [jobTitle, setJobTitle] = React.useState("");
   const [currentSport, setCurrentSport] = useState(null);
   const [sportList, setSportList] = useState([]);
@@ -52,8 +45,6 @@ const CoachInfoRegistration = (props) => {
   const onSportOpen = useCallback(() => {
     setUniVisible(false);
   }, []);
-
-  let [jobTitle, setJobTitle] = React.useState("");
 
   const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
 

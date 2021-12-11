@@ -15,7 +15,7 @@ import EmailPassScreen from "./src/screens/CoachRegistration/CoachEmailPass";
 import VerificationScreen from "./src/screens/CoachRegistration/Verification";
 import CoachInfoRegistration from "./src/screens/CoachRegistration/CoachInfoRegistration";
 import CoachPositionSelection from "./src/screens/CoachRegistration/CoachPositionSelection";
-import CompleteProfile1 from "./src/screens/CoachRegistration/CompleteProfile1";
+import CompleteProfilePage from "./src/screens/CoachRegistration/CompleteProfilePage";
 import AthleteSportInfo from "./src/screens/AthleteRegister/AthleteSportInfo";
 import AthleteHeightWeight from "./src/screens/AthleteRegister/AthleteHeightWeight";
 import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
@@ -79,7 +79,7 @@ export default function App() {
           {/* NEW, NOT SURE IF WORKS */}
           <Stack.Screen
             name={ScreenNames.COACH_COMPLETE}
-            component={CompleteProfile1}
+            component={CompleteProfilePage}
             options={{ headerShown: false }}
           />
 

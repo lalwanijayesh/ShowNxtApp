@@ -21,7 +21,7 @@ const splitName = (name) => {
   }
 }
 
-const CompleteProfile1 = (props) => {
+const CompleteProfilePage = (props) => {
 
   const [firstName, setFirstName] = React.useState(splitName(props.route.params.fullName).firstName);
   const [lastName, setLastName] = React.useState(splitName(props.route.params.fullName).lastName);
@@ -29,7 +29,7 @@ const CompleteProfile1 = (props) => {
   const [jobTitle, setJobTitle] = React.useState(props.route.params.jobTitle);
 
   const [uniVisible, setUniVisible] = React.useState(false);
-  const [uni, setUni] = React.useState(props.route.params.uni);
+  const [uni, setUni] = React.useState(props.route.params.schoolId);
   const [mockUni, setMockUni] = React.useState([
     { label: "Northeastern", value: "Northeastern" },
     { label: "Harvard", value: "harvard" },
@@ -37,7 +37,7 @@ const CompleteProfile1 = (props) => {
   ]);
 
   const [sportVisible, setSportVisible] = React.useState(false);
-  const [sport, setSport] = React.useState(props.route.params.sport);
+  const [sport, setSport] = React.useState(props.route.params.sportId);
   const [mockSport, setMockSport] = React.useState([
     { label: "Squash", value: "squash" },
     { label: "Soccer", value: "soccer" },
@@ -384,4 +384,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompleteProfile1;
+export default CompleteProfilePage;

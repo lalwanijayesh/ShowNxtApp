@@ -9,33 +9,6 @@ import {
 import { gql, useQuery } from "@apollo/client";
 
 import ScreenNames from "../../constants/ScreenNames";
-
-const CoachPositionSelection = (props) => {
-  let positions = [
-    "Goalkeeper",
-    "Defender",
-    "Quarterback",
-    "Fullback",
-    "Left Offensive Guard",
-    "Center",
-    "Right Offensive Guard",
-    "Left Offensive Tackle",
-    "Right Offensive Tackle",
-    "Tight End",
-    "Wide Receiver",
-    "Shooting Guard",
-    "Power Forward",
-    "Small Forward",
-    "Point Guard",
-    "Goalie",
-    "Winger",
-    "Third Base",
-  ];
-
-  let initialCounters = [];
-  for (let i = 0; i < positions.length; i += 1) {
-    initialCounters.push(0);
-  }
   
 const GET_POSITIONS = gql`
   query GetPositions($sportId: ID!) {
@@ -47,6 +20,31 @@ const GET_POSITIONS = gql`
 `;
 
 const CoachPositionSelection = (props) => {
+  // let positions = [
+  //   "Goalkeeper",
+  //   "Defender",
+  //   "Quarterback",
+  //   "Fullback",
+  //   "Left Offensive Guard",
+  //   "Center",
+  //   "Right Offensive Guard",
+  //   "Left Offensive Tackle",
+  //   "Right Offensive Tackle",
+  //   "Tight End",
+  //   "Wide Receiver",
+  //   "Shooting Guard",
+  //   "Power Forward",
+  //   "Small Forward",
+  //   "Point Guard",
+  //   "Goalie",
+  //   "Winger",
+  //   "Third Base",
+  // ];
+
+  // let initialCounters = [];
+  // for (let i = 0; i < positions.length; i += 1) {
+  //   initialCounters.push(0);
+  // }
   // let initialCounters = [];
   // for (let i = 0; i < positions.length; i += 1) {
   //   initialCounters.push(0);
