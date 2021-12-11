@@ -1,17 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 import {
-  ScrollView,
   View,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Alert,
-  Touchable,
-  TextInput,
   FlatList,
 } from "react-native";
 import { gql, useQuery } from "@apollo/client";
 
+import ScreenNames from "../../constants/ScreenNames";
+  
 const GET_POSITIONS = gql`
   query GetPositions($sportId: ID!) {
     positions(sportId: $sportId) {
@@ -22,6 +20,31 @@ const GET_POSITIONS = gql`
 `;
 
 const CoachPositionSelection = (props) => {
+  // let positions = [
+  //   "Goalkeeper",
+  //   "Defender",
+  //   "Quarterback",
+  //   "Fullback",
+  //   "Left Offensive Guard",
+  //   "Center",
+  //   "Right Offensive Guard",
+  //   "Left Offensive Tackle",
+  //   "Right Offensive Tackle",
+  //   "Tight End",
+  //   "Wide Receiver",
+  //   "Shooting Guard",
+  //   "Power Forward",
+  //   "Small Forward",
+  //   "Point Guard",
+  //   "Goalie",
+  //   "Winger",
+  //   "Third Base",
+  // ];
+
+  // let initialCounters = [];
+  // for (let i = 0; i < positions.length; i += 1) {
+  //   initialCounters.push(0);
+  // }
   // let initialCounters = [];
   // for (let i = 0; i < positions.length; i += 1) {
   //   initialCounters.push(0);
@@ -156,7 +179,7 @@ const CoachPositionSelection = (props) => {
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            props.navigation.navigate("CompleteProfile1", {
+            props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
               fullName: props.route.params.fullName,
               email: props.route.params.email,
               password: props.route.params.password,

@@ -5,11 +5,9 @@ import {
   TextInput,
   StyleSheet,
   Dimensions,
-  Alert,
   TouchableOpacity,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import serverUrl from "../../constants/graphql";
 import ScreenNames from "../../constants/ScreenNames";
 
 import { gql, useQuery } from "@apollo/client";
@@ -35,6 +33,7 @@ const CoachInfoRegistration = (props) => {
   const [uniList, setUniList] = useState([]);
 
   const [sportVisible, setSportVisible] = useState(false);
+  const [jobTitle, setJobTitle] = React.useState("");
   const [currentSport, setCurrentSport] = useState(null);
   const [sportList, setSportList] = useState([]);
 
@@ -46,13 +45,11 @@ const CoachInfoRegistration = (props) => {
     setUniVisible(false);
   }, []);
 
-  let [jobTitle, setJobTitle] = React.useState("");
-
   const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
 
   if (uniList.length == 0) {
-    if (loading) return <Text>Loading</Text>;
-    if (error) return <Text>Error</Text>;
+    if (loading) return <Text style={{textAlign: 'center'}}>Loading</Text>;
+    if (error) return <Text style={{textAlign: 'center'}}>Error</Text>;
 
     setUniList(
       data.schools.map(({ schoolId, name }) => ({
@@ -143,7 +140,7 @@ const CoachInfoRegistration = (props) => {
         </View>
       </View>
 
-      {currentUni !== null && currentSport !== null && jobTitle !== "" && (
+      {//currentUni !== null && currentSport !== null && jobTitle !== "" && 
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
@@ -159,7 +156,7 @@ const CoachInfoRegistration = (props) => {
         >
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
-      )}
+      }
     </View>
   );
 };

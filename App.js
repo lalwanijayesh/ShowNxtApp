@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ApolloProvider } from "@apollo/client";
 
 import ScreenNames from "./src/constants/ScreenNames";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import serverUrl from "./src/constants/graphql";
+import SchoolSearch from "./src/screens/SchoolSearch";
 
 // Screen imports
 import WelcomeScreen from "./src/screens/WelcomeScreen";
@@ -12,22 +15,18 @@ import EmailPassScreen from "./src/screens/CoachRegistration/CoachEmailPass";
 import VerificationScreen from "./src/screens/CoachRegistration/Verification";
 import CoachInfoRegistration from "./src/screens/CoachRegistration/CoachInfoRegistration";
 import CoachPositionSelection from "./src/screens/CoachRegistration/CoachPositionSelection";
-import CompleteProfile1 from "./src/screens/CoachRegistration/CompleteProfile1";
+import CompleteProfilePage from "./src/screens/CoachRegistration/CompleteProfilePage";
 import AthleteSportInfo from "./src/screens/AthleteRegister/AthleteSportInfo";
 import AthleteHeightWeight from "./src/screens/AthleteRegister/AthleteHeightWeight";
 import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
-import AthleteProfile from "./src/screens/AthleteProfile/AthleteProfile";
+import AthleteComplete from './src/screens/AthleteRegister/AthleteComplete';
 import AthleteEmailPassword from "./src/screens/AthleteRegister/AthleteEmailPassword";
 import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirmation";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import serverUrl from "./src/constants/graphql";
-import SchoolSearch from "./src/screens/SchoolSearch";
 import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
 import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
 import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
 import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
 import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
-
 const Stack = createNativeStackNavigator();
 
 // TODO: move out to its own file, but it didn't work when I tried to do it
@@ -79,8 +78,8 @@ export default function App() {
 
           {/* NEW, NOT SURE IF WORKS */}
           <Stack.Screen
-            name={ScreenNames.COMPLETE_PROFILE_1}
-            component={CompleteProfile1}
+            name={ScreenNames.COACH_COMPLETE}
+            component={CompleteProfilePage}
             options={{ headerShown: false }}
           />
 
@@ -139,8 +138,8 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name={ScreenNames.ATHLETE_PROFILE}
-            component={AthleteProfile}
+            name={ScreenNames.ATHLETE_COMPLETE}
+            component={AthleteComplete}
             options={{ headerShown: false }}
           />
 
