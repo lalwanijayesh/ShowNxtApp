@@ -1,12 +1,12 @@
 import React from "react";
-import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Dimensions, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
 import Icon from "react-native-ico-material-design";
 import {Video} from "expo-av";
-import {ScrollView} from "react-native-gesture-handler";
+
 export const assets = [
-  require("../../../assets/video/sample.mp4"),
-  require("../../../assets/video/dogvid.mp4"),
-  require("../../../assets/video/tree.mp4"),
+  {id: 1, video: require("../../../assets/video/sample.mp4") },
+  {id: 2, video: require("../../../assets/video/dogvid.mp4") },
+  {id: 3, video: require("../../../assets/video/tree.mp4") },
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
@@ -15,6 +15,7 @@ const { width, height } = Dimensions.get('window');
 const DisplayAthlete = ({ navigation }) => {
   constructor;
 
+  const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
   const [visibleButton1, setVisibleButton1] = React.useState(true);
 
@@ -28,11 +29,36 @@ const DisplayAthlete = ({ navigation }) => {
     setVisibleButton1(true);
   };
 
+  const handleVideoClick = (index) => {
+      if (currentlyPlaying == index) {
+          setCurrentlyPlaying(null);
+      } else {
+          setCurrentlyPlaying(index);
+      }
+  };
+
+  const renderItem = ({item, index}) => {
+    return (
+        <Pressable
+            style={styles.containerVid}
+            onPress={() => handleVideoClick(index)}>
+            <Video
+                style={styles.video}
+                source={item.video}
+                useNativeControls
+                isLooping
+                shouldPlay={index === currentlyPlaying}
+                resizeMode="contain"
+            />
+        </Pressable>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
-        <ScrollView horizontal disableIntervalMomentum={ true }
+        {/*<ScrollView horizontal disableIntervalMomentum={ true }
                     snapToInterval={ width * 1.25 }>
           {assets.map((source, index) => (
               <Video
@@ -41,11 +67,22 @@ const DisplayAthlete = ({ navigation }) => {
                   source={source}
                   useNativeControls
                   isLooping
-                  // shouldPlay
+                  shouldPlay
                   resizeMode="contain"
               />
           ))}
-        </ScrollView>
+        </ScrollView>*/}
+        <SafeAreaView>
+          <FlatList
+            horizontal
+            disableIntervalMomentum={ true }
+            snapToInterval={ width * 1.25 }
+            data={assets}
+            renderItem={renderItem}
+            onScrollEndDrag={() => setCurrentlyPlaying(null)}
+            keyExtractor={item => item.id.toString()}
+          />
+        </SafeAreaView>
       </View>
       {/* DISPLAYING THE VIDEO  */}
 
