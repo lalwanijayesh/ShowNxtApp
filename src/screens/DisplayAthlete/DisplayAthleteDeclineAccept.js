@@ -1,5 +1,5 @@
 import React from "react";
-import {Dimensions, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
+import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
 import Icon from "react-native-ico-material-design";
 import {Video} from "expo-av";
 
@@ -58,21 +58,6 @@ const DisplayAthlete = ({ navigation }) => {
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
-        {/*<ScrollView horizontal disableIntervalMomentum={ true }
-                    snapToInterval={ width * 1.25 }>
-          {assets.map((source, index) => (
-              <Video
-                  key={index}
-                  style={styles.video}
-                  source={source}
-                  useNativeControls
-                  isLooping
-                  shouldPlay
-                  resizeMode="contain"
-              />
-          ))}
-        </ScrollView>*/}
-        <SafeAreaView>
           <FlatList
             horizontal
             disableIntervalMomentum={ true }
@@ -82,9 +67,7 @@ const DisplayAthlete = ({ navigation }) => {
             onScrollEndDrag={() => setCurrentlyPlaying(null)}
             keyExtractor={item => item.id.toString()}
           />
-        </SafeAreaView>
       </View>
-      {/* DISPLAYING THE VIDEO  */}
 
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
       <View style={styles.navContainer}>
