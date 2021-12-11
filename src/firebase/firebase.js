@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "EnterYourApiKeyHere",
@@ -7,9 +8,13 @@ const firebaseConfig = {
   storageBucket: "StorageBucket",
   messagingSenderId: "MessagingSenderId",
   appId: "AppId",
-  measurementId: "MeasurementId"
+  measurementId: "MeasurementId",
 };
 
-firebase.initializeApp(firebaseConfig);
+let Firebase;
 
-export default firebase;
+if (firebase.apps.length === 0) {
+  Firebase = firebase.initializeApp(firebaseConfig);
+}
+
+export default Firebase;
