@@ -60,6 +60,8 @@ const DisplayAthlete = ({ navigation }) => {
       <View style={styles.containerVid}>
           <FlatList
             horizontal
+            pagingEnabled
+            bounces={false}
             disableIntervalMomentum={ true }
             snapToInterval={ width * 1.25 }
             data={assets}
