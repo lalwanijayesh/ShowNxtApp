@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-ico-material-design";
+import NavBar from "./NavBar";
 
 const SCHOOL_SEARCH = gql`
   query SchoolSearch($term: String!) {
@@ -63,40 +64,8 @@ const SchoolSearch = (props) => {
       />
 
       <SchoolsList term={searchTerm} />
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
-      <View style={styles.navContainer}>
-        <View style={styles.navBar}>
-          <TouchableOpacity style={styles.icon}>
-            <Icon
-              name="searching-magnifying-glass"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() =>
-              props.navigation.navigate(ScreenNames.COMMUNICATION_ATHLETE)
-            }
-          >
-            <Icon
-              name="black-envelope-email-symbol"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            //onPress={() => navigation.navigate(ScreenNames.ATHLETE_PROFILE)}
-          >
-            <Icon name="two-men" height="40" width="40" color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
+      <NavBar />
     </View>
   );
 };
@@ -106,24 +75,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-
-  icon: {
-    padding: 14,
-  },
-
-  navBar: {
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: `#000000`,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  navContainer: {
-    position: "absolute",
-    alignItems: "center",
-    bottom: -715,
-    color: `#000000`,
   },
 
   searchInput: {
