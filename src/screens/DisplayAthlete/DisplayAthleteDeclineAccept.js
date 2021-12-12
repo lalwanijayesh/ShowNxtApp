@@ -45,7 +45,7 @@ const DisplayAthlete = ({ navigation }) => {
             <Video
                 style={styles.video}
                 source={item.video}
-                useNativeControls
+                useNativeControls={false}
                 isLooping
                 shouldPlay={index === currentlyPlaying}
                 resizeMode="contain"
