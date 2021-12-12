@@ -13,12 +13,12 @@ import NavBar from "../NavBar";
 // TODO: Replace image in the circle view
 // TODO: find the way to let the user upload videos into react-native
 // TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data.
-const CommunicationAthlete = ({ navigation }) => {
+const CommunicationAthlete = (props) => {
   return (
     <View>
       <Text style={styles.buttonText}> Communication page!</Text>
 
-      <NavBar />
+      <NavBar navigation={props.navigation} />
     </View>
   );
 };

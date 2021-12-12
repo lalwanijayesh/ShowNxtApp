@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import Icon from "react-native-ico-material-design";
+import ScreenNames from "../constants/ScreenNames";
 
 const NavBar = (props) => {
   return (
@@ -20,7 +21,10 @@ const NavBar = (props) => {
       }}
     >
       <View style={styles.navBar}>
-        <TouchableOpacity style={styles.icon}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => props.navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+        >
           <Icon
             name="searching-magnifying-glass"
             height="40"
@@ -42,6 +46,7 @@ const NavBar = (props) => {
             color="white"
           />
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.icon}
           //onPress={() => navigation.navigate(ScreenNames.ATHLETE_PROFILE)}

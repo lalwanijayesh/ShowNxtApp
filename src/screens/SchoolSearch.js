@@ -65,7 +65,7 @@ const SchoolSearch = (props) => {
 
       <SchoolsList term={searchTerm} />
 
-      <NavBar />
+      <NavBar navigation={props.navigation} />
     </View>
   );
 };
