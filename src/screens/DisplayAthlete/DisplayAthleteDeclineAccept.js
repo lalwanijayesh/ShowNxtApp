@@ -1,38 +1,21 @@
-import React, { Component, useState, useEffect } from "react";
-import {
-  View,
-  ScrollView,
-  Dimensions,
-  Alert,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Button,
-  Platform,
-} from "react-native";
+import React from "react";
+import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
 import Icon from "react-native-ico-material-design";
-import { Video } from "expo-av";
-import * as ImagePicker from "expo-image-picker";
-import sampleVideo from "../../../assets/video/sample.mp4";
-import sampleVideoDog from "../../../assets/video/dogvid.mp4";
-import sampleTree from "../../../assets/video/tree.mp4";
-import { GestureHandler } from "expo";
-//const { Swipeable } = GestureHandler;
-import Swipeable from "react-native-gesture-handler/Swipeable";
+import {Video} from "expo-av";
+
 export const assets = [
-  require("../../../assets/video/sample.mp4"),
-  require("../../../assets/video/dogvid.mp4"),
-  require("../../../assets/video/tree.mp4"),
+  {id: 1, video: require("../../../assets/video/sample.mp4") },
+  {id: 2, video: require("../../../assets/video/dogvid.mp4") },
+  {id: 3, video: require("../../../assets/video/tree.mp4") },
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
 
 const DisplayAthlete = ({ navigation }) => {
   constructor;
 
-  const videoRef = React.useRef(null);
-  const [status, setStatus] = React.useState({});
+  const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
   const [visibleButton1, setVisibleButton1] = React.useState(true);
 
@@ -46,25 +29,47 @@ const DisplayAthlete = ({ navigation }) => {
     setVisibleButton1(true);
   };
 
-  const { width, height } = Dimensions.get("window");
+  const handleVideoClick = (index) => {
+      if (currentlyPlaying == index) {
+          setCurrentlyPlaying(null);
+      } else {
+          setCurrentlyPlaying(index);
+      }
+  };
+
+  const renderItem = ({item, index}) => {
+    return (
+        <Pressable
+            style={styles.containerVid}
+            onPress={() => handleVideoClick(index)}>
+            <Video
+                style={styles.video}
+                source={item.video}
+                useNativeControls={false}
+                isLooping
+                shouldPlay={index === currentlyPlaying}
+                resizeMode="contain"
+            />
+        </Pressable>
+    );
+  };
 
   return (
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
-        {sampleVideo && (
-          <Video
-            ref={videoRef}
-            style={styles.video}
-            source={sampleVideo}
-            useNativeControls
-            isLooping
-            resizeMode="contain"
-            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+          <FlatList
+            horizontal
+            pagingEnabled
+            bounces={false}
+            disableIntervalMomentum={ true }
+            snapToInterval={ width * 1.25 }
+            data={assets}
+            renderItem={renderItem}
+            onScrollEndDrag={() => setCurrentlyPlaying(null)}
+            keyExtractor={item => item.id.toString()}
           />
-        )}
       </View>
-      {/* DISPLAYING THE VIDEO  */}
 
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
       <View style={styles.navContainer}>
