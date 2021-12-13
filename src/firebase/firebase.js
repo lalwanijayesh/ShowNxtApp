@@ -1,5 +1,5 @@
-import firebase from "firebase";
-import { Alert } from "react-native";
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "EnterYourApiKeyHere",
@@ -8,10 +8,13 @@ const firebaseConfig = {
   storageBucket: "StorageBucket",
   messagingSenderId: "MessagingSenderId",
   appId: "AppId",
-  measurementId: "MeasurementId"
+  measurementId: "MeasurementId",
 };
 
+let Firebase;
 
-firebase.initializeApp(firebaseConfig);
+if (firebase.apps.length === 0) {
+  Firebase = firebase.initializeApp(firebaseConfig);
+}
 
-export default firebase;
+export default Firebase;
