@@ -1,12 +1,14 @@
 import React from "react";
-import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
+import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressable, SafeAreaView} from "react-native";
 import Icon from "react-native-ico-material-design";
 import {Video} from "expo-av";
+import firebase from "../../firebase/firebase";
 
-export const assets = [
-  {id: 1, video: require("../../../assets/video/sample.mp4") },
-  {id: 2, video: require("../../../assets/video/dogvid.mp4") },
-  {id: 3, video: require("../../../assets/video/tree.mp4") },
+// TODO replace dummy links with applicant athlete videos from backend
+export const videos = [
+  {id: 1, path: "videos/sample.mp4" },
+  {id: 2, path: "videos/dogvid.mp4" },
+  {id: 3, path: "videos/tree.mp4" }
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
@@ -18,6 +20,7 @@ const DisplayAthlete = ({ navigation }) => {
   const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
   const [visibleButton1, setVisibleButton1] = React.useState(true);
+  const [videoUrls, setVideoUrls] = React.useState([]);
 
   const changeVisibility = () => {
     setVisible(true);
@@ -30,12 +33,32 @@ const DisplayAthlete = ({ navigation }) => {
   };
 
   const handleVideoClick = (index) => {
-      if (currentlyPlaying == index) {
+      if (currentlyPlaying === index) {
           setCurrentlyPlaying(null);
       } else {
           setCurrentlyPlaying(index);
       }
   };
+
+  React.useEffect(() => {
+    const storage = firebase.storage();
+    /*videos.map(video => {
+      storage.refFromURL('gs://reactnativefirebasedemo-101ba.appspot.com/' + video.path)
+          .getDownloadURL()
+          .then(url => {
+            console.log("Download URL: " + url);
+            setVideoUrls(prevArr => [...prevArr, url]);
+          });
+    });*/
+    Promise.all(videos.map(async (video) => {
+      const url = await storage.refFromURL('gs://reactnativefirebasedemo-101ba.appspot.com/' + video.path)
+          .getDownloadURL();
+      console.log(url);
+      return url;
+    })).then(data => {
+      setVideoUrls(data);
+    });
+  }, []);
 
   const renderItem = ({item, index}) => {
     return (
@@ -44,7 +67,9 @@ const DisplayAthlete = ({ navigation }) => {
             onPress={() => handleVideoClick(index)}>
             <Video
                 style={styles.video}
-                source={item.video}
+                source={{
+                  uri: item
+                }}
                 useNativeControls={false}
                 isLooping
                 shouldPlay={index === currentlyPlaying}
@@ -58,17 +83,19 @@ const DisplayAthlete = ({ navigation }) => {
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
+        <SafeAreaView>
           <FlatList
             horizontal
             pagingEnabled
             bounces={false}
             disableIntervalMomentum={ true }
             snapToInterval={ width * 1.25 }
-            data={assets}
+            data={videoUrls}
             renderItem={renderItem}
             onScrollEndDrag={() => setCurrentlyPlaying(null)}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item, index) => index.toString()}
           />
+        </SafeAreaView>
       </View>
 
       {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
