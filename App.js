@@ -80,6 +80,11 @@ export default function App() {
           />
 
           <Stack.Screen
+              name={ScreenNames.EMAIL_PASSWORD}
+              component={AthleteEmailPassword}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name={ScreenNames.SCHOOL_INFO}
             component={SchoolInfo}
             options={{ headerShown: false }}
