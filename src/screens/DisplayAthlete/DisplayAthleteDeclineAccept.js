@@ -13,7 +13,6 @@ import Icon from "react-native-ico-material-design";
 import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
 import { firebaseBucket } from "../../constants/config";
-import CoachNavBar from "../CoachNavBar";
 
 // TODO replace dummy links with applicant athlete videos from backend
 export const videos = [
@@ -171,8 +170,6 @@ const DisplayAthlete = ({ navigation }) => {
           style={styles.buttonChangeVidRect2}
         ></TouchableOpacity>
       </View>
-
-      <CoachNavBar navigation={navigation} />
     </View>
   );
 };

@@ -9,14 +9,11 @@ import {
 } from "react-native";
 // import ScreenNames from "../constants/ScreenNames";
 import Icon from "react-native-ico-material-design";
-import CoachNavBar from "../CoachNavBar";
 
 const ProfilePageCoach = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.buttonText}>Welcome to the Coach Profile Page!</Text>
-
-      <CoachNavBar navigation={navigation} />
     </View>
   );
 };

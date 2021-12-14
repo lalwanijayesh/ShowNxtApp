@@ -7,15 +7,12 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import CoachNavBar from "../CoachNavBar";
 // import ScreenNames from "../constants/ScreenNames";
 
 const SearchForCoach = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.buttonText}>Welcome to the Search Page!</Text>
-
-      <CoachNavBar navigation={navigation} />
     </View>
   );
 };

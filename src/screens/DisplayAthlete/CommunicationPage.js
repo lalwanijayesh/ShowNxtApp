@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 //import ScreenNames from "../constants/ScreenNames";
-import CoachNavBar from "../CoachNavBar";
 
 const CommunicationPage = ({ navigation }) => {
   return (
@@ -18,8 +17,6 @@ const CommunicationPage = ({ navigation }) => {
         <TouchableOpacity style={styles.buttonHalfScreen}></TouchableOpacity>
       </View>
       <Text style={styles.buttonText}>Welcome to the Communication Page!</Text>
-
-      <CoachNavBar navigation={navigation} />
     </View>
   );
 };

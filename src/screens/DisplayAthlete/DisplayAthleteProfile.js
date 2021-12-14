@@ -11,7 +11,6 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 //import ScreenNames from "../constants/ScreenNames";
 import Icon from "react-native-ico-material-design";
-import CoachNavBar from "../CoachNavBar";
 
 const AthleteProfile = ({ navigation }) => {
   return (
@@ -19,8 +18,6 @@ const AthleteProfile = ({ navigation }) => {
       <ScrollView>
         <Text style={styles.buttonText}> ATHLETE PROFILE PAGE! </Text>
       </ScrollView>
-
-      <CoachNavBar navigation={navigation} />
     </View>
   );
 };
