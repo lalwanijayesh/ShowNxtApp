@@ -103,6 +103,11 @@ const EmailPassScreen = (props) => {
           });
         })
         .catch((error) => Alert.alert(error.message));
+      // props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
+      //   fullName: fullName,
+      //   email: email,
+      //   password: password,
+      // });
     }
   };
 

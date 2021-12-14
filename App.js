@@ -2,8 +2,13 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ApolloProvider } from "@apollo/client";
+import { LogBox } from 'react-native';
 
 import ScreenNames from "./src/constants/ScreenNames";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { serverUrl } from "./src/constants/config";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import serverUrl from "./src/constants/graphql";
 
 // Screen imports
 import WelcomeScreen from "./src/screens/WelcomeScreen";
@@ -12,19 +17,24 @@ import EmailPassScreen from "./src/screens/CoachRegistration/CoachEmailPass";
 import VerificationScreen from "./src/screens/CoachRegistration/Verification";
 import CoachInfoRegistration from "./src/screens/CoachRegistration/CoachInfoRegistration";
 import CoachPositionSelection from "./src/screens/CoachRegistration/CoachPositionSelection";
-import CompleteProfile1 from "./src/screens/CoachRegistration/CompleteProfile1";
+import CompleteProfilePage from "./src/screens/CoachRegistration/CompleteProfilePage";
 import AthleteSportInfo from "./src/screens/AthleteRegister/AthleteSportInfo";
 import AthleteHeightWeight from "./src/screens/AthleteRegister/AthleteHeightWeight";
 import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
-import AthleteProfile from "./src/screens/AthleteProfile/AthleteProfile";
+import AthleteComplete from './src/screens/AthleteRegister/AthleteComplete';
 import AthleteEmailPassword from "./src/screens/AthleteRegister/AthleteEmailPassword";
 import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirmation";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import serverUrl from "./src/constants/graphql";
 import SchoolSearch from "./src/screens/SchoolSearch";
 import SchoolInfo from "./src/screens/ApplyToSchool/SchoolInfo";
-
+import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
+import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
+import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
+import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
+import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
 const Stack = createNativeStackNavigator();
+
+// Ignore timer related warnings from firebase core APIs
+LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 
 // TODO: move out to its own file, but it didn't work when I tried to do it
 const client = new ApolloClient({
@@ -73,9 +83,39 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
+          {/* NEW, NOT SURE IF WORKS */}
           <Stack.Screen
-            name="CompleteProfile1"
-            component={CompleteProfile1}
+            name={ScreenNames.COACH_COMPLETE}
+            component={CompleteProfilePage}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.DISPLAY_ATHLETE_PROFILE}
+            component={DisplayAthleteProfile}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
+            component={DisplayAthleteDeclineAccept}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.SEARCH_FOR_COACH}
+            component={SearchForCoach}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.COMMUNICATION_PAGE}
+            component={CommunicationPage}
+            options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name={ScreenNames.PROFILE_PAGE_COACH}
+            component={ProfilePageCoach}
             options={{ headerShown: false }}
           />
 
@@ -110,8 +150,8 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name={ScreenNames.ATHLETE_PROFILE}
-            component={AthleteProfile}
+            name={ScreenNames.ATHLETE_COMPLETE}
+            component={AthleteComplete}
             options={{ headerShown: false }}
           />
 
