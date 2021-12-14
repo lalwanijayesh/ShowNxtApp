@@ -7,15 +7,18 @@ import {
   TouchableOpacity,
   View,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import Icon from "react-native-ico-material-design";
 import { Video } from "expo-av";
-import CoachNavBar from "../CoachNavBar";
+import firebase from "../../firebase/firebase";
+import { firebaseBucket } from "../../constants/config";
 
-export const assets = [
-  { id: 1, video: require("../../../assets/video/sample.mp4") },
-  { id: 2, video: require("../../../assets/video/dogvid.mp4") },
-  { id: 3, video: require("../../../assets/video/tree.mp4") },
+// TODO replace dummy links with applicant athlete videos from backend
+export const videos = [
+  { id: 1, path: "videos/sample.mp4" },
+  { id: 2, path: "videos/dogvid.mp4" },
+  { id: 3, path: "videos/tree.mp4" },
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
@@ -27,6 +30,7 @@ const DisplayAthlete = ({ navigation }) => {
   const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
   const [visibleButton1, setVisibleButton1] = React.useState(true);
+  const [videoUrls, setVideoUrls] = React.useState([]);
 
   const changeVisibility = () => {
     setVisible(true);
@@ -39,12 +43,27 @@ const DisplayAthlete = ({ navigation }) => {
   };
 
   const handleVideoClick = (index) => {
-    if (currentlyPlaying == index) {
+    if (currentlyPlaying === index) {
       setCurrentlyPlaying(null);
     } else {
       setCurrentlyPlaying(index);
     }
   };
+
+  React.useEffect(() => {
+    const storage = firebase.storage();
+    Promise.all(
+      videos.map(async (video) => {
+        const url = await storage
+          .refFromURL("gs://" + firebaseBucket + "/" + video.path)
+          .getDownloadURL();
+        console.log(url);
+        return url;
+      })
+    ).then((data) => {
+      setVideoUrls(data);
+    });
+  }, []);
 
   const renderItem = ({ item, index }) => {
     return (
@@ -54,7 +73,9 @@ const DisplayAthlete = ({ navigation }) => {
       >
         <Video
           style={styles.video}
-          source={item.video}
+          source={{
+            uri: item,
+          }}
           useNativeControls={false}
           isLooping
           shouldPlay={index === currentlyPlaying}
@@ -68,17 +89,56 @@ const DisplayAthlete = ({ navigation }) => {
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
-        <FlatList
-          horizontal
-          pagingEnabled
-          bounces={false}
-          disableIntervalMomentum={true}
-          snapToInterval={width * 1.25}
-          data={assets}
-          renderItem={renderItem}
-          onScrollEndDrag={() => setCurrentlyPlaying(null)}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <SafeAreaView>
+          <FlatList
+            horizontal
+            pagingEnabled
+            bounces={false}
+            disableIntervalMomentum={true}
+            snapToInterval={width * 1.25}
+            data={videoUrls}
+            renderItem={renderItem}
+            onScrollEndDrag={() => setCurrentlyPlaying(null)}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </SafeAreaView>
+      </View>
+
+      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
+      <View style={styles.navContainer}>
+        <View style={styles.navBar}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
+          >
+            <Icon
+              name="searching-magnifying-glass"
+              height="40"
+              width="40"
+              color="white"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
+            <Icon name="home-button" height="40" width="40" color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => navigation.navigate(ScreenNames.COMMUNICATION_PAGE)}
+          >
+            <Icon
+              name="black-envelope-email-symbol"
+              height="40"
+              width="40"
+              color="white"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
+          >
+            <Icon name="two-men" height="40" width="40" color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}

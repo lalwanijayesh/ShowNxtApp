@@ -2,11 +2,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ApolloProvider } from "@apollo/client";
+import { LogBox } from 'react-native';
 
 import ScreenNames from "./src/constants/ScreenNames";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import serverUrl from "./src/constants/graphql";
-import SchoolSearch from "./src/screens/SchoolSearch";
+import { serverUrl } from "./src/constants/config";
 
 // Screen imports
 import WelcomeScreen from "./src/screens/WelcomeScreen";
@@ -22,6 +22,8 @@ import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
 import AthleteComplete from "./src/screens/AthleteRegister/AthleteComplete";
 import AthleteEmailPassword from "./src/screens/AthleteRegister/AthleteEmailPassword";
 import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirmation";
+import SchoolSearch from "./src/screens/SchoolSearch";
+import SchoolInfo from "./src/screens/ApplyToSchool/SchoolInfo";
 import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
 import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
 import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
@@ -29,6 +31,9 @@ import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
 import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
 import CommunicationAthlete from "./src/screens/AthleteFlow/CommunicationAthlete";
 const Stack = createNativeStackNavigator();
+
+// Ignore timer related warnings from firebase core APIs
+LogBox.ignoreLogs(['Setting a timer for a long period of time']);
 
 // TODO: move out to its own file, but it didn't work when I tried to do it
 const client = new ApolloClient({
@@ -114,8 +119,13 @@ export default function App() {
           />
 
           <Stack.Screen
-            name={ScreenNames.EMAIL_PASSWORD}
-            component={AthleteEmailPassword}
+              name={ScreenNames.EMAIL_PASSWORD}
+              component={AthleteEmailPassword}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.SCHOOL_INFO}
+            component={SchoolInfo}
             options={{ headerShown: false }}
           />
           <Stack.Screen
