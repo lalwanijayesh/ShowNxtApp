@@ -7,8 +7,6 @@ import { LogBox } from 'react-native';
 import ScreenNames from "./src/constants/ScreenNames";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { serverUrl } from "./src/constants/config";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import serverUrl from "./src/constants/graphql";
 
 // Screen imports
 import WelcomeScreen from "./src/screens/WelcomeScreen";
