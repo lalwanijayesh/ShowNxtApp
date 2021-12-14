@@ -7,6 +7,8 @@ export default ScreenNames = {
   ATHLETE_HEIGHT_WEIGHT: "athlete_height_weight",
   ATHLETE_ACADEMIC: "athlete_academic",
   ATHLETE_COMPLETE: "athlete_complete_page",
+  SEARCH_FOR_COACH: "search_for_coach",
+  ATHLETE_COMMUNICATION: "athlete_communication",
 
   ATHLETE_COACH_SELECTION: "athlete_coach_selection",
   COACH_EMAIL_PASS: "coach_email_pass",
@@ -15,7 +17,6 @@ export default ScreenNames = {
   COACH_VERIFICATION: "coach_verification",
   COACH_COMPLETE: "coach_complete",
   PROFILE_PAGE_COACH: "profile_page_coach",
-  SEARCH_FOR_COACH: "search_for_coach",
   DISPLAY_ATHLETE_PROFILE: "display_athlete_profile",
 
   DISPLAY_ATHLETE_DECLINE_ACCEPT: "display_athlete_decline_accept",

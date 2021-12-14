@@ -10,7 +10,7 @@ import {
 import Icon from "react-native-ico-material-design";
 import ScreenNames from "../constants/ScreenNames";
 
-const NavBar = (props) => {
+const AthleteNavBar = (props) => {
   return (
     <View
       style={{
@@ -36,7 +36,7 @@ const NavBar = (props) => {
         <TouchableOpacity
           style={styles.icon}
           onPress={() =>
-            props.navigation.navigate(ScreenNames.COMMUNICATION_ATHLETE)
+            props.navigation.navigate(ScreenNames.ATHLETE_COMMUNICATION)
           }
         >
           <Icon
@@ -49,7 +49,9 @@ const NavBar = (props) => {
 
         <TouchableOpacity
           style={styles.icon}
-          //onPress={() => navigation.navigate(ScreenNames.ATHLETE_PROFILE)}
+          onPress={() =>
+            props.navigation.navigate(ScreenNames.ATHLETE_COMPLETE)
+          }
         >
           <Icon name="two-men" height="40" width="40" color="white" />
         </TouchableOpacity>
@@ -84,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NavBar;
+export default AthleteNavBar;

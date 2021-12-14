@@ -1,16 +1,25 @@
 import React from "react";
-import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressable} from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Pressable,
+} from "react-native";
 import Icon from "react-native-ico-material-design";
-import {Video} from "expo-av";
+import { Video } from "expo-av";
+import CoachNavBar from "../CoachNavBar";
 
 export const assets = [
-  {id: 1, video: require("../../../assets/video/sample.mp4") },
-  {id: 2, video: require("../../../assets/video/dogvid.mp4") },
-  {id: 3, video: require("../../../assets/video/tree.mp4") },
+  { id: 1, video: require("../../../assets/video/sample.mp4") },
+  { id: 2, video: require("../../../assets/video/dogvid.mp4") },
+  { id: 3, video: require("../../../assets/video/tree.mp4") },
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const DisplayAthlete = ({ navigation }) => {
   constructor;
@@ -30,27 +39,28 @@ const DisplayAthlete = ({ navigation }) => {
   };
 
   const handleVideoClick = (index) => {
-      if (currentlyPlaying == index) {
-          setCurrentlyPlaying(null);
-      } else {
-          setCurrentlyPlaying(index);
-      }
+    if (currentlyPlaying == index) {
+      setCurrentlyPlaying(null);
+    } else {
+      setCurrentlyPlaying(index);
+    }
   };
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     return (
-        <Pressable
-            style={styles.containerVid}
-            onPress={() => handleVideoClick(index)}>
-            <Video
-                style={styles.video}
-                source={item.video}
-                useNativeControls={false}
-                isLooping
-                shouldPlay={index === currentlyPlaying}
-                resizeMode="contain"
-            />
-        </Pressable>
+      <Pressable
+        style={styles.containerVid}
+        onPress={() => handleVideoClick(index)}
+      >
+        <Video
+          style={styles.video}
+          source={item.video}
+          useNativeControls={false}
+          isLooping
+          shouldPlay={index === currentlyPlaying}
+          resizeMode="contain"
+        />
+      </Pressable>
     );
   };
 
@@ -58,56 +68,18 @@ const DisplayAthlete = ({ navigation }) => {
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
-          <FlatList
-            horizontal
-            pagingEnabled
-            bounces={false}
-            disableIntervalMomentum={ true }
-            snapToInterval={ width * 1.25 }
-            data={assets}
-            renderItem={renderItem}
-            onScrollEndDrag={() => setCurrentlyPlaying(null)}
-            keyExtractor={item => item.id.toString()}
-          />
+        <FlatList
+          horizontal
+          pagingEnabled
+          bounces={false}
+          disableIntervalMomentum={true}
+          snapToInterval={width * 1.25}
+          data={assets}
+          renderItem={renderItem}
+          onScrollEndDrag={() => setCurrentlyPlaying(null)}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </View>
-
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
-      <View style={styles.navContainer}>
-        <View style={styles.navBar}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
-          >
-            <Icon
-              name="searching-magnifying-glass"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Icon name="home-button" height="40" width="40" color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.COMMUNICATION_PAGE)}
-          >
-            <Icon
-              name="black-envelope-email-symbol"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
-          >
-            <Icon name="two-men" height="40" width="40" color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
 
       {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}
       <View style={styles.buttonsContainer}>
@@ -175,6 +147,8 @@ const DisplayAthlete = ({ navigation }) => {
           style={styles.buttonChangeVidRect2}
         ></TouchableOpacity>
       </View>
+
+      <CoachNavBar navigation={navigation} />
     </View>
   );
 };
@@ -196,19 +170,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
-  },
-  navBar: {
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: `#000000`,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  navContainer: {
-    position: "absolute",
-    alignItems: "center",
-    bottom: 0,
-    color: `#000000`,
   },
 
   buttonChangeVidContainer: {

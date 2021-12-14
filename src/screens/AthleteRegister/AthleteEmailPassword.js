@@ -62,14 +62,16 @@ const AthleteEmailPassword = ({ navigation }) => {
     if (!isValidEmail && !isValidPassword) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          userCredential.user.sendEmailVerification();
-          navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
-        })
-        .catch((error) => Alert.alert(error.message));
+      // firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(email, password)
+      //   .then((userCredential) => {
+      //     userCredential.user.sendEmailVerification();
+      //     navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
+      //   })
+      //   .catch((error) => Alert.alert(error.message));
+
+      navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
     }
   };
 

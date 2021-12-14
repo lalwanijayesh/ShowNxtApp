@@ -27,6 +27,7 @@ import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
 import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
 import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
 import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
+import CommunicationAthlete from "./src/screens/AthleteFlow/CommunicationAthlete";
 const Stack = createNativeStackNavigator();
 
 // TODO: move out to its own file, but it didn't work when I tried to do it
@@ -39,9 +40,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
-        >
+        <Stack.Navigator initialRouteName={ScreenNames.WELCOME}>
           <Stack.Screen
             name={ScreenNames.WELCOME}
             component={WelcomeScreen}
@@ -145,11 +144,11 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          {/* <Stack.Screen
-            name={ScreenNames.COMMUNICATION_ATHLETE}
+          <Stack.Screen
+            name={ScreenNames.ATHLETE_COMMUNICATION}
             component={CommunicationAthlete}
             options={{ headerShown: false }}
-          /> */}
+          />
 
           <Stack.Screen
             name={ScreenNames.SCHOOL_SEARCH}

@@ -28,7 +28,9 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.COACH_INFO_REGISTRATION)}
+        onPress={() =>
+          navigation.navigate(ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT)
+        }
       >
         <Text style={styles.buttonText}>SKIP</Text>
       </TouchableOpacity>
