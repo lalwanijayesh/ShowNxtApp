@@ -2,10 +2,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ApolloProvider } from "@apollo/client";
+import { LogBox } from 'react-native';
 
 import ScreenNames from "./src/constants/ScreenNames";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import serverUrl from "./src/constants/graphql";
+import { serverUrl } from "./src/constants/config";
 import SchoolSearch from "./src/screens/SchoolSearch";
 
 // Screen imports
@@ -29,6 +30,9 @@ import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
 import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
 const Stack = createNativeStackNavigator();
 
+// Ignore timer related warnings from firebase core APIs
+LogBox.ignoreLogs(['Setting a timer for a long period of time']);
+
 // TODO: move out to its own file, but it didn't work when I tried to do it
 const client = new ApolloClient({
   uri: serverUrl,
@@ -39,7 +43,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}>
+        <Stack.Navigator initialRouteName={ScreenNames.WELCOME}>
           <Stack.Screen
             name={ScreenNames.WELCOME}
             component={WelcomeScreen}
