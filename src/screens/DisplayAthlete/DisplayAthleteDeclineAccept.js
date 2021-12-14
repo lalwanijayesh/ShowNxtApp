@@ -3,6 +3,7 @@ import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressabl
 import Icon from "react-native-ico-material-design";
 import {Video} from "expo-av";
 import firebase from "../../firebase/firebase";
+import {firebaseBucket} from "../../constants/config";
 
 // TODO replace dummy links with applicant athlete videos from backend
 export const videos = [
@@ -42,16 +43,8 @@ const DisplayAthlete = ({ navigation }) => {
 
   React.useEffect(() => {
     const storage = firebase.storage();
-    /*videos.map(video => {
-      storage.refFromURL('gs://reactnativefirebasedemo-101ba.appspot.com/' + video.path)
-          .getDownloadURL()
-          .then(url => {
-            console.log("Download URL: " + url);
-            setVideoUrls(prevArr => [...prevArr, url]);
-          });
-    });*/
     Promise.all(videos.map(async (video) => {
-      const url = await storage.refFromURL('gs://reactnativefirebasedemo-101ba.appspot.com/' + video.path)
+      const url = await storage.refFromURL('gs://' + firebaseBucket + '/' + video.path)
           .getDownloadURL();
       console.log(url);
       return url;
