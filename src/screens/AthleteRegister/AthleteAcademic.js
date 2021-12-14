@@ -83,11 +83,11 @@ const AthleteAcademic = ({navigation}) => {
                  style={[styles.textBoxContainer, styles.textBox, styles.spacingBetweenBoxes]} />
 
         <TouchableOpacity onPress={() => {
-                            gpa != '' && !!school && !!year ?
-                            navigation.navigate(ScreenNames.ATHLETE_PROFILE) :
+                            gpa !== '' && !!school && !!year ?
+                            navigation.navigate(ScreenNames.ATHLETE_COMPLETE) :
                             Alert.alert("Please enter school, year and your gpa before moving to the next step!!")
                           }}
-                          style={[styles.nextBtn, gpa != '' && !!school && !!year ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
+                          style={[styles.nextBtn, gpa !== '' && !!school && !!year ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
         <Text  style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>
     </View>

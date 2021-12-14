@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Alert,
@@ -24,20 +23,6 @@ const WelcomeScreen = ({ navigation }) => {
         onPress={() => navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)}
       >
         <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() =>
-          navigation.navigate(ScreenNames.COACH_INFO_REGISTRATION)
-        }
-      >
-        <Text style={styles.buttonText}>SKIP</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.SCHOOL_INFO)}
-      >
-        <Text style={styles.buttonText}>SKIP</Text>
       </TouchableOpacity>
     </View>
   );

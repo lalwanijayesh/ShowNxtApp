@@ -1,4 +1,4 @@
-export default ScreenNames = {
+const ScreenNames = {
   WELCOME: "welcome",
 
   EMAIL_PASSWORD: "email_password",
@@ -23,3 +23,5 @@ export default ScreenNames = {
   SCHOOL_SEARCH: "school_search",
   SCHOOL_INFO: "school_info",
 };
+
+export default ScreenNames;

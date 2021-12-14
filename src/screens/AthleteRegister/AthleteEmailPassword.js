@@ -62,23 +62,29 @@ const AthleteEmailPassword = ({navigation}) => {
       Alert.alert("Please enter valid email and password.");
     } else {
       firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
-        userCredential.user.sendEmailVerification();
-        navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
+        userCredential.user.sendEmailVerification()
+            .then(() => {
+              navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
+            })
+            .catch((error) => Alert.alert("An error occurred while sending verificaton email!"));
       }).catch((error) => Alert.alert(error.message));
     }
   };
   
-  // TODO: find the way to implement loading inddicator when it is navigating to the emailpass screen.
+  // TODO: find the way to implement loading indicator when it is navigating to the emailpass screen.
   const renderLoadingIndicator = () => {
-    <View style={styles.preloader}>
-      <ActivityIndicator size="large" color="#9E9E9E" />
-    </View>
+    return (
+      <View style={styles.preloader}>
+        <ActivityIndicator size="large" color="#9E9E9E" />
+      </View>
+    )
   };
 
   const renderRegisterScreen = () => {
     return (
       <View style={styles.container}>
-      <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate('AthleteCoachSelection')}>
+      <TouchableOpacity style={styles.backContainer}
+          onPress={() => navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
 

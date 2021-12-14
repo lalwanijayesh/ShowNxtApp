@@ -1,11 +1,10 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ApolloProvider } from "@apollo/client";
+import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
 import { LogBox } from 'react-native';
 
 import ScreenNames from "./src/constants/ScreenNames";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { serverUrl } from "./src/constants/config";
 
 // Screen imports
@@ -29,6 +28,7 @@ import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
 import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
 import SearchForCoach from "./src/screens/DisplayAthlete/SearchForCoach";
 import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
+
 const Stack = createNativeStackNavigator();
 
 // Ignore timer related warnings from firebase core APIs
@@ -123,11 +123,6 @@ export default function App() {
               options={{ headerShown: false }}
           />
           <Stack.Screen
-            name={ScreenNames.SCHOOL_INFO}
-            component={SchoolInfo}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
             name={ScreenNames.EMAIL_CONFIRMATION}
             component={EmailConfirmation}
             options={{ headerShown: false }}
@@ -157,6 +152,11 @@ export default function App() {
             name={ScreenNames.SCHOOL_SEARCH}
             component={SchoolSearch}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name={ScreenNames.SCHOOL_INFO}
+              component={SchoolInfo}
+              options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
