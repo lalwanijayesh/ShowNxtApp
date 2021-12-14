@@ -38,7 +38,7 @@ const WelcomeScreen = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate(ScreenNames.SCHOOL_INFO)}
       >
-        <Text style={styles.buttonText}>SKIP</Text>
+        <Text style={styles.buttonText}>SCHOOL INFO</Text>
       </TouchableOpacity>
     </View>
   );

@@ -13,6 +13,7 @@ import Icon from "react-native-ico-material-design";
 import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
 import { firebaseBucket } from "../../constants/config";
+import CoachNavBar from "../CoachNavBar";
 
 // TODO replace dummy links with applicant athlete videos from backend
 export const videos = [
@@ -102,43 +103,6 @@ const DisplayAthlete = ({ navigation }) => {
             keyExtractor={(item, index) => index.toString()}
           />
         </SafeAreaView>
-      </View>
-
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
-      <View style={styles.navContainer}>
-        <View style={styles.navBar}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
-          >
-            <Icon
-              name="searching-magnifying-glass"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Icon name="home-button" height="40" width="40" color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.COMMUNICATION_PAGE)}
-          >
-            <Icon
-              name="black-envelope-email-symbol"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
-          >
-            <Icon name="two-men" height="40" width="40" color="white" />
-          </TouchableOpacity>
-        </View>
       </View>
 
       {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}

@@ -20,9 +20,17 @@ const CoachNavBar = (props) => {
             color="white"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.icon}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() =>
+            props.navigation.navigate(
+              ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT
+            )
+          }
+        >
           <Icon name="home-button" height="40" width="40" color="white" />
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.icon}
           onPress={() =>
