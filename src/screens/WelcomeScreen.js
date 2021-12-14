@@ -28,17 +28,16 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() =>
-          navigation.navigate(ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT)
-        }
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
       >
-        <Text style={styles.buttonText}>SKIP</Text>
+        <Text style={styles.buttonText}>ATHLETE</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.SCHOOL_INFO)}
+        onPress={() => navigation.navigate(ScreenNames.COACH_TAB_FLOW)}
       >
-        <Text style={styles.buttonText}>SCHOOL INFO</Text>
+        <Text style={styles.buttonText}>COACH</Text>
       </TouchableOpacity>
     </View>
   );

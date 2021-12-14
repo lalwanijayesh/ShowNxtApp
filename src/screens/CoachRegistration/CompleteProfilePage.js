@@ -249,11 +249,7 @@ const CompleteProfilePage = (props) => {
 
         <TouchableOpacity
           style={styles.nextBtn}
-          onPress={() =>
-            props.navigation.navigate(
-              ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT
-            )
-          }
+          onPress={() => props.navigation.navigate(ScreenNames.COACH_TAB_FLOW)}
         >
           <Text style={styles.nextText}>{"Find Recruits"}</Text>
         </TouchableOpacity>

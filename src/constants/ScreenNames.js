@@ -23,4 +23,7 @@ export default ScreenNames = {
   COMMUNICATION_PAGE: "communication_page",
   SCHOOL_SEARCH: "school_search",
   SCHOOL_INFO: "school_info",
+
+  COACH_TAB_FLOW: "coach_tab_flow",
+  ATHLETE_TAB_FLOW: "athlete_tab_flow",
 };

@@ -87,7 +87,7 @@ const AthleteComplete = (props) => {
 
       <TouchableOpacity
         style={styles.nextBtn}
-        onPress={() => props.navigation.navigate(ScreenNames.SCHOOL_SEARCH)}
+        onPress={() => props.navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
       >
         <Text style={styles.nextText}>{"Start Exploring"}</Text>
       </TouchableOpacity>

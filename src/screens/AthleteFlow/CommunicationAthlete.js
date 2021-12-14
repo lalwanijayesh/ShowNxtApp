@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import AthleteNavBar from "../AthleteNavBar";
 
 // TODO: Replace image in the circle view
 // TODO: find the way to let the user upload videos into react-native
@@ -15,8 +14,6 @@ const CommunicationAthlete = (props) => {
   return (
     <View>
       <Text style={styles.buttonText}> Communication page!</Text>
-
-      <AthleteNavBar navigation={props.navigation} />
     </View>
   );
 };

@@ -10,7 +10,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import AthleteNavBar from "./AthleteNavBar";
 
 const SCHOOL_SEARCH = gql`
   query SchoolSearch($term: String!) {
@@ -63,8 +62,6 @@ const SchoolSearch = (props) => {
       />
 
       <SchoolsList term={searchTerm} />
-
-      <AthleteNavBar navigation={props.navigation} />
     </View>
   );
 };
