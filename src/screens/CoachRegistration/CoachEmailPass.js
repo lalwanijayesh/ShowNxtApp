@@ -91,23 +91,18 @@ const EmailPassScreen = (props) => {
     if (email && !isPasswordSufficient(password)) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      // firebase
-      //   .auth()
-      //   .createUserWithEmailAndPassword(email, password)
-      //   .then((userCredential) => {
-      //     userCredential.user.sendEmailVerification();
-      //     props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
-      //       fullName: fullName,
-      //       email: email,
-      //       password: password,
-      //     });
-      //   })
-      //   .catch((error) => Alert.alert(error.message));
-      props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
-        fullName: fullName,
-        email: email,
-        password: password,
-      });
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          userCredential.user.sendEmailVerification();
+          props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
+            fullName: fullName,
+            email: email,
+            password: password,
+          });
+        })
+        .catch((error) => Alert.alert(error.message));
     }
   };
 
