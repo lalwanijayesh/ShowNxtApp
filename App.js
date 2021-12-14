@@ -7,7 +7,6 @@ import { LogBox } from 'react-native';
 import ScreenNames from "./src/constants/ScreenNames";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { serverUrl } from "./src/constants/config";
-import SchoolSearch from "./src/screens/SchoolSearch";
 
 // Screen imports
 import WelcomeScreen from "./src/screens/WelcomeScreen";
@@ -23,6 +22,8 @@ import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
 import AthleteComplete from './src/screens/AthleteRegister/AthleteComplete';
 import AthleteEmailPassword from "./src/screens/AthleteRegister/AthleteEmailPassword";
 import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirmation";
+import SchoolSearch from "./src/screens/SchoolSearch";
+import SchoolInfo from "./src/screens/ApplyToSchool/SchoolInfo";
 import DisplayAthleteDeclineAccept from "./src/screens/DisplayAthlete/DisplayAthleteDeclineAccept";
 import CommunicationPage from "./src/screens/DisplayAthlete/CommunicationPage";
 import ProfilePageCoach from "./src/screens/DisplayAthlete/ProfilePageCoach";
@@ -117,8 +118,13 @@ export default function App() {
           />
 
           <Stack.Screen
-            name={ScreenNames.EMAIL_PASSWORD}
-            component={AthleteEmailPassword}
+              name={ScreenNames.EMAIL_PASSWORD}
+              component={AthleteEmailPassword}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={ScreenNames.SCHOOL_INFO}
+            component={SchoolInfo}
             options={{ headerShown: false }}
           />
           <Stack.Screen

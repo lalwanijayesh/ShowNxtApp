@@ -21,4 +21,5 @@ export default ScreenNames = {
   DISPLAY_ATHLETE_DECLINE_ACCEPT: "display_athlete_decline_accept",
   COMMUNICATION_PAGE: "communication_page",
   SCHOOL_SEARCH: "school_search",
+  SCHOOL_INFO: "school_info",
 };
