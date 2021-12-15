@@ -12,6 +12,7 @@ import {
 } from "react-native";
 
 import DropDownPicker from "react-native-dropdown-picker";
+import ScreenNames from "../../constants/ScreenNames";
 
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -19,16 +20,19 @@ LogBox.ignoreAllLogs();
 
 const splitName = (name) => {
   const listOfStrings = name.split(" ");
-  return { 
+  return {
     firstName: listOfStrings[0],
-    lastName: listOfStrings[listOfStrings.length - 1]
-  }
-}
+    lastName: listOfStrings[listOfStrings.length - 1],
+  };
+};
 
 const CompleteProfilePage = (props) => {
-
-  const [firstName, setFirstName] = React.useState(splitName(props.route.params.fullName).firstName);
-  const [lastName, setLastName] = React.useState(splitName(props.route.params.fullName).lastName);
+  const [firstName, setFirstName] = React.useState(
+    splitName(props.route.params.fullName).firstName
+  );
+  const [lastName, setLastName] = React.useState(
+    splitName(props.route.params.fullName).lastName
+  );
   const [bio, setBio] = React.useState("");
   const [jobTitle, setJobTitle] = React.useState(props.route.params.jobTitle);
 
@@ -55,12 +59,7 @@ const CompleteProfilePage = (props) => {
     setUniVisible(false);
   }, []);
 
-  let positions = [
-    "Goalkeeper",
-    "Defender",
-    "Quarterback",
-    "Midfielder",
-  ];
+  let positions = ["Goalkeeper", "Defender", "Quarterback", "Midfielder"];
 
   let initialCounters = [];
   for (let i = 0; i < positions.length; i += 1) {
@@ -87,10 +86,9 @@ const CompleteProfilePage = (props) => {
     setCounters(currentCounters);
   };
 
-
   return (
-    <View style={{backgroundColor: '#FFFFFF'}}>
-      <ScrollView style={{marginBottom: 39}}>
+    <View style={{ backgroundColor: "#FFFFFF" }}>
+      <ScrollView style={{ marginBottom: 39 }}>
         <View style={styles.infoConatiner}>
           <View style={styles.avaContainer}>
             <View style={styles.avatar}></View>
@@ -99,46 +97,50 @@ const CompleteProfilePage = (props) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{marginTop: 45}}>
-            <Text style={[styles.title, {color: '#000000'}]}>Bio</Text>
+          <View style={{ marginTop: 45 }}>
+            <Text style={[styles.title, { color: "#000000" }]}>Bio</Text>
             <TextInput
               maxLength={100}
               multiline={true}
               onChangeText={setBio}
               value={bio}
-              placeholderTextColor={'#000000'}
+              placeholderTextColor={"#000000"}
               placeholder="Give recruits background about yourself..."
             />
           </View>
 
-          <View style={[styles.dropdownContainer, {marginTop: 50}]}>
+          <View style={[styles.dropdownContainer, { marginTop: 50 }]}>
             <View>
-              <Text style={[styles.title, {color: '#555555'}]}>First Name</Text>
+              <Text style={[styles.title, { color: "#555555" }]}>
+                First Name
+              </Text>
               <TextInput
                 style={[styles.boxSmallBorder, styles.boxSmallDimensions]}
                 autoCorrect={false}
                 onChangeText={setFirstName}
                 value={firstName}
-                placeholderTextColor={'#000000'}
+                placeholderTextColor={"#000000"}
                 placeholder="Name"
               />
             </View>
 
             <View>
-              <Text style={[styles.title, {color: '#555555'}]}>Last Name</Text>
+              <Text style={[styles.title, { color: "#555555" }]}>
+                Last Name
+              </Text>
               <TextInput
                 style={[styles.boxSmallBorder, styles.boxSmallDimensions]}
                 autoCorrect={false}
                 onChangeText={setLastName}
                 value={lastName}
-                placeholderTextColor={'#000000'}
+                placeholderTextColor={"#000000"}
                 placeholder="LastName"
               />
             </View>
           </View>
 
-          <View style={{marginTop: 14}}>
-            <Text style={[styles.title, {color: '#555555'}]}>University</Text>
+          <View style={{ marginTop: 14 }}>
+            <Text style={[styles.title, { color: "#555555" }]}>University</Text>
             <DropDownPicker
               searchable={true}
               searchPlaceholder="Search..."
@@ -150,14 +152,16 @@ const CompleteProfilePage = (props) => {
               setValue={setUni}
               setItems={setMockUni}
               onOpen={onUniOpen}
-              style={[{height: 30}]}
+              style={[{ height: 30 }]}
               dropDownDirection="TOP"
             />
           </View>
 
-          <View style={[styles.dropdownContainer, {marginTop: 14}]}>
+          <View style={[styles.dropdownContainer, { marginTop: 14 }]}>
             <View>
-              <Text style={[styles.title, {color: '#555555'}]}>Coaching Sport</Text>
+              <Text style={[styles.title, { color: "#555555" }]}>
+                Coaching Sport
+              </Text>
               <DropDownPicker
                 searchable={true}
                 searchPlaceholder="Search..."
@@ -169,27 +173,30 @@ const CompleteProfilePage = (props) => {
                 setValue={setSport}
                 setItems={setMockSport}
                 onOpen={onSportOpen}
-                style={[styles.boxSmallDimensions, {height: 30}]}
+                style={[styles.boxSmallDimensions, { height: 30 }]}
                 dropDownDirection="TOP" // there is a bug between DropDownPicker and ScrollView for IOS will find the alternative way later.
               />
             </View>
 
             <View>
-              <Text style={[styles.title, {color: '#555555'}]}>Job Title</Text>
+              <Text style={[styles.title, { color: "#555555" }]}>
+                Job Title
+              </Text>
               <TextInput
                 style={[styles.boxSmallBorder, styles.boxSmallDimensions]}
                 autoCorrect={false}
                 onChangeText={setJobTitle}
                 value={jobTitle}
-                placeholderTextColor={'#000000'}
+                placeholderTextColor={"#000000"}
                 placeholder="Job"
               />
             </View>
           </View>
 
-          <Text style={[styles.title, {color: '#000000', marginTop: 47}]}>Recruiting positions for</Text>
+          <Text style={[styles.title, { color: "#000000", marginTop: 47 }]}>
+            Recruiting positions for
+          </Text>
         </View>
-        
 
         <View marginTop={14}>
           <FlatList
@@ -200,7 +207,17 @@ const CompleteProfilePage = (props) => {
               let id = parseInt(item.key);
 
               return (
-                <View style={[styles.itemContainer, item.key === (positions.length - 1).toString() ? {borderColor: 'rgba(0, 0, 0, 0.2)', borderWidth: 1,} : {borderTopColor: 'rgba(0, 0, 0, 0.2)', borderTopWidth: 1}]}>
+                <View
+                  style={[
+                    styles.itemContainer,
+                    item.key === (positions.length - 1).toString()
+                      ? { borderColor: "rgba(0, 0, 0, 0.2)", borderWidth: 1 }
+                      : {
+                          borderTopColor: "rgba(0, 0, 0, 0.2)",
+                          borderTopWidth: 1,
+                        },
+                  ]}
+                >
                   <View style={styles.itemLabelContainer}>
                     <Text style={styles.itemLabel}>{positions[id]}</Text>
                   </View>
@@ -234,24 +251,25 @@ const CompleteProfilePage = (props) => {
 
         <Text style={styles.textAddMore}>+ add more positions</Text>
 
-        <TouchableOpacity style={styles.nextBtn}>
+        <TouchableOpacity
+          style={styles.nextBtn}
+          onPress={() => props.navigation.navigate(ScreenNames.COACH_TAB_FLOW)}
+        >
           <Text style={styles.nextText}>{"Find Recruits"}</Text>
         </TouchableOpacity>
-
       </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-
   infoConatiner: {
     marginHorizontal: 22,
   },
 
   avaContainer: {
-    justifyContent: 'center', 
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   avatar: {
@@ -267,18 +285,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 10,
     lineHeight: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   dropdownContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 
   boxSmallBorder: {
     borderWidth: 0.5,
     borderRadius: 5,
-    borderColor: '#000000',
+    borderColor: "#000000",
   },
 
   boxSmallDimensions: {
@@ -286,7 +304,7 @@ const styles = StyleSheet.create({
       ios: 7,
     }),
     paddingLeft: 9,
-    width: (Dimensions.get('screen').width - 67) / 2,
+    width: (Dimensions.get("screen").width - 67) / 2,
   },
 
   itemContainer: {
@@ -311,7 +329,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 19,
     borderRadius: 5,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderWidth: 1,
     height: 35,
   },
@@ -330,7 +348,7 @@ const styles = StyleSheet.create({
 
   itemButton: {
     justifyContent: "center",
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   itemButtonPlus: {
@@ -338,7 +356,7 @@ const styles = StyleSheet.create({
   },
 
   borderMinusSign: {
-    borderRightColor: '#000000',
+    borderRightColor: "#000000",
     borderTopEndRadius: 5,
     borderBottomEndRadius: 5,
     borderRightWidth: 1,
@@ -347,7 +365,7 @@ const styles = StyleSheet.create({
   },
 
   borderPlusSign: {
-    borderLeftColor: '#000000',
+    borderLeftColor: "#000000",
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     borderLeftWidth: 1,
@@ -360,29 +378,29 @@ const styles = StyleSheet.create({
   },
 
   textAddMore: {
-    textDecorationLine: 'underline',
-    marginRight: 19, 
+    textDecorationLine: "underline",
+    marginRight: 19,
     marginTop: 15,
     lineHeight: 16,
     fontSize: 10,
-    alignSelf: 'flex-end',
-    color: '#555555',
+    alignSelf: "flex-end",
+    color: "#555555",
   },
 
   nextBtn: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     marginHorizontal: 69,
     marginTop: 53,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
     height: 40,
     borderRadius: 6,
   },
 
   nextText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: "#FFFFFF",
+    fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
   },
