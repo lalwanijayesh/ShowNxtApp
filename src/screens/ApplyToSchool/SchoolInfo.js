@@ -15,15 +15,83 @@ import Icon from "react-native-ico-material-design";
 import college from "../../../assets/uni.jpg";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 
+const GET_PROFILES_FOR_ATHLETE = gql`
+  query AthleteProfiles($userId: ID!) {
+    profilesAthlete(user_id: $userId) {
+      profileId
+      positionId
+    }
+  }
+`;
+
+const CREATE_APPLICATION = gql`
+  mutation CreateApplication(
+    $profileId: ID!
+    $schoolId: ID!
+    $positionId: ID!
+  ) {
+    createApplication(
+      profileId: $profileId
+      schoolId: $schoolId
+      positionId: $positionId
+    ) {
+      applicationId
+    }
+  }
+`;
+
 const SchoolInfo = (props) => {
   const [visible, setVisible] = React.useState(false);
 
   const { schoolId, name, location } = props.route.params;
+  const userId = 1; // todo: fix
 
   const [openings, setOpenings] = React.useState([]);
   const [shouldSkip, setShouldSkip] = React.useState(false);
 
   const [selectedOpening, setSelectedOpening] = React.useState(null);
+
+  const createApplication = (profile) => {
+    const [sendMutation, { loading, error, data }] = useLazyQuery(
+      CREATE_APPLICATION,
+      {
+        variables: {
+          profileId: profile.profileId,
+          schoolId: schoolId,
+          positionId: selectedOpening.positionId,
+        },
+        onCompleted: (data) => {
+          Alert.alert("Successfully applied to school!");
+        },
+      }
+    );
+  };
+
+  const attemptToApplyToSelected = () => {
+    const [getProfiles, { loading, error, data }] = useLazyQuery(
+      GET_PROFILES_FOR_ATHLETE,
+      {
+        variables: { userId: userId },
+        onCompleted: (data) => {
+          let profile = data.profilesAthlete.find(
+            (potentialProfile) =>
+              potentialProfile.positionId === selectedOpening.positionId
+          );
+
+          if (profile) {
+            // We can successfully apply
+            createApplication(profile);
+          } else {
+            Alert.alert("You haven't created a profile for that position yet!");
+          }
+        },
+      }
+    );
+
+    getProfiles();
+
+    setSelectedOpening(null);
+  };
 
   const GET_SCHOOL_POSITIONS = gql`
     query GetSchoolAndPositions($schoolId: ID!) {
@@ -138,7 +206,7 @@ const SchoolInfo = (props) => {
           <Text style={styles.twoReq}> ✓ 1100+ SATs</Text>
           <TouchableOpacity
             style={styles.applyButton}
-            onPress={() => setSelectedOpening(null)}
+            onPress={() => attemptToApplyToSelected()}
           >
             <Text style={styles.applyText}>APPLY</Text>
           </TouchableOpacity>
