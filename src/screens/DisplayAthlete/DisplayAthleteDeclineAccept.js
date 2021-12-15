@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
   Pressable,
   SafeAreaView,
 } from "react-native";
@@ -107,11 +108,13 @@ const DisplayAthlete = ({ navigation }) => {
       {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonsBar}>
-          <TouchableOpacity style={styles.circleDecline}>
+          <TouchableOpacity style={styles.circleDecline}
+                            onPress={() => Alert.alert("Dismissed")}>
             <Text style={styles.symbolText}>X</Text>
           </TouchableOpacity>
           <View style={styles.circlePerVid}></View>
-          <TouchableOpacity style={styles.circleAccept}>
+          <TouchableOpacity style={styles.circleAccept}
+                            onPress={() => Alert.alert("Accepted")}>
             <Text style={styles.symbolText}>✓</Text>
           </TouchableOpacity>
         </View>
