@@ -1,53 +1,58 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
-import ScreenNames from '../../constants/ScreenNames';
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import ScreenNames from "../../constants/ScreenNames";
 
 // TODO: Replace image in the circle view
 // TODO: find the way to let the user upload videos into react-native
-// TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data. 
-const AthleteComplete = ({navigation}) => {
-
+// TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data.
+const AthleteComplete = (props) => {
   const testData = [
     {
-      id: '1',
-      title: 'First Video',
+      id: "1",
+      title: "First Video",
     },
     {
-      id: '2',
-      title: 'Second Video',
+      id: "2",
+      title: "Second Video",
     },
     {
-      id: '3',
-      title: 'Third Video',
+      id: "3",
+      title: "Third Video",
     },
     {
-      id: '4',
-      title: 'Fourth Video',
+      id: "4",
+      title: "Fourth Video",
     },
     {
-      id: '5',
-      title: 'Fifth Video',
+      id: "5",
+      title: "Fifth Video",
     },
     {
-      id: '6',
-      title: 'Sixth Video',
+      id: "6",
+      title: "Sixth Video",
     },
   ];
 
-
   const renderItem = (item) => (
-    <View style={styles.videoStyle}
-    >   
+    <View style={styles.videoStyle}>
       <TouchableOpacity>
         <Text>{item.title}</Text>
-      </TouchableOpacity>  
-    </View> 
+      </TouchableOpacity>
+    </View>
   );
-  
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backContainer}
-                        onPress={() => navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}>
+      <TouchableOpacity
+        style={styles.backContainer}
+        onPress={() => props.navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}
+      >
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
 
@@ -57,79 +62,86 @@ const AthleteComplete = ({navigation}) => {
         <View style={styles.avatar}></View>
         <View>
           <Text style={styles.textName}>{"Name LastName"}</Text>
-          <Text style={[styles.spacingBetweenText, styles.textInfo]}>{"Position"}</Text>
+          <Text style={[styles.spacingBetweenText, styles.textInfo]}>
+            {"Position"}
+          </Text>
           <Text style={styles.textInfo}>{"School in School Town, State"}</Text>
         </View>
       </View>
 
       <Text style={styles.videoTitle}>{"Videos"}</Text>
 
-      <View style={{marginHorizontal: 34, marginTop: 23}}>
+      <View style={{ marginHorizontal: 34, marginTop: 23 }}>
         <FlatList
           data={testData}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => renderItem(item)}
-          keyExtractor={item => item.id}
+          renderItem={({ item }) => renderItem(item)}
+          keyExtractor={(item) => item.id}
         />
       </View>
 
-      <Text style={styles.text}>{"Place the most explosive video first in line for the best result."}</Text>
+      <Text style={styles.text}>
+        {"Place the most explosive video first in line for the best result."}
+      </Text>
 
-      <TouchableOpacity style={styles.nextBtn}>
+      <TouchableOpacity
+        style={styles.nextBtn}
+        onPress={() => props.navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
+      >
         <Text style={styles.nextText}>{"Start Exploring"}</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 export default AthleteComplete;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
 
   backContainer: {
-    position: 'absolute',
+    position: "absolute",
     left: 42,
     top: 40,
   },
 
   back: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   register: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 14,
-    lineHeight: 16, 
+    lineHeight: 16,
     marginTop: 54,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 
   infoContainer: {
     marginTop: 40,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginHorizontal: 32,
   },
 
   avatar: {
     width: 100,
     height: 100,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderWidth: 1,
     borderRadius: 50,
     marginRight: 34,
   },
 
   textName: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
-    color: '#000000',
+    color: "#000000",
   },
 
   spacingBetweenText: {
@@ -137,31 +149,31 @@ const styles = StyleSheet.create({
   },
 
   textInfo: {
-    color: '#555555',
+    color: "#555555",
     fontSize: 10,
     lineHeight: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   videoTitle: {
     marginTop: 57,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     lineHeight: 16,
-    color: '#000000',
+    color: "#000000",
     marginLeft: 34,
   },
 
   videoStyle: {
     width: 125,
     height: 271,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: "#EEEEEE",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#EEEEEE',
+    borderColor: "#EEEEEE",
     marginRight: 17,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   text: {
@@ -169,24 +181,24 @@ const styles = StyleSheet.create({
     marginLeft: 34,
     fontSize: 8,
     lineHeight: 11,
-    color: '#000000',
+    color: "#000000",
   },
 
   nextBtn: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     marginHorizontal: 69,
     marginTop: 71,
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
     height: 40,
     borderRadius: 6,
   },
 
   nextText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: "#FFFFFF",
+    fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
   },
-})
+});

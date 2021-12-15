@@ -1,7 +1,14 @@
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import React, { useState } from "react";
-import { Text, View, TextInput, Image, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const SCHOOL_SEARCH = gql`

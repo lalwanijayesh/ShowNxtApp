@@ -18,45 +18,6 @@ const AthleteProfile = ({ navigation }) => {
       <ScrollView>
         <Text style={styles.buttonText}> ATHLETE PROFILE PAGE! </Text>
       </ScrollView>
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
-      <View style={styles.navContainer}>
-        <View style={styles.navBar}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
-          >
-            <Icon
-              name="searching-magnifying-glass"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() =>
-              navigation.navigate(ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT)
-            }
-          >
-            <Icon name="home-button" height="40" width="40" color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Icon
-              name="black-envelope-email-symbol"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
-          >
-            <Icon name="two-men" height="40" width="40" color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
     </View>
   );
 };
