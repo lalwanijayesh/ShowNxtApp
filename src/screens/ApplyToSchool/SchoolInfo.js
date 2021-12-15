@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,33 @@ import { LinearGradient } from "expo-linear-gradient";
 //import ScreenNames from "../constants/ScreenNames";
 import Icon from "react-native-ico-material-design";
 import college from "../../../assets/uni.jpg";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+
+const GET_SCHOOL_POSITIONS = gql`
+  query GetSchoolAndPositions($schoolId: ID!) {
+    school(schoolId: $schoolId) {
+      schoolId
+      name
+      location
+      openings {
+        positionId
+        coachId
+        openingCount
+      }
+    }
+
+    positions {
+      positionId
+      positionName
+      sportId
+    }
+
+    sports {
+      sportId
+      sportName
+    }
+  }
+`;
 
 const GET_PROFILES_FOR_ATHLETE = gql`
   query AthleteProfiles($userId: ID!) {
@@ -44,80 +70,48 @@ const SchoolInfo = (props) => {
   const [visible, setVisible] = React.useState(false);
 
   const { schoolId, name, location } = props.route.params;
-  const userId = 1; // todo: fix
+  const userId = 16; // todo: fix
 
   const [openings, setOpenings] = React.useState([]);
   const [shouldSkip, setShouldSkip] = React.useState(false);
 
   const [selectedOpening, setSelectedOpening] = React.useState(null);
 
-  const createApplication = (profile) => {
-    const [sendMutation, { loading, error, data }] = useLazyQuery(
-      CREATE_APPLICATION,
-      {
-        variables: {
-          profileId: profile.profileId,
-          schoolId: schoolId,
-          positionId: selectedOpening.positionId,
-        },
-        onCompleted: (data) => {
-          Alert.alert("Successfully applied to school!");
-        },
-      }
-    );
-  };
+  const [createApplication] = useMutation(CREATE_APPLICATION, {
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
+    onCompleted: (data) => {
+      Alert.alert("Successfully applied to school!");
+    },
+  });
 
-  const attemptToApplyToSelected = () => {
-    const [getProfiles, { loading, error, data }] = useLazyQuery(
-      GET_PROFILES_FOR_ATHLETE,
-      {
-        variables: { userId: userId },
-        onCompleted: (data) => {
-          let profile = data.profilesAthlete.find(
-            (potentialProfile) =>
-              potentialProfile.positionId === selectedOpening.positionId
-          );
+  const [attemptToApplyToSelected] = useLazyQuery(GET_PROFILES_FOR_ATHLETE, {
+    variables: { userId: userId },
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
 
-          if (profile) {
-            // We can successfully apply
-            createApplication(profile);
-          } else {
-            Alert.alert("You haven't created a profile for that position yet!");
-          }
-        },
-      }
-    );
+    onCompleted: (data) => {
+      let profile = data.profilesAthlete.find(
+        (potentialProfile) =>
+          potentialProfile.positionId === selectedOpening.positionId
+      );
 
-    getProfiles();
-
-    setSelectedOpening(null);
-  };
-
-  const GET_SCHOOL_POSITIONS = gql`
-    query GetSchoolAndPositions($schoolId: ID!) {
-      school(schoolId: $schoolId) {
-        schoolId
-        name
-        location
-        openings {
-          positionId
-          coachId
-          openingCount
-        }
+      if (profile) {
+        // We can successfully apply
+        createApplication({
+          variables: {
+            profileId: profile.profileId,
+            schoolId: schoolId,
+            positionId: selectedOpening.positionId,
+          },
+        });
+      } else {
+        Alert.alert("You haven't created a profile for that position yet!");
       }
 
-      positions {
-        positionId
-        positionName
-        sportId
-      }
-
-      sports {
-        sportId
-        sportName
-      }
-    }
-  `;
+      setSelectedOpening(null);
+    },
+  });
 
   const { loading, error, data } = useQuery(GET_SCHOOL_POSITIONS, {
     variables: { schoolId },
@@ -206,7 +200,9 @@ const SchoolInfo = (props) => {
           <Text style={styles.twoReq}> ✓ 1100+ SATs</Text>
           <TouchableOpacity
             style={styles.applyButton}
-            onPress={() => attemptToApplyToSelected()}
+            onPress={() => {
+              attemptToApplyToSelected();
+            }}
           >
             <Text style={styles.applyText}>APPLY</Text>
           </TouchableOpacity>
