@@ -1,19 +1,28 @@
 import React from "react";
-import {Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View, Pressable, SafeAreaView} from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Pressable,
+  SafeAreaView,
+} from "react-native";
 import Icon from "react-native-ico-material-design";
-import {Video} from "expo-av";
+import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
-import {firebaseBucket} from "../../constants/config";
+import { firebaseBucket } from "../../constants/config";
 
 // TODO replace dummy links with applicant athlete videos from backend
 export const videos = [
-  {id: 1, path: "videos/sample.mp4" },
-  {id: 2, path: "videos/dogvid.mp4" },
-  {id: 3, path: "videos/tree.mp4" }
+  { id: 1, path: "videos/sample.mp4" },
+  { id: 2, path: "videos/dogvid.mp4" },
+  { id: 3, path: "videos/tree.mp4" },
 ];
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const DisplayAthlete = ({ navigation }) => {
   constructor;
@@ -34,41 +43,45 @@ const DisplayAthlete = ({ navigation }) => {
   };
 
   const handleVideoClick = (index) => {
-      if (currentlyPlaying === index) {
-          setCurrentlyPlaying(null);
-      } else {
-          setCurrentlyPlaying(index);
-      }
+    if (currentlyPlaying === index) {
+      setCurrentlyPlaying(null);
+    } else {
+      setCurrentlyPlaying(index);
+    }
   };
 
   React.useEffect(() => {
     const storage = firebase.storage();
-    Promise.all(videos.map(async (video) => {
-      const url = await storage.refFromURL('gs://' + firebaseBucket + '/' + video.path)
+    Promise.all(
+      videos.map(async (video) => {
+        const url = await storage
+          .refFromURL("gs://" + firebaseBucket + "/" + video.path)
           .getDownloadURL();
-      console.log(url);
-      return url;
-    })).then(data => {
+        console.log(url);
+        return url;
+      })
+    ).then((data) => {
       setVideoUrls(data);
     });
   }, []);
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     return (
-        <Pressable
-            style={styles.containerVid}
-            onPress={() => handleVideoClick(index)}>
-            <Video
-                style={styles.video}
-                source={{
-                  uri: item
-                }}
-                useNativeControls={false}
-                isLooping
-                shouldPlay={index === currentlyPlaying}
-                resizeMode="contain"
-            />
-        </Pressable>
+      <Pressable
+        style={styles.containerVid}
+        onPress={() => handleVideoClick(index)}
+      >
+        <Video
+          style={styles.video}
+          source={{
+            uri: item,
+          }}
+          useNativeControls={false}
+          isLooping
+          shouldPlay={index === currentlyPlaying}
+          resizeMode="contain"
+        />
+      </Pressable>
     );
   };
 
@@ -81,8 +94,8 @@ const DisplayAthlete = ({ navigation }) => {
             horizontal
             pagingEnabled
             bounces={false}
-            disableIntervalMomentum={ true }
-            snapToInterval={ width * 1.25 }
+            disableIntervalMomentum={true}
+            snapToInterval={width * 1.25}
             data={videoUrls}
             renderItem={renderItem}
             onScrollEndDrag={() => setCurrentlyPlaying(null)}
@@ -90,44 +103,6 @@ const DisplayAthlete = ({ navigation }) => {
           />
         </SafeAreaView>
       </View>
-
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
-      <View style={styles.navContainer}>
-        <View style={styles.navBar}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.SEARCH_FOR_COACH)}
-          >
-            <Icon
-              name="searching-magnifying-glass"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Icon name="home-button" height="40" width="40" color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.COMMUNICATION_PAGE)}
-          >
-            <Icon
-              name="black-envelope-email-symbol"
-              height="40"
-              width="40"
-              color="white"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => navigation.navigate(ScreenNames.PROFILE_PAGE_COACH)}
-          >
-            <Icon name="two-men" height="40" width="40" color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {/* NAVIGATION BAR ON THE BOTTOM OF PAGE */}
 
       {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}
       <View style={styles.buttonsContainer}>
@@ -216,19 +191,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
-  },
-  navBar: {
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: `#000000`,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  navContainer: {
-    position: "absolute",
-    alignItems: "center",
-    bottom: 0,
-    color: `#000000`,
   },
 
   buttonChangeVidContainer: {
