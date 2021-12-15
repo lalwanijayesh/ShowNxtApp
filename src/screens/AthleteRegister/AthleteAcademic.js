@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   TouchableOpacity,
   Text,
@@ -12,19 +12,37 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
 import years from "../../data/years";
+import {gql, useLazyQuery} from "@apollo/client";
 
-const AthleteAcademic = ({ navigation }) => {
+const GET_SCHOOLS = gql`
+  query GetSchools {
+    schools {
+      schoolId
+      name
+    }
+  }
+`;
+
+const AthleteAcademic = ({ navigation, route }) => {
   const [gpa, setGPA] = useState("");
 
   const [openSchool, setOpenSchool] = useState(false);
   const [school, setSchool] = useState(null);
-  const [mockSchool, setMockSchool] = useState([
-    { label: "Northeastern University", value: "neu" },
-    { label: "Havard University", value: "hu" },
-    { label: "Boston University", value: "bu" },
-    { label: "Boston College", value: "bc" },
-    { label: "Massachusetts Institute of Technology", value: "mit" },
-  ]);
+  const [schoolList, setSchoolList] = useState([]);
+
+  const [getSchools] = useLazyQuery(GET_SCHOOLS, {
+    onCompleted: (data) => {
+        console.log(data);
+        setSchoolList(data.schools.map(({schoolId, name}) => ({
+            label: name,
+            value: schoolId,
+        })));
+    }
+  });
+
+  useEffect(() => {
+    getSchools();
+  }, []);
 
   const [openYear, setOpenYear] = useState(false);
   const [year, setYear] = useState(null);
@@ -57,10 +75,10 @@ const AthleteAcademic = ({ navigation }) => {
         placeholder="Find School"
         open={openSchool}
         value={school}
-        items={mockSchool}
+        items={schoolList}
         setOpen={setOpenSchool}
         setValue={setSchool}
-        setItems={setMockSchool}
+        setItems={setSchoolList}
         onOpen={handleSchoolOpen}
         zIndex={3000}
         zIndexInverse={1000}
@@ -110,15 +128,21 @@ const AthleteAcademic = ({ navigation }) => {
 
       <TouchableOpacity
         onPress={() => {
-          gpa != "" && !!school && !!year
-            ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE)
+          gpa !== "" && !!school && !!year
+            ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE, {
+                ...route.params,
+                school: school, // TODO change this to object
+                schoolName: schoolList.filter(s => s.value === school)[0].label,
+                year: year,
+                gpa: gpa,
+              })
             : Alert.alert(
                 "Please enter school, year and your gpa before moving to the next step!!"
               );
         }}
         style={[
           styles.nextBtn,
-          gpa != "" && !!school && !!year
+          gpa !== "" && !!school && !!year
             ? { backgroundColor: "#000000", borderColor: "#000000" }
             : { backgroundColor: "#888888", borderColor: "#888888" },
         ]}

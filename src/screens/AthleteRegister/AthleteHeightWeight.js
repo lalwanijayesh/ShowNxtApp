@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { TouchableOpacity, Text, TextInput, View, StyleSheet, Alert, Keyboard } from 'react-native';
 import ScreenNames from '../../constants/ScreenNames';
 
-const AthleteHeightWeight = ({navigation}) => {
+const AthleteHeightWeight = ({ navigation, route }) => {
 
   const [ft, setFn] = useState(null);
   const [inch, setInch] = useState(null);
@@ -61,10 +61,16 @@ const AthleteHeightWeight = ({navigation}) => {
 
       <TouchableOpacity onPress={() => {
                           ft && inch && weight ?
-                          navigation.navigate(ScreenNames.ATHLETE_ACADEMIC) :
+                          navigation.navigate(ScreenNames.ATHLETE_ACADEMIC, {
+                            ...route.params,
+                            height: { ft: ft, inch: inch},
+                            weight: weight
+                          }) :
                           Alert.alert("Please enter your height and weight before moving to the next step!!")
                         }}
-                        style={[styles.nextBtn, ft && inch && weight ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
+                        style={[styles.nextBtn, ft && inch && weight ?
+                            {backgroundColor: '#000000', borderColor: '#000000',} :
+                            {backgroundColor: '#888888', borderColor: '#888888',}]}>
         <Text style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>
     </View>
