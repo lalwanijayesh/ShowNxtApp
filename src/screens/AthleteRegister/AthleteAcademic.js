@@ -12,8 +12,9 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
 import years from "../../data/years";
-import {gql, useLazyQuery} from "@apollo/client";
+import {gql, useLazyQuery, useMutation} from "@apollo/client";
 
+// TODO move all gql constants to separate file
 const GET_SCHOOLS = gql`
   query GetSchools {
     schools {
@@ -22,6 +23,15 @@ const GET_SCHOOLS = gql`
     }
   }
 `;
+const ADD_ATHLETE_INFO = gql`
+    mutation CreateAthlete($userId: ID!, $firstName: String!, $lastName: String!, $gender: Gender!, 
+            $gpa: Float, $weight: Float, $height: Float) {
+      createAthlete(user_id: $userId, first_name: $firstName, last_name: $lastName, gender: $gender, 
+            gpa: $gpa, weight: $weight, height: $height) {
+        userId
+      }
+    }
+`;
 
 const AthleteAcademic = ({ navigation, route }) => {
   const [gpa, setGPA] = useState("");
@@ -29,6 +39,10 @@ const AthleteAcademic = ({ navigation, route }) => {
   const [openSchool, setOpenSchool] = useState(false);
   const [school, setSchool] = useState(null);
   const [schoolList, setSchoolList] = useState([]);
+
+  const [addAthleteInfo] = useMutation(ADD_ATHLETE_INFO, {
+      onError: error => console.log(error)
+  });
 
   const [getSchools] = useLazyQuery(GET_SCHOOLS, {
     onCompleted: (data) => {
@@ -128,17 +142,30 @@ const AthleteAcademic = ({ navigation, route }) => {
 
       <TouchableOpacity
         onPress={() => {
-          gpa !== "" && !!school && !!year
-            ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE, {
-                ...route.params,
-                school: school, // TODO change this to object
-                schoolName: schoolList.filter(s => s.value === school)[0].label,
-                year: year,
-                gpa: gpa,
-              })
-            : Alert.alert(
-                "Please enter school, year and your gpa before moving to the next step!!"
-              );
+            addAthleteInfo({
+                    variables: {
+                        userId: route.params.userId,
+                        firstName: route.params.fullName.split(/\s+/)[0],
+                        lastName: route.params.fullName.split(/\s+/)[1],
+                        gender: route.params.gender.toUpperCase(),
+                        // TODO propose height format change
+                        height: parseInt(parseFloat(route.params.height.ft) * 30.48
+                            + parseFloat(route.params.height.inch) * 2.54),
+                        weight: parseInt(route.params.weight),
+                        gpa: parseFloat(gpa)
+                    }
+                }
+            ).then(res =>
+                gpa !== "" && !!school && !!year
+                    ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE, {
+                        ...route.params,
+                        school: school,
+                        // TODO change this to school object
+                        schoolName: schoolList.filter(s => s.value === school)[0].label,
+                        year: year,
+                        gpa: gpa,
+                    })
+                    : Alert.alert("Please enter school, year and your gpa before moving to the next step!!"));
         }}
         style={[
           styles.nextBtn,
