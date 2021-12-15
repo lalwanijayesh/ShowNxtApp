@@ -1,36 +1,49 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, Button, Platform, Alert } from 'react-native';
-import {Video} from 'expo-av';
-import * as ImagePicker from 'expo-image-picker';
-import Firebase from '../../firebase/firebase';
-import ScreenNames from '../../constants/ScreenNames';
-import ImagePickerExample from '../VideoUpload';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Button,
+  Platform,
+  Alert,
+} from "react-native";
+import { Video } from "expo-av";
+import * as ImagePicker from "expo-image-picker";
+import Firebase from "../../firebase/firebase";
+import ScreenNames from "../../constants/ScreenNames";
+import ImagePickerExample from "../VideoUpload";
+import UserIdContext from "../../AppContext";
 
 // TODO: Replace image in the circle view
-// TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data. 
+// TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data.
 const AthleteComplete = ({ navigation, route }) => {
+  const [userId, setUserId] = useContext(UserIdContext);
+
   const testData = [
     {
-      id: '1',
+      id: "1",
     },
     {
-      id: '2',
+      id: "2",
     },
     {
-      id: '3',
+      id: "3",
     },
     {
-      id: '4',
-    }
+      id: "4",
+    },
   ];
 
   const renderItem = (item) => {
     return (
-    <View style={{marginRight: 17}}>
-      <View style={styles.videoStyle}>  
-        <ImagePickerExample />
-      </View> 
-    </View>)
+      <View style={{ marginRight: 17 }}>
+        <View style={styles.videoStyle}>
+          <ImagePickerExample />
+        </View>
+      </View>
+    );
   };
 
   return (
@@ -72,7 +85,11 @@ const AthleteComplete = ({ navigation, route }) => {
 
       <TouchableOpacity
         style={styles.nextBtn}
-        onPress={() => navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
+        onPress={() => {
+          setUserId(route.params.userId);
+
+          navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW, route.params);
+        }}
       >
         <Text style={styles.nextText}>{"Start Exploring"}</Text>
       </TouchableOpacity>
@@ -155,9 +172,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEEEEE",
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#EEEEEE',
-    justifyContent: 'center',
-    alignItems: 'center'
+    borderColor: "#EEEEEE",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   text: {
