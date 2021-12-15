@@ -7,20 +7,90 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 //import ScreenNames from "../constants/ScreenNames";
 import Icon from "react-native-ico-material-design";
 import college from "../../../assets/uni.jpg";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 
-const SchoolInfo = ({ navigation }) => {
+const SchoolInfo = (props) => {
   const [visible, setVisible] = React.useState(false);
+
+  const { schoolId, name, location } = props.route.params;
+
+  const [openings, setOpenings] = React.useState([]);
+  const [shouldSkip, setShouldSkip] = React.useState(false);
+
+  const [selectedOpening, setSelectedOpening] = React.useState(null);
+
+  const GET_SCHOOL_POSITIONS = gql`
+    query GetSchoolAndPositions($schoolId: ID!) {
+      school(schoolId: $schoolId) {
+        schoolId
+        name
+        location
+        openings {
+          positionId
+          coachId
+          openingCount
+        }
+      }
+
+      positions {
+        positionId
+        positionName
+        sportId
+      }
+
+      sports {
+        sportId
+        sportName
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(GET_SCHOOL_POSITIONS, {
+    variables: { schoolId },
+    skip: shouldSkip,
+    onCompleted: (data) => {
+      let resOpenings = [];
+      for (let i = 0; i < data.school.openings.length; i += 1) {
+        let opening = data.school.openings[i];
+
+        let position = data.positions.find(
+          (possiblePosition) =>
+            possiblePosition.positionId === opening.positionId
+        );
+
+        let sport = data.sports.find(
+          (possibleSport) => possibleSport.sportId === position.sportId
+        );
+
+        resOpenings.push({
+          positionId: opening.positionId,
+          coachId: opening.coachId,
+          openingCount: opening.openingCount,
+          positionName: position.positionName,
+          sportId: position.sportId,
+          sportName: sport.sportName,
+        });
+      }
+
+      setOpenings(resOpenings);
+      setShouldSkip(true);
+    },
+  });
+
+  if (loading) return <Text>Loading</Text>;
+  if (error) return <Text>Error</Text>;
 
   return (
     <View style={styles.container}>
       <Image style={styles.photoContainer} source={college} />
-      <Text style={styles.collegeNameText}>Northeastern University</Text>
-      <Text style={styles.locationText}>📍 Boston, MA</Text>
+      <Text style={styles.collegeNameText}>{name}</Text>
+      <Text style={styles.locationText}>📍 {location}</Text>
       <View style={styles.containerDescription}>
         <Text>
           {" "}
@@ -33,44 +103,56 @@ const SchoolInfo = ({ navigation }) => {
       </View>
       <Text style={styles.titleText}>POSITIONS OPEN FOR 2021 APPLICATION</Text>
       {/* POSITIONS  */}
-      <View style={styles.containerPosition}>
-        <Text style={styles.positionsText}>Men's Soccer Team</Text>
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={() => setVisible(true)}
-        >
-          <Text style={styles.positionsText}>Goalkeeper</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.containerPosition2}>
-        <Text style={styles.positionsText}>Men's Soccer Team</Text>
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={() => setVisible(true)}
-        >
-          <Text style={styles.positionsText}>Striker</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={visible ? styles.applyView : styles.hidden}>
-        <Text style={styles.positionText}>GOALKEEPER</Text>
-        <Text style={styles.teamText}>Men's Soccer Team</Text>
-        <Text style={styles.oneReq}> ✓ Minimum 3.0 GPA</Text>
-        <Text style={styles.twoReq}> ✓ 1100+ SATs</Text>
-        <TouchableOpacity
-          style={styles.applyButton}
-          onPress={() => setVisible(false)}
-        >
-          <Text style={styles.applyText}>APPLY</Text>
-        </TouchableOpacity>
-      </View>
+
+      <ScrollView style={styles.positionsScroll}>
+        {openings.map(
+          ({ positionId, coachId, positionCount, positionName, sportName }) => (
+            <View key={positionId} style={styles.containerPosition}>
+              <Text style={styles.positionsText}>{sportName}</Text>
+              <TouchableOpacity
+                style={styles.nextButton}
+                onPress={() =>
+                  setSelectedOpening({
+                    positionId,
+                    coachId,
+                    positionCount,
+                    positionName,
+                    sportName,
+                  })
+                }
+              >
+                <Text style={styles.positionsText}>{positionName}</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        )}
+      </ScrollView>
+
+      {selectedOpening && (
+        <View style={styles.applyView}>
+          <Text style={styles.positionText}>
+            {selectedOpening.positionName}
+          </Text>
+          <Text style={styles.teamText}>{selectedOpening.sportName}</Text>
+          <Text style={styles.oneReq}> ✓ Minimum 3.0 GPA</Text>
+          <Text style={styles.twoReq}> ✓ 1100+ SATs</Text>
+          <TouchableOpacity
+            style={styles.applyButton}
+            onPress={() => setSelectedOpening(null)}
+          >
+            <Text style={styles.applyText}>APPLY</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  hidden: {
-    display: "none",
+  positionsScroll: {
+    width: "90%",
   },
+
   oneReq: {
     marginTop: 60,
     color: "black",
@@ -117,7 +199,7 @@ const styles = StyleSheet.create({
   containerDescription: {
     height: "20%",
     width: "80%",
-    margin: 50,
+    marginTop: 20,
   },
   containerPosition: {
     // backgroundColor: "yellow",
@@ -126,8 +208,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     color: "red",
-    width: "80%",
-    margin: 75,
+    width: "100%",
+    // margin: 75,
     //textAlign: "center",
     //alignSelf: "center",
   },
@@ -155,7 +237,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     fontSize: 17,
-    margin: -40,
+    // margin: -40,
   },
   locationText: {
     color: "black",
@@ -184,7 +266,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "50%",
     position: "absolute",
-    bottom: 0,
+    bottom: 17,
     opacity: 0.95,
     backgroundColor: "#87cefa",
     borderRadius: 39,

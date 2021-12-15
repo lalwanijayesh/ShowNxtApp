@@ -1,15 +1,15 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/storage'
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "EnterYourApiKeyHere",
-  authDomain: "AuthDomain",
-  projectId: "ProjectId",
-  storageBucket: "StorageBucket",
-  messagingSenderId: "MessagingSenderId",
-  appId: "AppId",
-  measurementId: "MeasurementId",
+  apiKey: "AIzaSyBGBuoRlmsVtUcroBMDIPELzc37l7hMfZ8",
+  authDomain: "shownxt-cc3b8.firebaseapp.com",
+  projectId: "shownxt-cc3b8",
+  storageBucket: "shownxt-cc3b8.appspot.com",
+  messagingSenderId: "1075128173840",
+  appId: "1:1075128173840:web:b6b2e36dafb556cd475195",
+  measurementId: "G-RHFSZGH2F7",
 };
 
 let Firebase;

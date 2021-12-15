@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import ScreenNames from "../constants/ScreenNames";
 
 const WelcomeScreen = ({ navigation }) => {
@@ -23,6 +17,20 @@ const WelcomeScreen = ({ navigation }) => {
         onPress={() => navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)}
       >
         <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate(ScreenNames.COACH_TAB_FLOW)}
+      >
+        <Text style={styles.buttonText}>COACH TAB</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
+      >
+        <Text style={styles.buttonText}>ATHLETE TAB</Text>
       </TouchableOpacity>
     </View>
   );
