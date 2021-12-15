@@ -13,6 +13,10 @@ import {
 
 import DropDownPicker from "react-native-dropdown-picker";
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();
+
 const splitName = (name) => {
   const listOfStrings = name.split(" ");
   return { 

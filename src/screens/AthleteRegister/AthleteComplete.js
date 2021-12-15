@@ -1,48 +1,37 @@
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, Button, Platform, Alert } from 'react-native';
+import {Video} from 'expo-av';
+import * as ImagePicker from 'expo-image-picker';
+import Firebase from '../../firebase/firebase';
 import ScreenNames from '../../constants/ScreenNames';
+import ImagePickerExample from '../VideoUpload';
 
 // TODO: Replace image in the circle view
-// TODO: find the way to let the user upload videos into react-native
 // TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data. 
 const AthleteComplete = ({navigation}) => {
-
   const testData = [
     {
       id: '1',
-      title: 'First Video',
     },
     {
       id: '2',
-      title: 'Second Video',
     },
     {
       id: '3',
-      title: 'Third Video',
     },
     {
       id: '4',
-      title: 'Fourth Video',
-    },
-    {
-      id: '5',
-      title: 'Fifth Video',
-    },
-    {
-      id: '6',
-      title: 'Sixth Video',
-    },
+    }
   ];
 
-
-  const renderItem = (item) => (
-    <View style={styles.videoStyle}
-    >   
-      <TouchableOpacity>
-        <Text>{item.title}</Text>
-      </TouchableOpacity>  
-    </View> 
-  );
+  const renderItem = (item) => {
+    return (
+    <View style={{marginRight: 17}}>
+      <View style={styles.videoStyle}>  
+        <ImagePickerExample />
+      </View> 
+    </View>)
+  };
   
   return (
     <View style={styles.container}>
@@ -66,6 +55,7 @@ const AthleteComplete = ({navigation}) => {
 
       <View style={{marginHorizontal: 34, marginTop: 23}}>
         <FlatList
+          bounces={false}
           data={testData}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -153,13 +143,12 @@ const styles = StyleSheet.create({
   },
 
   videoStyle: {
-    width: 125,
+    width: 135,
     height: 271,
     backgroundColor: '#EEEEEE',
     borderRadius: 14,
     borderWidth: 1,
     borderColor: '#EEEEEE',
-    marginRight: 17,
     justifyContent: 'center',
     alignItems: 'center'
   },
