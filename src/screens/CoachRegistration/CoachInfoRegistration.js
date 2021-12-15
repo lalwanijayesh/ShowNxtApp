@@ -21,7 +21,7 @@ const GET_SCHOOLS_AND_SPORTS = gql`
 
     sports {
       sportId
-      name
+      sportName
       gender
     }
   }
@@ -47,7 +47,7 @@ const CoachInfoRegistration = (props) => {
 
   const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
 
-  if (uniList.length == 0) {
+  if (uniList.length === 0) {
     if (loading) return <Text style={{textAlign: 'center'}}>Loading</Text>;
     if (error) return <Text style={{textAlign: 'center'}}>Error</Text>;
 
@@ -59,8 +59,8 @@ const CoachInfoRegistration = (props) => {
     );
 
     setSportList(
-      data.sports.map(({ sportId, name, gender }) => ({
-        label: name + " [" + gender + "]",
+      data.sports.map(({ sportId, sportName, gender }) => ({
+        label: sportName + " [" + gender + "]",
         value: sportId,
       }))
     );

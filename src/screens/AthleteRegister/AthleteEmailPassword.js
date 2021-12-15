@@ -5,11 +5,21 @@ import {
   TextInput,
   View,
   StyleSheet,
-  ActivityIndicator,
   Alert,
 } from "react-native";
 import firebase from "../../firebase/firebase";
 import ScreenNames from "../../constants/ScreenNames";
+import { gql, useMutation } from '@apollo/client';
+import {ATHLETE} from "../../constants/enums";
+
+const CREATE_USER = gql`
+  mutation CreateUser($email: String!, $type: UserType!) {
+    createUser(email: $email, type: $type) {
+      id
+    }
+  }
+`;
+
 
 // special character array
 const symbols = '"~`!@#$%^&*()-_=+[{]}|;:,<>.?/"';
@@ -21,9 +31,15 @@ for (let i = 0; i < symbols.length; i++) {
 // numbers array
 const numArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-const AthleteEmailPassword = ({ navigation }) => {
+const AthleteEmailPassword = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [createUser] = useMutation(CREATE_USER, {
+    onError: error => {
+      Alert.alert("An error occurred during login. Please contact administrator.");
+    }
+  });
 
   /**
    * Check if the input email is valid
@@ -62,22 +78,21 @@ const AthleteEmailPassword = ({ navigation }) => {
     if (!isValidEmail && !isValidPassword) {
       Alert.alert("Please enter valid email and password.");
     } else {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          userCredential.user.sendEmailVerification();
-          navigation.navigate(ScreenNames.EMAIL_CONFIRMATION);
-        })
-        .catch((error) => Alert.alert(error.message));
+      firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
+        createUser({variables: {email: email, type: ATHLETE.toUpperCase()}}).then(res => {
+          console.log("User created successfully with id " + res.data.createUser.id);
+          userCredential.user.sendEmailVerification()
+              .then(() => {
+                navigation.navigate(ScreenNames.EMAIL_CONFIRMATION, {
+                  ...route.params,
+                  email: email,
+                  userId: res.data.createUser.id
+                });
+              })
+              .catch((error) => Alert.alert("An error occurred while sending verificaton email!"))
+        });
+      }).catch((error) => Alert.alert(error.message));
     }
-  };
-
-  // TODO: find the way to implement loading inddicator when it is navigating to the emailpass screen.
-  const renderLoadingIndicator = () => {
-    <View style={styles.preloader}>
-      <ActivityIndicator size="large" color="#9E9E9E" />
-    </View>;
   };
 
   const renderRegisterScreen = () => {

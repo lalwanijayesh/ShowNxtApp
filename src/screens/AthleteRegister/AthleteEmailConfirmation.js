@@ -4,19 +4,21 @@ import ScreenNames from '../../constants/ScreenNames';
 
 // TODO: store the email through Firebase -> send to user -> implement email here
 // currently this is a just simple view component
-const EmailConfirmation = ({navigation}) => {
+const EmailConfirmation = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backContainer} onPress={() => navigation.navigate(ScreenNames.EMAIL_PASSWORD)}>
+      <TouchableOpacity style={styles.backContainer}
+                        onPress={() => navigation.navigate(ScreenNames.EMAIL_PASSWORD)}>
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
 
       <Text style={styles.register}>{"REGISTER"}</Text>
-       
       <Text style={styles.mail}>{"Use the verification link at the provided email."}</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.ATHLETE_SPORT_INFO)} 
+      <TouchableOpacity onPress={() =>
+          navigation.navigate(ScreenNames.ATHLETE_SPORT_INFO,
+              route.params)}
                         style={styles.nextBtn}>
         <Text style={styles.nextText}>{"Next"}</Text>
       </TouchableOpacity>

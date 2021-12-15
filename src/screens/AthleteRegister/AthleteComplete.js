@@ -8,7 +8,7 @@ import ImagePickerExample from '../VideoUpload';
 
 // TODO: Replace image in the circle view
 // TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data. 
-const AthleteComplete = ({navigation}) => {
+const AthleteComplete = ({ navigation, route }) => {
   const testData = [
     {
       id: '1',
@@ -37,24 +37,22 @@ const AthleteComplete = ({navigation}) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.backContainer}
-        onPress={() => props.navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}
       >
         <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
-
       <Text style={styles.register}>{"COMPLETE PROFILE"}</Text>
 
       <View style={styles.infoContainer}>
         <View style={styles.avatar}></View>
         <View>
-          <Text style={styles.textName}>{"Name LastName"}</Text>
+          <Text style={styles.textName}>{route.params.fullName}</Text>
           <Text style={[styles.spacingBetweenText, styles.textInfo]}>
-            {"Position"}
+            {route.params.positionName}
           </Text>
-          <Text style={styles.textInfo}>{"School in School Town, State"}</Text>
+          <Text style={styles.textInfo}>{route.params.schoolName}</Text>
         </View>
       </View>
-
       <Text style={styles.videoTitle}>{"Videos"}</Text>
 
       <View style={{ marginHorizontal: 34, marginTop: 23 }}>
@@ -74,7 +72,7 @@ const AthleteComplete = ({navigation}) => {
 
       <TouchableOpacity
         style={styles.nextBtn}
-        onPress={() => props.navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
       >
         <Text style={styles.nextText}>{"Start Exploring"}</Text>
       </TouchableOpacity>

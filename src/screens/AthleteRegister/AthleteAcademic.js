@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   TouchableOpacity,
   Text,
@@ -12,19 +12,62 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
 import years from "../../data/years";
+import {gql, useLazyQuery, useMutation} from "@apollo/client";
 
-const AthleteAcademic = ({ navigation }) => {
+// TODO move all gql constants to separate file
+const GET_SCHOOLS = gql`
+  query GetSchools {
+    schools {
+      schoolId
+      name
+    }
+  }
+`;
+const ADD_ATHLETE_INFO = gql`
+    mutation CreateAthlete($userId: ID!, $firstName: String!, $lastName: String!, $gender: Gender!, 
+            $gpa: Float, $weight: Float, $height: Float) {
+      createAthlete(user_id: $userId, first_name: $firstName, last_name: $lastName, gender: $gender, 
+            gpa: $gpa, weight: $weight, height: $height) {
+        userId
+      }
+    }
+`;
+const CREATE_PROFILE = gql`
+    mutation CreateProfile($userId: ID!, $positionId: ID!) {
+      createProfile(user_id: $userId, position_id: $positionId) {
+        profileId
+      }
+    }
+`;
+
+const AthleteAcademic = ({ navigation, route }) => {
   const [gpa, setGPA] = useState("");
 
   const [openSchool, setOpenSchool] = useState(false);
   const [school, setSchool] = useState(null);
-  const [mockSchool, setMockSchool] = useState([
-    { label: "Northeastern University", value: "neu" },
-    { label: "Havard University", value: "hu" },
-    { label: "Boston University", value: "bu" },
-    { label: "Boston College", value: "bc" },
-    { label: "Massachusetts Institute of Technology", value: "mit" },
-  ]);
+  const [schoolList, setSchoolList] = useState([]);
+
+  const [addAthleteInfo] = useMutation(ADD_ATHLETE_INFO, {
+      onError: error => console.log(error)
+  });
+
+  const [addProfile] = useMutation(CREATE_PROFILE, {
+      onError: error => console.log(error)
+  });
+
+  const [getSchools] = useLazyQuery(GET_SCHOOLS, {
+    onCompleted: (data) => {
+        console.log(data);
+        setSchoolList(data.schools.map(({schoolId, name}) => ({
+            label: name,
+            value: schoolId,
+        })));
+    }
+  });
+
+  useEffect(() => {
+    getSchools();
+  }, []);
 
   const [openYear, setOpenYear] = useState(false);
   const [year, setYear] = useState(null);
@@ -57,10 +100,10 @@ const AthleteAcademic = ({ navigation }) => {
         placeholder="Find School"
         open={openSchool}
         value={school}
-        items={mockSchool}
+        items={schoolList}
         setOpen={setOpenSchool}
         setValue={setSchool}
-        setItems={setMockSchool}
+        setItems={setSchoolList}
         onOpen={handleSchoolOpen}
         zIndex={3000}
         zIndexInverse={1000}
@@ -110,15 +153,44 @@ const AthleteAcademic = ({ navigation }) => {
 
       <TouchableOpacity
         onPress={() => {
-          gpa != "" && !!school && !!year
-            ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE)
-            : Alert.alert(
-                "Please enter school, year and your gpa before moving to the next step!!"
-              );
+            addAthleteInfo({
+                    variables: {
+                        userId: route.params.userId,
+                        firstName: route.params.fullName.split(/\s+/)[0],
+                        lastName: route.params.fullName.split(/\s+/)[1],
+                        gender: route.params.gender.toUpperCase(),
+                        // TODO propose height format change
+                        height: parseInt(parseFloat(route.params.height.ft) * 30.48
+                            + parseFloat(route.params.height.inch) * 2.54),
+                        weight: parseInt(route.params.weight),
+                        gpa: parseFloat(gpa)
+                    }
+                }
+                // TODO add exception handling and possibly combine athlete/profile creation
+            ).then(r => {
+                addProfile( {
+                    variables: {
+                        userId: route.params.userId,
+                        positionId: route.params.position
+                    }
+                }).then(res => {
+                    gpa !== "" && !!school && !!year
+                        ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE, {
+                            ...route.params,
+                            profileId: res.data.createProfile.profileId,
+                            school: school,
+                            // TODO change this to school object
+                            schoolName: schoolList.filter(s => s.value === school)[0].label,
+                            year: year,
+                            gpa: gpa,
+                        })
+                        : Alert.alert("Please enter school, year and your gpa before moving to the next step!!");
+                });
+            });
         }}
         style={[
           styles.nextBtn,
-          gpa != "" && !!school && !!year
+          gpa !== "" && !!school && !!year
             ? { backgroundColor: "#000000", borderColor: "#000000" }
             : { backgroundColor: "#888888", borderColor: "#888888" },
         ]}
