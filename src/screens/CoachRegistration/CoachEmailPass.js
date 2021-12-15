@@ -95,12 +95,15 @@ const EmailPassScreen = (props) => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          userCredential.user.sendEmailVerification();
-          props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
-            fullName: fullName,
-            email: email,
-            password: password,
-          });
+          userCredential.user.sendEmailVerification()
+              .then(() => {
+                props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
+                  fullName: fullName,
+                  email: email,
+                  password: password,
+                });
+              })
+              .catch((error) => Alert.alert("An error occurred while sending verificaton email!"));
         })
         .catch((error) => Alert.alert(error.message));
     }

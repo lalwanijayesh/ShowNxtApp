@@ -11,10 +11,10 @@ import { gql, useQuery } from "@apollo/client";
 import ScreenNames from "../../constants/ScreenNames";
   
 const GET_POSITIONS = gql`
-  query GetPositions($sportId: ID!) {
-    positions(sportId: $sportId) {
+  query PositionsBySport($sportId: ID!) {
+    positionsBySport(sportId: $sportId) {
       positionId
-      name
+      positionName
     }
   }
 `;
@@ -77,9 +77,9 @@ const CoachPositionSelection = (props) => {
     if (error) return <Text>Error</Text>;
 
     setPositions(
-      data.positions.map(({ positionId, name }) => ({
+      data.positionsBySport.map(({ positionId, positionName }) => ({
         positionId,
-        name,
+        positionName,
         counter: 0,
       }))
     );
@@ -122,7 +122,7 @@ const CoachPositionSelection = (props) => {
             return (
               <View style={styles.itemContainer}>
                 <View style={styles.itemLabelContainer}>
-                  <Text style={styles.itemLabel}>{positions[id].name}</Text>
+                  <Text style={styles.itemLabel}>{positions[id].positionName}</Text>
                 </View>
 
                 <View style={styles.itemIncrementContainer}>
