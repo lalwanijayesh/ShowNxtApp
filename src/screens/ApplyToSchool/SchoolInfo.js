@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-ico-material-design";
 import college from "../../../assets/uni.jpg";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import UserIdContext from "../../AppContext";
 
 const GET_SCHOOL_POSITIONS = gql`
   query GetSchoolAndPositions($schoolId: ID!) {
@@ -70,7 +71,7 @@ const SchoolInfo = (props) => {
   const [visible, setVisible] = React.useState(false);
 
   const { schoolId, name, location } = props.route.params;
-  const userId = 16; // todo: fix
+  const [userId, setUserId] = React.useContext(UserIdContext);
 
   const [openings, setOpenings] = React.useState([]);
   const [shouldSkip, setShouldSkip] = React.useState(false);
@@ -86,7 +87,7 @@ const SchoolInfo = (props) => {
   });
 
   const [attemptToApplyToSelected] = useLazyQuery(GET_PROFILES_FOR_ATHLETE, {
-    variables: { userId: userId },
+    variables: { userId },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
 

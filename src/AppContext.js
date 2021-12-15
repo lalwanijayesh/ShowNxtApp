@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 
 // const appContextWrapper = (component) => ({
 //   ...initialAppState,
@@ -27,3 +27,7 @@ import React from "react";
 //     );
 //   }
 // }
+
+const UserIdContext = createContext(undefined);
+
+export default UserIdContext;
