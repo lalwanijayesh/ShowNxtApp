@@ -35,7 +35,11 @@ const AthleteEmailPassword = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [createUser] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER, {
+    onError: error => {
+      Alert.alert("An error occurred during login. Please contact administrator.");
+    }
+  });
 
   /**
    * Check if the input email is valid
