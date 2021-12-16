@@ -32,6 +32,13 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>ATHLETE TAB</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('AthleteComplete1')}
+      >
+        <Text style={styles.buttonText}>ATHLETE COMPLETE VIDEO PAGE</Text>
+      </TouchableOpacity>
     </View>
   );
 };

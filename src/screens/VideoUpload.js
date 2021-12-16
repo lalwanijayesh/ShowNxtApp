@@ -71,10 +71,8 @@ const ImagePickerExample = () => {
           ref={videoRef}
           style={styles.video}
           source={{ uri: video }}
-          useNativeControls={false}
+          useNativeControls
           resizeMode="cover"
-          isLooping
-          shouldPlay
           onPlaybackStatusUpdate={status => setStatus(() => status)}
         />
       }

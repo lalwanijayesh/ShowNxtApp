@@ -27,6 +27,7 @@ import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthletePr
 import CoachFlowTab from "./src/screens/CoachFlowTab";
 import AthleteFlowTab from "./src/screens/AthleteFlow/AthleteFlowTab";
 import UserIdContext from "./src/AppContext";
+import AthleteComplete1 from "./src/screens/AthleteRegister/AtheleteComplete1";
 const Stack = createNativeStackNavigator();
 
 // Ignore timer related warnings from firebase core APIs
@@ -94,6 +95,12 @@ export default function App() {
               component={DisplayAthleteProfile}
               options={{ headerShown: false }}
             />
+
+            <Stack.Screen
+              name={'AthleteComplete1'}
+              component={AthleteComplete1}
+              options={{ headerShown: false }}
+            />    
 
             {/* <Stack.Screen
             name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
