@@ -81,16 +81,16 @@ const AthleteEmailPassword = ({ navigation, route }) => {
       firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
         createUser({variables: {email: email, type: ATHLETE.toUpperCase()}}).then(res => {
           console.log("User created successfully with id " + res.data.createUser.id);
-          userCredential.user.sendEmailVerification()
+        });
+        userCredential.user.sendEmailVerification()
               .then(() => {
                 navigation.navigate(ScreenNames.EMAIL_CONFIRMATION, {
                   ...route.params,
                   email: email,
-                  userId: res.data.createUser.id
+                  //userId: res.data.createUser.id
                 });
               })
               .catch((error) => Alert.alert("An error occurred while sending verificaton email!"))
-        });
       }).catch((error) => Alert.alert(error.message));
     }
   };
