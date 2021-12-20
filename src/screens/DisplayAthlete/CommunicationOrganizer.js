@@ -9,9 +9,9 @@ import {
   TextInput,
   ImageBackground,
   Image,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-//import ScreenNames from "../constants/ScreenNames";
 import { gql, useLazyQuery, useQuery } from "@apollo/client";
 
 const GET_EVALUATIONS = gql`
@@ -162,7 +162,7 @@ const CommunicationOrganizer = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.athletesContainer}>
+      <ScrollView style={styles.athletesContainer}>
         {likedSelected
           ? // ? acceptedApplications.map((application) => (
             //     <AthleteItem application={application} navigation={navigation} />
@@ -203,7 +203,7 @@ const CommunicationOrganizer = ({ navigation }) => {
                   navigation={navigation}
                 />
               ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
