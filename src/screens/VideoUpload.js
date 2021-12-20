@@ -3,11 +3,12 @@ import { Text, View, Platform, StyleSheet, Alert, TouchableOpacity } from 'react
 import { Video } from 'expo-av';
 import * as ImagePicker from 'expo-image-picker';
 import firebase from '../firebase/firebase';
+import uuid from 'react-native-uuid';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();
 
-const ImagePickerExample = () => {
+const ImagePickerExample = ({profileId, addVideo}) => {
   const videoRef = React.useRef(null);
   const [video, setVideo] = useState(null);
   const [status, setStatus] = React.useState({});
@@ -37,13 +38,16 @@ const ImagePickerExample = () => {
       setVideo(result.uri);
       setStatus({ isPlaying: false });
       //videoRef.current.pauseAsync();
-      uploadVideo();
+      console.log(result.uri);
+      await uploadVideo(result.uri);
     }
   };
 
-  const uploadVideo = async () => {
+  const uploadVideo = async (uri) => {
     const storageRef = firebase.storage().ref();
-    const fileRef = storageRef.child('videos/upload1.mp4');
+    const filePath = "videos/" + uuid.v4()
+        + uri.substring(uri.lastIndexOf("."));
+    const fileRef = storageRef.child(filePath);
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -54,13 +58,19 @@ const ImagePickerExample = () => {
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
-      xhr.open("GET", video, true);
+      xhr.open("GET", uri, true);
       xhr.send(null);
     });
 
     fileRef.put(blob).then((snapshot) => {
-      Alert.alert('Uploaded video successfully!');
+      console.log('Uploaded video successfully!');
       blob.close();
+      addVideo({
+        variables: {
+          profileId: profileId,
+          filePath: filePath,
+        },
+      }).then(r => console.log("File Path saved - " + filePath));
     });
   }
 

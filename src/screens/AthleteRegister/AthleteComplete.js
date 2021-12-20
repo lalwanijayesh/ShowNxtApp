@@ -4,22 +4,28 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList,
-  Button,
-  Platform,
-  Alert,
+  FlatList
 } from "react-native";
-import { Video } from "expo-av";
-import * as ImagePicker from "expo-image-picker";
-import Firebase from "../../firebase/firebase";
 import ScreenNames from "../../constants/ScreenNames";
 import ImagePickerExample from "../VideoUpload";
 import UserIdContext from "../../AppContext";
+import {gql, useMutation} from "@apollo/client";
 
-// TODO: Replace image in the circle view
-// TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data.
+const ADD_VIDEO = gql`
+mutation AddProfileVideo($profileId: ID!, $filePath: String!) {
+  addProfileVideo(profileId: $profileId, filePath: $filePath) {
+    videoId
+    uploadDate
+  }
+}
+`
+
 const AthleteComplete = ({ navigation, route }) => {
   const [userId, setUserId] = useContext(UserIdContext);
+
+  const [addVideo] = useMutation(ADD_VIDEO, {
+    onError: (error) => console.log(error),
+  });
 
   const testData = [
     {
@@ -40,7 +46,10 @@ const AthleteComplete = ({ navigation, route }) => {
     return (
       <View style={{ marginRight: 17 }}>
         <View style={styles.videoStyle}>
-          <ImagePickerExample />
+          <ImagePickerExample
+              profileId={route.params.profileId}
+              addVideo={addVideo}
+          />
         </View>
       </View>
     );
