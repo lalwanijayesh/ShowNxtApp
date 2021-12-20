@@ -20,7 +20,7 @@ const ScreenNames = {
   DISPLAY_ATHLETE_PROFILE: "display_athlete_profile",
 
   DISPLAY_ATHLETE_DECLINE_ACCEPT: "display_athlete_decline_accept",
-  COMMUNICATION_PAGE: "communication_page",
+  COMMUNICATION_ORGANIZER: "communication_organizer",
   SCHOOL_SEARCH: "school_search",
   SCHOOL_INFO: "school_info",
 
