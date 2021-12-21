@@ -2,17 +2,14 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
-  Alert,
   TextInput,
   ImageBackground,
   Image,
   ScrollView,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 const GET_EVALUATIONS = gql`
   query EvaluationsByCoach($coachId: ID!) {
@@ -42,9 +39,11 @@ const AthleteItem = (props) => {
   return (
     <TouchableOpacity
       key={props.application.applicationId}
-      onPress={() =>
-        console.log("Selected " + props.application.profile.athlete.firstName)
-      }
+      onPress={() => {
+        console.log("Selected " + props.application.profile.athlete.firstName);
+
+        // TODO: navigate to communication page for that specific athlete
+      }}
     >
       <View style={styles.athleteContainer}>
         <ImageBackground
@@ -162,16 +161,12 @@ const CommunicationOrganizer = ({ navigation }) => {
         </View>
       </View>
 
-      <ScrollView style={styles.athletesContainer}>
+      <ScrollView
+        style={styles.athletesScroll}
+        contentContainerStyle={styles.athletesContainer}
+      >
         {likedSelected
-          ? // ? acceptedApplications.map((application) => (
-            //     <AthleteItem application={application} navigation={navigation} />
-            //   ))
-            // : rejectedApplications.map((application) => (
-            //     <AthleteItem application={application} navigation={navigation} />
-            //   ))}
-
-            acceptedApplications
+          ? acceptedApplications
               .filter((application) =>
                 (
                   application.profile.athlete.firstName +
@@ -289,21 +284,26 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
 
+  athletesScroll: {
+    width: "90%",
+  },
+
   athletesContainer: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "flex-start",
   },
 
   athleteContainer: {
     borderColor: "black",
     borderRadius: 15,
-    margin: 10,
+    margin: 5,
   },
 
   athleteVideoFrame: {
-    width: 180,
-    height: 180,
+    width: 170,
+    height: 170,
 
     display: "flex",
     flexDirection: "row",

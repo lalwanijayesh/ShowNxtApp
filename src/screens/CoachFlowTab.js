@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ScreenNames from "../constants/ScreenNames";
 import DisplayAthlete from "./DisplayAthlete/DisplayAthleteDeclineAccept";
 import SearchForCoach from "./DisplayAthlete/SearchForCoach";
-import CommunicationPage from "./DisplayAthlete/CommunicationPage";
+import CommunicationOrganizer from "./DisplayAthlete/CommunicationOrganizer";
 import ProfilePageCoach from "./DisplayAthlete/ProfilePageCoach";
 import { StyleSheet } from "react-native";
 import Icon from "react-native-ico-material-design";
@@ -44,8 +44,8 @@ const CoachFlowTab = (props) => {
         }}
       />
       <Tab.Screen
-        name={ScreenNames.COMMUNICATION_PAGE}
-        component={CommunicationPage}
+        name={ScreenNames.COMMUNICATION_ORGANIZER}
+        component={CommunicationOrganizer}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
