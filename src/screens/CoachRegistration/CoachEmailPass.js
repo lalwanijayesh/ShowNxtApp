@@ -108,15 +108,25 @@ const EmailPassScreen = (props) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backContainer}
+        onPress={() =>
+          props.navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)
+        }
+      >
+        <Text style={styles.back}>{"<"}</Text>
+      </TouchableOpacity>
       <TextInput
         style={styles.emailInput}
         onChangeText={setEmail}
         value={email}
         autoCompleteType="email"
-        placeholder="Email"
+        placeholder="Enter email"
+        autoCorrect={false}
       />
-
-      <Text style={styles.emailvalid}>Please use a valid email.</Text>
+      <View style={styles.checkContainer}>
+        <Text style={styles.emailvalid}>Please use a valid email.</Text>
+      </View>
 
       <TextInput
         style={styles.passwordInput}
@@ -125,6 +135,7 @@ const EmailPassScreen = (props) => {
         autoCompleteType="password"
         secureTextEntry={true}
         placeholder="Password"
+        autoCorrect={false}
       />
 
       <View style={styles.passwordRequirementsContainer}>
@@ -180,6 +191,20 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
 
+  textBox: {
+    color: "#555555",
+    fontSize: 14,
+    lineHeight: 16,
+    fontWeight: "bold",
+    backgroundColor: "#FFFFFF",
+  },
+
+  checkContainer: {
+    alignItems: "flex-start",
+    //backgroundColor: "yellow",
+    width: 220,
+  },
+
   container: {
     display: "flex",
     flexDirection: "column",
@@ -195,6 +220,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginTop: 170,
+    //color: "#555555",
+
+    //backgroundColor: "#FFFFFF",
+    fontWeight: "bold",
   },
 
   passwordInput: {
@@ -205,6 +234,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginTop: 30,
+    //color: "#555555",
+    fontWeight: "bold",
   },
 
   buttonReady: {
@@ -222,13 +253,26 @@ const styles = StyleSheet.create({
   passwordRequirements: {
     //fontWeight: "bold",
     textAlign: "center",
-    marginTop: 10,
+    marginTop: 8,
+    fontSize: 13,
+  },
+
+  backContainer: {
+    position: "absolute",
+    left: 42,
+    top: 40,
+  },
+
+  back: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 
   emailvalid: {
     textAlign: "left",
     marginTop: 5,
-    fontSize: 12,
+    fontSize: 13,
+    justifyContent: "flex-start",
   },
   passwordRequirements1: {
     fontWeight: "normal",
