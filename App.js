@@ -27,6 +27,7 @@ import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthletePr
 import CoachFlowTab from "./src/screens/CoachFlowTab";
 import AthleteFlowTab from "./src/screens/AthleteFlow/AthleteFlowTab";
 import UserIdContext from "./src/AppContext";
+import Login from "./src/screens/Login";
 const Stack = createNativeStackNavigator();
 
 // Ignore timer related warnings from firebase core APIs
@@ -51,6 +52,12 @@ export default function App() {
               name={ScreenNames.WELCOME}
               component={WelcomeScreen}
               options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name={ScreenNames.LOGIN}
+                component={Login}
+                options={{ headerShown: false }}
             />
 
             <Stack.Screen
