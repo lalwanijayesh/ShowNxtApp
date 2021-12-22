@@ -20,38 +20,9 @@ const GET_POSITIONS = gql`
 `;
 
 const CoachPositionSelection = (props) => {
-  // let positions = [
-  //   "Goalkeeper",
-  //   "Defender",
-  //   "Quarterback",
-  //   "Fullback",
-  //   "Left Offensive Guard",
-  //   "Center",
-  //   "Right Offensive Guard",
-  //   "Left Offensive Tackle",
-  //   "Right Offensive Tackle",
-  //   "Tight End",
-  //   "Wide Receiver",
-  //   "Shooting Guard",
-  //   "Power Forward",
-  //   "Small Forward",
-  //   "Point Guard",
-  //   "Goalie",
-  //   "Winger",
-  //   "Third Base",
-  // ];
-
-  // let initialCounters = [];
-  // for (let i = 0; i < positions.length; i += 1) {
-  //   initialCounters.push(0);
-  // }
-  // let initialCounters = [];
-  // for (let i = 0; i < positions.length; i += 1) {
-  //   initialCounters.push(0);
-  // }
 
   const [positions, setPositions] = React.useState([]);
-  // const [counters, setCounters] = React.useState([]);
+
   const { loading, error, data } = useQuery(GET_POSITIONS, {
     variables: { sportId: props.route.params.sportId },
   });
@@ -72,7 +43,7 @@ const CoachPositionSelection = (props) => {
     setPositions(currentPositions);
   };
 
-  if (positions.length == 0) {
+  if (positions.length === 0) {
     if (loading) return <Text>Loading</Text>;
     if (error) return <Text>Error</Text>;
 
@@ -159,7 +130,8 @@ const CoachPositionSelection = (props) => {
           <Text style={styles.oneText}>✓</Text>
         </View>
 
-        <View style={styles.dash}></View>
+        <View style={styles.dash}>
+        </View>
 
         <View style={styles.circle1}>
           <Text style={styles.oneText}>2</Text>
@@ -180,12 +152,7 @@ const CoachPositionSelection = (props) => {
           style={styles.buttonReady}
           onPress={() => {
             props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
-              fullName: props.route.params.fullName,
-              email: props.route.params.email,
-              password: props.route.params.password,
-              schoolId: props.route.params.schoolId,
-              sportId: props.route.params.sportId,
-              jobTitle: props.route.params.jobTitle,
+              ...props.route.params,
               positions: getFilledPositions(),
             });
           }}

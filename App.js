@@ -31,8 +31,9 @@ const Stack = createNativeStackNavigator();
 
 // Ignore timer related warnings from firebase core APIs
 LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
+LogBox.ignoreLogs(["VirtualizedLists should never be nested inside"]);
+LogBox.ignoreAllLogs();
 
-// TODO: move out to its own file, but it didn't work when I tried to do it
 const client = new ApolloClient({
   uri: serverUrl,
   cache: new InMemoryCache(),
