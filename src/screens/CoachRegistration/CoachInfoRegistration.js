@@ -48,8 +48,8 @@ const CoachInfoRegistration = (props) => {
   const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
 
   if (uniList.length == 0) {
-    if (loading) return <Text style={{textAlign: 'center'}}>Loading</Text>;
-    if (error) return <Text style={{textAlign: 'center'}}>Error</Text>;
+    if (loading) return <Text style={{ textAlign: "center" }}>Loading</Text>;
+    if (error) return <Text style={{ textAlign: "center" }}>Error</Text>;
 
     setUniList(
       data.schools.map(({ schoolId, name }) => ({
@@ -68,6 +68,15 @@ const CoachInfoRegistration = (props) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backContainer}
+        onPress={() =>
+          props.navigation.navigate(ScreenNames.COACH_VERIFICATION)
+        }
+      >
+        <Text style={styles.back}>{"<"}</Text>
+      </TouchableOpacity>
+
       <View style={styles.marginTop1} />
 
       <DropDownPicker
@@ -140,7 +149,8 @@ const CoachInfoRegistration = (props) => {
         </View>
       </View>
 
-      {//currentUni !== null && currentSport !== null && jobTitle !== "" && 
+      {
+        //currentUni !== null && currentSport !== null && jobTitle !== "" &&
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
@@ -167,6 +177,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     margin: 255,
+  },
+
+  backContainer: {
+    position: "absolute",
+    left: -32,
+    top: -30,
+  },
+
+  back: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 
   textUnderCircles: {

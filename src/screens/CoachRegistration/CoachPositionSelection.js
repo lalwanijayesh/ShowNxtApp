@@ -9,7 +9,7 @@ import {
 import { gql, useQuery } from "@apollo/client";
 
 import ScreenNames from "../../constants/ScreenNames";
-  
+
 const GET_POSITIONS = gql`
   query GetPositions($sportId: ID!) {
     positions(sportId: $sportId) {
@@ -20,36 +20,6 @@ const GET_POSITIONS = gql`
 `;
 
 const CoachPositionSelection = (props) => {
-  // let positions = [
-  //   "Goalkeeper",
-  //   "Defender",
-  //   "Quarterback",
-  //   "Fullback",
-  //   "Left Offensive Guard",
-  //   "Center",
-  //   "Right Offensive Guard",
-  //   "Left Offensive Tackle",
-  //   "Right Offensive Tackle",
-  //   "Tight End",
-  //   "Wide Receiver",
-  //   "Shooting Guard",
-  //   "Power Forward",
-  //   "Small Forward",
-  //   "Point Guard",
-  //   "Goalie",
-  //   "Winger",
-  //   "Third Base",
-  // ];
-
-  // let initialCounters = [];
-  // for (let i = 0; i < positions.length; i += 1) {
-  //   initialCounters.push(0);
-  // }
-  // let initialCounters = [];
-  // for (let i = 0; i < positions.length; i += 1) {
-  //   initialCounters.push(0);
-  // }
-
   const [positions, setPositions] = React.useState([]);
   // const [counters, setCounters] = React.useState([]);
   const { loading, error, data } = useQuery(GET_POSITIONS, {
@@ -190,7 +160,7 @@ const CoachPositionSelection = (props) => {
             });
           }}
         >
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>Complete Profile</Text>
         </TouchableOpacity>
       )}
     </View>

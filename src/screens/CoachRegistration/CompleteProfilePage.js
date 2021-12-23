@@ -14,8 +14,8 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
 
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs();
 
 const splitName = (name) => {

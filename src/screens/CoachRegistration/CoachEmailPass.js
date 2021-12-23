@@ -173,6 +173,8 @@ const EmailPassScreen = (props) => {
             if (userType === COACH) {
               registerUser();
             } else {
+              props.navigation.navigate(ScreenNames.COACH_INFO_REGISTRATION);
+
               // TODO: redirect to next Athlete screen
             }
           }}
@@ -220,9 +222,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginTop: 170,
-    //color: "#555555",
-
-    //backgroundColor: "#FFFFFF",
     fontWeight: "bold",
   },
 
@@ -234,7 +233,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginTop: 30,
-    //color: "#555555",
     fontWeight: "bold",
   },
 
