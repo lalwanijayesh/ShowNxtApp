@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
   Pressable,
   SafeAreaView,
 } from "react-native";
@@ -13,24 +14,69 @@ import Icon from "react-native-ico-material-design";
 import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
 import { firebaseBucket } from "../../constants/config";
+import {gql, useLazyQuery, useMutation} from "@apollo/client";
 
-// TODO replace dummy links with applicant athlete videos from backend
-export const videos = [
-  { id: 1, path: "videos/sample.mp4" },
-  { id: 2, path: "videos/dogvid.mp4" },
-  { id: 3, path: "videos/tree.mp4" },
-];
+const GET_NEXT_APPLICATION = gql`
+query Query($userId: ID!) {
+  coach(userId: $userId) {
+    nextApplication {
+      applicationId
+      profile {
+        profileId
+        athlete {
+          lastName
+          userId
+          firstName
+          gender
+          gpa
+          sat
+          act
+          height
+          weight
+        }
+        positionId
+        videos {
+          videoId
+          filePath
+          uploadDate
+        }
+      }
+      schoolId
+    }
+  }
+}
+`
+const SET_EVALUATION_STATUS = gql`
+mutation Mutation($applicationId: ID!, $coachId: ID!, $status: EvalStatus!) {
+  makeEvaluation(applicationId: $applicationId, coachId: $coachId, status: $status) {
+    status
+  }
+}
+`
 
 // TODO: make a method that for each video displays a little white circle at the bottom of the screen
 const { width, height } = Dimensions.get("window");
 
-const DisplayAthlete = ({ navigation }) => {
-  constructor;
+const DisplayAthlete = ({ navigation, route }) => {
 
   const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
   const [visibleButton1, setVisibleButton1] = React.useState(true);
   const [videoUrls, setVideoUrls] = React.useState([]);
+
+  const [applicationId, setApplicationId] = React.useState(null);
+
+  const [getNextApplication] = useLazyQuery(GET_NEXT_APPLICATION, {
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [setEvaluationStatus] = useMutation(SET_EVALUATION_STATUS, {
+    onError: (error) => {
+      console.log(error);
+    }
+  });
 
   const changeVisibility = () => {
     setVisible(true);
@@ -52,16 +98,23 @@ const DisplayAthlete = ({ navigation }) => {
 
   React.useEffect(() => {
     const storage = firebase.storage();
-    Promise.all(
-      videos.map(async (video) => {
-        const url = await storage
-          .refFromURL("gs://" + firebaseBucket + "/" + video.path)
-          .getDownloadURL();
-        console.log(url);
-        return url;
-      })
-    ).then((data) => {
-      setVideoUrls(data);
+    getNextApplication({
+      variables: {
+        userId: route.params.userId
+      }
+    }).then(res => {
+      setApplicationId(res.data.coach.nextApplication.applicationId);
+      Promise.all(
+          res.data.coach.nextApplication.profile.videos.map(async (video) => {
+            const url = await storage
+                .refFromURL("gs://" + firebaseBucket + "/" + video.filePath)
+                .getDownloadURL();
+            console.log(url);
+            return url;
+          })
+      ).then((data) => {
+        setVideoUrls(data);
+      });
     });
   }, []);
 
@@ -83,6 +136,17 @@ const DisplayAthlete = ({ navigation }) => {
         />
       </Pressable>
     );
+  };
+
+  const evaluateApplication = (status) => {
+    setEvaluationStatus({
+      variables: {
+        applicationId: applicationId,
+        coachId: route.params.userId,
+        status: status
+      }
+    }).then(r => console.log(r));
+    // TODO get next application
   };
 
   return (
@@ -107,11 +171,13 @@ const DisplayAthlete = ({ navigation }) => {
       {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonsBar}>
-          <TouchableOpacity style={styles.circleDecline}>
+          <TouchableOpacity style={styles.circleDecline}
+                            onPress={() => evaluateApplication('DISMISS')}>
             <Text style={styles.symbolText}>X</Text>
           </TouchableOpacity>
           <View style={styles.circlePerVid}></View>
-          <TouchableOpacity style={styles.circleAccept}>
+          <TouchableOpacity style={styles.circleAccept}
+                            onPress={() =>  evaluateApplication('ACCEPT')}>
             <Text style={styles.symbolText}>✓</Text>
           </TouchableOpacity>
         </View>

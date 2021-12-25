@@ -11,17 +11,18 @@ import { gql, useQuery } from "@apollo/client";
 import ScreenNames from "../../constants/ScreenNames";
 
 const GET_POSITIONS = gql`
-  query GetPositions($sportId: ID!) {
-    positions(sportId: $sportId) {
+  query PositionsBySport($sportId: ID!) {
+    positionsBySport(sportId: $sportId) {
       positionId
-      name
+      positionName
     }
   }
 `;
 
 const CoachPositionSelection = (props) => {
+
   const [positions, setPositions] = React.useState([]);
-  // const [counters, setCounters] = React.useState([]);
+
   const { loading, error, data } = useQuery(GET_POSITIONS, {
     variables: { sportId: props.route.params.sportId },
   });
@@ -42,14 +43,14 @@ const CoachPositionSelection = (props) => {
     setPositions(currentPositions);
   };
 
-  if (positions.length == 0) {
+  if (positions.length === 0) {
     if (loading) return <Text>Loading</Text>;
     if (error) return <Text>Error</Text>;
 
     setPositions(
-      data.positions.map(({ positionId, name }) => ({
+      data.positionsBySport.map(({ positionId, positionName }) => ({
         positionId,
-        name,
+        positionName,
         counter: 0,
       }))
     );
@@ -92,7 +93,7 @@ const CoachPositionSelection = (props) => {
             return (
               <View style={styles.itemContainer}>
                 <View style={styles.itemLabelContainer}>
-                  <Text style={styles.itemLabel}>{positions[id].name}</Text>
+                  <Text style={styles.itemLabel}>{positions[id].positionName}</Text>
                 </View>
 
                 <View style={styles.itemIncrementContainer}>
@@ -129,7 +130,8 @@ const CoachPositionSelection = (props) => {
           <Text style={styles.oneText}>✓</Text>
         </View>
 
-        <View style={styles.dash}></View>
+        <View style={styles.dash}>
+        </View>
 
         <View style={styles.circle1}>
           <Text style={styles.oneText}>2</Text>
@@ -150,12 +152,7 @@ const CoachPositionSelection = (props) => {
           style={styles.buttonReady}
           onPress={() => {
             props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
-              fullName: props.route.params.fullName,
-              email: props.route.params.email,
-              password: props.route.params.password,
-              schoolId: props.route.params.schoolId,
-              sportId: props.route.params.sportId,
-              jobTitle: props.route.params.jobTitle,
+              ...props.route.params,
               positions: getFilledPositions(),
             });
           }}

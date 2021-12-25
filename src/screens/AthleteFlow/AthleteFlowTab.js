@@ -1,18 +1,42 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ScreenNames from "../../constants/ScreenNames";
-import SchoolSearch from "../SchoolSearch";
+import SchoolSearch from "../ApplyToSchool/SchoolSearch";
 import CommunicationAthlete from "./CommunicationAthlete";
 import AthleteComplete from "../AthleteRegister/AthleteComplete";
 import Icon from "react-native-ico-material-design";
 import { StyleSheet } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SchoolInfo from "../ApplyToSchool/SchoolInfo";
 
 const Tab = createBottomTabNavigator();
+const ApplicationStack = createNativeStackNavigator();
+
+const ApplicationScreen = () => {
+  return (
+    <ApplicationStack.Navigator
+      initialRouteName={ScreenNames.SCHOOL_SEARCH}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <ApplicationStack.Screen
+        name={ScreenNames.SCHOOL_SEARCH}
+        component={SchoolSearch}
+      />
+
+      <ApplicationStack.Screen
+        name={ScreenNames.SCHOOL_INFO}
+        component={SchoolInfo}
+      />
+    </ApplicationStack.Navigator>
+  );
+};
 
 const AthleteFlowTab = (props) => {
   return (
     <Tab.Navigator
-      initialRouteName={ScreenNames.SCHOOL_SEARCH}
+      initialRouteName={ScreenNames.ATHLETE_APPLICATION_STACK}
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -20,8 +44,8 @@ const AthleteFlowTab = (props) => {
       }}
     >
       <Tab.Screen
-        name={ScreenNames.SCHOOL_SEARCH}
-        component={SchoolSearch}
+        name={ScreenNames.ATHLETE_APPLICATION_STACK}
+        component={ApplicationScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon

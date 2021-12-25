@@ -9,24 +9,50 @@ import {
   Dimensions,
   Platform,
   FlatList,
+  Alert
 } from "react-native";
-
 import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
+import {gql, useMutation, useQuery} from "@apollo/client";
 
-import { LogBox } from "react-native";
-LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
-LogBox.ignoreAllLogs();
+const GET_SCHOOLS_AND_SPORTS = gql`
+  query GetSchoolsAndSports {
+    schools {
+      schoolId
+      name
+    }
+
+    sports {
+      sportId
+      sportName
+      gender
+    }
+  }
+`;
+const CREATE_COACH = gql`
+mutation Mutation($userId: ID!, $schoolId: ID!, $sportId: ID!, $firstName: String!, $lastName: String!, 
+  $openPositionIds: [ID!], $openPositionValues: [Int!]) {
+  createCoach(userId: $userId, schoolId: $schoolId, sportId: $sportId, firstName: $firstName, lastName: $lastName, 
+    openPositionIds: $openPositionIds, openPositionValues: $openPositionValues) {
+      userId
+      firstName
+      lastName
+      schoolId
+      sportId
+  }
+}
+`
 
 const splitName = (name) => {
   const listOfStrings = name.split(" ");
   return {
     firstName: listOfStrings[0],
-    lastName: listOfStrings[listOfStrings.length - 1],
+    lastName: listOfStrings.length > 1 ? listOfStrings[listOfStrings.length - 1] : "",
   };
 };
 
 const CompleteProfilePage = (props) => {
+
   const [firstName, setFirstName] = React.useState(
     splitName(props.route.params.fullName).firstName
   );
@@ -36,20 +62,19 @@ const CompleteProfilePage = (props) => {
   const [bio, setBio] = React.useState("");
   const [jobTitle, setJobTitle] = React.useState(props.route.params.jobTitle);
 
+  const [createCoach] = useMutation(CREATE_COACH, {
+    onError: error => {
+      Alert.alert("An error occurred during registration. Please contact administrator.");
+    }
+  });
+
   const [uniVisible, setUniVisible] = React.useState(false);
   const [uni, setUni] = React.useState(props.route.params.schoolId);
-  const [mockUni, setMockUni] = React.useState([
-    { label: "Northeastern", value: "Northeastern" },
-    { label: "Harvard", value: "harvard" },
-    { label: "Bu", value: "bu" },
-  ]);
+  const [uniList, setUniList] = React.useState([]);
 
   const [sportVisible, setSportVisible] = React.useState(false);
   const [sport, setSport] = React.useState(props.route.params.sportId);
-  const [mockSport, setMockSport] = React.useState([
-    { label: "Squash", value: "squash" },
-    { label: "Soccer", value: "soccer" },
-  ]);
+  const [sportList, setSportList] = React.useState([]);
 
   const onUniOpen = useCallback(() => {
     setSportVisible(false);
@@ -59,11 +84,32 @@ const CompleteProfilePage = (props) => {
     setUniVisible(false);
   }, []);
 
-  let positions = ["Goalkeeper", "Defender", "Quarterback", "Midfielder"];
+  const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
+
+  if (uniList.length === 0) {
+    if (loading) return <Text style={{textAlign: 'center'}}>Loading</Text>;
+    if (error) return <Text style={{textAlign: 'center'}}>Error</Text>;
+
+    setUniList(
+        data.schools.map(({ schoolId, name }) => ({
+          label: name,
+          value: schoolId,
+        }))
+    );
+
+    setSportList(
+        data.sports.map(({ sportId, sportName, gender }) => ({
+          label: sportName + " [" + gender + "]",
+          value: sportId,
+        }))
+    );
+  }
+
+  const [positions, setPositions] = React.useState(props.route.params.positions);
 
   let initialCounters = [];
   for (let i = 0; i < positions.length; i += 1) {
-    initialCounters.push(0);
+    initialCounters.push(positions[i].counter);
   }
 
   const [counters, setCounters] = React.useState(initialCounters);
@@ -91,7 +137,9 @@ const CompleteProfilePage = (props) => {
       <ScrollView style={{ marginBottom: 39 }}>
         <View style={styles.infoConatiner}>
           <View style={styles.avaContainer}>
-            <View style={styles.avatar}></View>
+            <View style={styles.avatar}>
+              {/* TODO add profile avatar */}
+            </View>
             <TouchableOpacity>
               <Text>add photo</Text>
             </TouchableOpacity>
@@ -147,10 +195,10 @@ const CompleteProfilePage = (props) => {
               placeholder={"University"}
               open={uniVisible}
               value={uni}
-              items={mockUni}
+              items={uniList}
               setOpen={setUniVisible}
               setValue={setUni}
-              setItems={setMockUni}
+              setItems={setUniList}
               onOpen={onUniOpen}
               style={[{ height: 30 }]}
               dropDownDirection="TOP"
@@ -168,13 +216,13 @@ const CompleteProfilePage = (props) => {
                 placeholder={"Sport"}
                 open={sportVisible}
                 value={sport}
-                items={mockSport}
+                items={sportList}
                 setOpen={setSportVisible}
                 setValue={setSport}
-                setItems={setMockSport}
+                setItems={setSportList}
                 onOpen={onSportOpen}
                 style={[styles.boxSmallDimensions, { height: 30 }]}
-                dropDownDirection="TOP" // there is a bug between DropDownPicker and ScrollView for IOS will find the alternative way later.
+                dropDownDirection="TOP"
               />
             </View>
 
@@ -200,17 +248,14 @@ const CompleteProfilePage = (props) => {
 
         <View marginTop={14}>
           <FlatList
-            data={positions.map((_, i) => {
-              return { key: i.toString() };
-            })}
-            renderItem={({ item }) => {
-              let id = parseInt(item.key);
-
+            data={positions}
+            renderItem={({ item, index }) => {
+              let id = parseInt(index);
               return (
                 <View
                   style={[
                     styles.itemContainer,
-                    item.key === (positions.length - 1).toString()
+                    index === (positions.length - 1).toString()
                       ? { borderColor: "rgba(0, 0, 0, 0.2)", borderWidth: 1 }
                       : {
                           borderTopColor: "rgba(0, 0, 0, 0.2)",
@@ -219,7 +264,7 @@ const CompleteProfilePage = (props) => {
                   ]}
                 >
                   <View style={styles.itemLabelContainer}>
-                    <Text style={styles.itemLabel}>{positions[id]}</Text>
+                    <Text style={styles.itemLabel}>{item.positionName}</Text>
                   </View>
 
                   <View style={styles.itemIncrementContainer}>
@@ -253,7 +298,22 @@ const CompleteProfilePage = (props) => {
 
         <TouchableOpacity
           style={styles.nextBtn}
-          onPress={() => props.navigation.navigate(ScreenNames.COACH_TAB_FLOW)}
+          onPress={() => {
+            createCoach({
+              variables: {
+                userId: props.route.params.userId,
+                schoolId: uni,
+                sportId: sport,
+                firstName: firstName,
+                lastName: lastName,
+                openPositionIds: positions.map(obj => obj.positionId),
+                openPositionValues: Object.values(counters)
+              }
+            }).then(res => {
+              console.log(res.data);
+              props.navigation.navigate(ScreenNames.COACH_TAB_FLOW, props.route.params);
+            });
+          }}
         >
           <Text style={styles.nextText}>{"Find Recruits"}</Text>
         </TouchableOpacity>

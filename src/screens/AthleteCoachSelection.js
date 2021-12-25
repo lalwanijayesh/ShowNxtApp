@@ -7,28 +7,19 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import { ATHLETE, COACH } from "../constants/enums";
 import ScreenNames from "../constants/ScreenNames";
 
 const AthleteCoachSelection = ({ navigation, props }) => {
   const [fullName, setFullName] = React.useState("");
-  //const [selectedType, setType] = React.useState("none");
 
   const [userType, setUserType] = useState(false);
   const [type, setType] = useState(null);
-  const [mockSport, setMockSports] = useState([
+  const [typeList, setTypeList] = useState([
     { label: "Athlete", value: "athlete" },
     { label: "Coach", value: "coach" },
   ]);
-
-  /**
-   * close the Position dropdown when the sport dropdown is opened.
-   */
-  const handleSportOpen = useCallback(() => {
-    setUserType(true);
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -44,10 +35,10 @@ const AthleteCoachSelection = ({ navigation, props }) => {
         placeholder="Athlete or Coach?"
         open={userType}
         value={type}
-        items={mockSport}
+        items={typeList}
         setOpen={setUserType}
         setValue={setType}
-        setItems={setMockSports}
+        setItems={setTypeList}
         zIndex={3000}
         zIndexInverse={1000}
         style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
@@ -84,9 +75,6 @@ const AthleteCoachSelection = ({ navigation, props }) => {
   );
 };
 
-// trying to add little arrow on next button
-// <Text style={styles.buttonTextArrow}>›</Text>
-
 const styles = StyleSheet.create({
   container: {
     display: "flex",
@@ -118,9 +106,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
+  // TODO add arrow icon in button
   buttonText: {
     fontWeight: "bold",
     textAlign: "center",
+    color: "white",
   },
 
   nameInput: {
@@ -180,12 +170,6 @@ const styles = StyleSheet.create({
     margin: 410,
     width: 237,
     backgroundColor: "#000000",
-  },
-
-  buttonText: {
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
   },
 
   buttonTextArrow: {

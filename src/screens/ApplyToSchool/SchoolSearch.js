@@ -10,6 +10,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import ScreenNames from "../../constants/ScreenNames";
 
 const SCHOOL_SEARCH = gql`
   query SchoolSearch($term: String!) {
@@ -37,13 +38,23 @@ const SchoolsList = (props) => {
       {data.schoolSearch
         // .filter((school) => school.name.includes(props.term))
         .map(({ schoolId, name, location }) => (
-          <View key={schoolId} style={styles.schoolContainer}>
+          <TouchableOpacity
+            key={schoolId}
+            style={styles.schoolContainer}
+            onPress={() =>
+              props.navigation.navigate(ScreenNames.SCHOOL_INFO, {
+                schoolId,
+                name,
+                location,
+              })
+            }
+          >
             <Image
               style={styles.schoolImage}
               source={{ uri: PLACEHOLDER_IMG }}
             />
             <Text style={styles.schoolName}>{name}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
     </ScrollView>
   );
@@ -61,7 +72,7 @@ const SchoolSearch = (props) => {
         style={styles.searchInput}
       />
 
-      <SchoolsList term={searchTerm} />
+      <SchoolsList term={searchTerm} navigation={props.navigation} />
     </View>
   );
 };

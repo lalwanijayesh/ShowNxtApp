@@ -11,6 +11,15 @@ import {
 import firebase from "../../firebase/firebase";
 import { COACH } from "../../constants/enums";
 import ScreenNames from "../../constants/ScreenNames";
+import {gql, useMutation} from "@apollo/client";
+
+const CREATE_USER = gql`
+  mutation CreateUser($email: String!, $type: UserType!) {
+    createUser(email: $email, type: $type) {
+      id
+    }
+  }
+`;
 
 const hasSpecialCharacters = (password) => {
   const specialCharacters = [
@@ -87,6 +96,12 @@ const EmailPassScreen = (props) => {
 
   let { userType, fullName } = props.route.params;
 
+  const [createUser] = useMutation(CREATE_USER, {
+    onError: error => {
+      Alert.alert("An error occurred during registration. Please contact administrator.");
+    }
+  });
+
   const registerUser = () => {
     if (email && !isPasswordSufficient(password)) {
       Alert.alert("Please enter valid email and password.");
@@ -95,14 +110,19 @@ const EmailPassScreen = (props) => {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          userCredential.user.sendEmailVerification();
-          props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
-            fullName: fullName,
-            email: email,
-            password: password,
-          });
+        createUser({variables: {email: email, type: COACH.toUpperCase()}}).then(res => {
+          console.log("User created successfully with id " + res.data.createUser.id);
+          userCredential.user.sendEmailVerification()
+              .then(() => {
+                props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
+                  fullName: fullName,
+                  email: email,
+                  userId: res.data.createUser.id
+                });
+              })
+              .catch((error) => Alert.alert("An error occurred while sending verificaton email!"));
         })
-        .catch((error) => Alert.alert(error.message));
+      }).catch((error) => Alert.alert(error.message));
     }
   };
 

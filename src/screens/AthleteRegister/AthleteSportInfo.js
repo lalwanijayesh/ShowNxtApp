@@ -1,10 +1,29 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ScreenNames from '../../constants/ScreenNames';
-import {generateSportList, generateListOfPositionBySport, generateInfo} from '../../data/mockSports/generateMockSports';
+import {gql, useLazyQuery} from "@apollo/client";
 
-const AthleteSportInfo = ({navigation}) => {
+const GET_SPORTS = gql`
+  query GetSports {
+    sports {
+      sportId
+      sportName
+      gender
+    }
+  }
+`;
+
+const GET_POSITIONS = gql`
+  query PositionsBySport($sportId: ID!) {
+    positionsBySport(sportId: $sportId) {
+      positionId
+      positionName
+    }
+  }
+`;
+
+const AthleteSportInfo = ({ navigation, route }) => {
 
   const [openGender, setOpenGender] = useState(false);
   const [openSport, setOpenSport] = useState(false);
@@ -19,11 +38,36 @@ const AthleteSportInfo = ({navigation}) => {
     {label: 'Female', value: 'female'},
     {label: 'Other', value: 'other'},
   ]);
+
   // TODO: rename those mock 
-  const [mockSport, setMockSports] = useState(generateInfo(generateSportList()));
-  const [mockPosition, setMockPositon] = useState([{
+  const [sportList, setSportList] = useState([]);
+  const [positionList, setPositionList] = useState([{
     label: 'None', value: 'None'
   }]);
+
+  const [getSports] = useLazyQuery(GET_SPORTS, {
+    onCompleted: (data) => {
+      console.log(data);
+      setSportList(data.sports.map(({sportId, sportName, gender}) => ({
+        label: sportName + " [" + gender + "]",
+        value: sportId,
+      })));
+    }
+  });
+
+  useEffect(() => {
+    getSports();
+  }, []);
+
+  const [getPositions] = useLazyQuery(GET_POSITIONS, {
+    onCompleted: (data) => {
+      console.log(data);
+      setPositionList(data.positionsBySport.map(({positionId, positionName}) => ({
+        label: positionName,
+        value: positionId,
+      })));
+    }
+  });
 
   /**
    * close other dropdowns when the gender is opened.
@@ -50,7 +94,7 @@ const AthleteSportInfo = ({navigation}) => {
     setOpenSport(false);
     setOpenPosition(true);
     setOpenGender(false);
-    setMockPositon(generateInfo(generateListOfPositionBySport(sport)));
+    getPositions({ variables : { sportId: sport}});
   }, [sport]);
 
   // TODO: fix when the user changes the sport the position will be changed as well and Next button will be disabled.
@@ -84,11 +128,11 @@ const AthleteSportInfo = ({navigation}) => {
       placeholder="Sport"
       open={openSport}
       value={sport}
-      items={mockSport}
+      items={sportList}
       onOpen={handleSportOpen}
       setOpen={setOpenSport}
       setValue={setSport}
-      setItems={setMockSports}
+      setItems={setSportList}
       zIndex={2000}
       zIndexInverse={2000}
       style={[styles.spacingBetween, styles.box, styles.pickleStyle]}
@@ -103,11 +147,11 @@ const AthleteSportInfo = ({navigation}) => {
       placeholder="Position"
       open={openPosition}
       value={position}
-      items={mockPosition}
+      items={positionList}
       onOpen={handlePositionOpen}
       setOpen={setOpenPosition}
       setValue={setPosition}
-      setItems={setMockPositon}
+      setItems={setPositionList}
       style={[styles.spacingBetween, styles.box, styles.pickleStyle]}
       dropDownContainerStyle={[styles.spacingBetween, styles.pickleStyle]}
     />
@@ -116,10 +160,18 @@ const AthleteSportInfo = ({navigation}) => {
 
     <TouchableOpacity onPress={() => {
                         gender && position && sport ?
-                        navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT) :
+                        navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT, {
+                          ...route.params,
+                          gender: gender,
+                          sport: sport,
+                          position: position,
+                          positionName: positionList.filter(p => p.value === position)[0].label,
+                        }) :
                         Alert.alert("Please choose gender, sport and position before moving to the next step!!")
                       }}
-                      style={[styles.nextBtn, gender && position && sport ? {backgroundColor: '#000000', borderColor: '#000000',} : {backgroundColor: '#888888', borderColor: '#888888',}]}>
+                      style={[styles.nextBtn, gender && position && sport ?
+                          {backgroundColor: '#000000', borderColor: '#000000',} :
+                          {backgroundColor: '#888888', borderColor: '#888888',}]}>
       <Text style={styles.nextText}>{"Next"}</Text>
     </TouchableOpacity>
   </View>

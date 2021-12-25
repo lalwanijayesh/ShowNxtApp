@@ -21,7 +21,7 @@ const GET_SCHOOLS_AND_SPORTS = gql`
 
     sports {
       sportId
-      name
+      sportName
       gender
     }
   }
@@ -47,9 +47,9 @@ const CoachInfoRegistration = (props) => {
 
   const { loading, error, data } = useQuery(GET_SCHOOLS_AND_SPORTS);
 
-  if (uniList.length == 0) {
-    if (loading) return <Text style={{ textAlign: "center" }}>Loading</Text>;
-    if (error) return <Text style={{ textAlign: "center" }}>Error</Text>;
+  if (uniList.length === 0) {
+    if (loading) return <Text style={{textAlign: 'center'}}>Loading</Text>;
+    if (error) return <Text style={{textAlign: 'center'}}>Error</Text>;
 
     setUniList(
       data.schools.map(({ schoolId, name }) => ({
@@ -59,8 +59,8 @@ const CoachInfoRegistration = (props) => {
     );
 
     setSportList(
-      data.sports.map(({ sportId, name, gender }) => ({
-        label: name + " [" + gender + "]",
+      data.sports.map(({ sportId, sportName, gender }) => ({
+        label: sportName + " [" + gender + "]",
         value: sportId,
       }))
     );
@@ -133,7 +133,8 @@ const CoachInfoRegistration = (props) => {
           <Text style={styles.oneText}>1</Text>
         </View>
 
-        <View style={styles.dash}></View>
+        <View style={styles.dash}>
+        </View>
 
         <View style={styles.circle2}>
           <Text style={styles.oneText}>2</Text>
@@ -149,15 +150,12 @@ const CoachInfoRegistration = (props) => {
         </View>
       </View>
 
-      {
-        //currentUni !== null && currentSport !== null && jobTitle !== "" &&
+      {currentUni !== null && currentSport !== null && jobTitle !== "" &&
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
             props.navigation.navigate(ScreenNames.COACH_POSITION_SELECTION, {
-              fullName: props.route.params.fullName,
-              email: props.route.params.email,
-              password: props.route.params.password,
+              ...props.route.params,
               schoolId: currentUni,
               sportId: currentSport,
               jobTitle: jobTitle,

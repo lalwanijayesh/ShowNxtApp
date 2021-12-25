@@ -1,6 +1,6 @@
-export default ScreenNames = {
+const ScreenNames = {
   WELCOME: "welcome",
-
+  LOGIN: "login",
   EMAIL_PASSWORD: "email_password",
   EMAIL_CONFIRMATION: "email_confirmation",
   ATHLETE_SPORT_INFO: "athlete_sport_info",
@@ -20,10 +20,14 @@ export default ScreenNames = {
   DISPLAY_ATHLETE_PROFILE: "display_athlete_profile",
 
   DISPLAY_ATHLETE_DECLINE_ACCEPT: "display_athlete_decline_accept",
-  COMMUNICATION_PAGE: "communication_page",
+  COMMUNICATION_ORGANIZER: "communication_organizer",
   SCHOOL_SEARCH: "school_search",
   SCHOOL_INFO: "school_info",
 
   COACH_TAB_FLOW: "coach_tab_flow",
   ATHLETE_TAB_FLOW: "athlete_tab_flow",
+
+  ATHLETE_APPLICATION_STACK: "athlete_application_stack",
 };
+
+export default ScreenNames;

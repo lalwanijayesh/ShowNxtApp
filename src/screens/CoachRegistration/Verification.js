@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import ScreenNames from "../../constants/ScreenNames";
-// import { ATHLETE, COACH } from "../../../constants/enums";
 
 const VerificationScreen = (props) => {
   return (
