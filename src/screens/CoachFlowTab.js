@@ -37,6 +37,7 @@ const CoachFlowTab = (props) => {
       <Tab.Screen
         name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
         component={DisplayAthlete}
+        initialParams={props.route.params}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon name="home-button" height={size} width={size} color="white" />

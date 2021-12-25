@@ -103,29 +103,6 @@ export default function App() {
               options={{ headerShown: false }}
             />
 
-            {/* <Stack.Screen
-            name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
-            component={DisplayAthleteDeclineAccept}
-            options={{ headerShown: false }}
-          /> */}
-            {/* <Stack.Screen
-            name={ScreenNames.SEARCH_FOR_COACH}
-            component={SearchForCoach}
-            options={{ headerShown: false }}
-          /> */}
-
-            {/* <Stack.Screen
-            name={ScreenNames.COMMUNICATION_PAGE}
-            component={CommunicationPage}
-            options={{ headerShown: false }}
-          /> */}
-
-            {/* <Stack.Screen
-            name={ScreenNames.PROFILE_PAGE_COACH}
-            component={ProfilePageCoach}
-            options={{ headerShown: false }}
-          /> */}
-
             <Stack.Screen
               name={ScreenNames.COACH_TAB_FLOW}
               component={CoachFlowTab}
