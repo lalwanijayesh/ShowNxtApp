@@ -6,7 +6,9 @@ import ScreenNames from "../../constants/ScreenNames";
 const VerificationScreen = (props) => {
   return (
     <View style={styles.container}>
-      <Text>You have just been sent a verification to your email!</Text>
+      <Text>
+        Use the verification link at the provided email: {props.email}
+      </Text>
       <TouchableOpacity
         style={styles.buttonReady}
         onPress={() => {
@@ -17,6 +19,13 @@ const VerificationScreen = (props) => {
         }}
       >
         <Text style={styles.buttonText}>Next</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.backContainer}
+        onPress={() => props.navigation.navigate(ScreenNames.COACH_EMAIL_PASS)}
+      >
+        <Text style={styles.back}>{"<"}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -29,6 +38,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     margin: 90,
+  },
+
+  backContainer: {
+    position: "absolute",
+    left: -45,
+    top: -40,
+  },
+
+  back: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 
   buttonReady: {

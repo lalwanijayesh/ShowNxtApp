@@ -11,7 +11,7 @@ import {
 import { ATHLETE, COACH } from "../constants/enums";
 import ScreenNames from "../constants/ScreenNames";
 
-const AthleteCoachSelection = (props) => {
+const AthleteCoachSelection = ({ navigation, props }) => {
   const [fullName, setFullName] = React.useState("");
 
   const [userType, setUserType] = useState(false);
@@ -50,12 +50,12 @@ const AthleteCoachSelection = (props) => {
           style={styles.buttonReady}
           onPress={() => {
             if (type === "athlete") {
-              props.navigation.navigate(ScreenNames.EMAIL_PASSWORD, {
+              navigation.navigate(ScreenNames.EMAIL_PASSWORD, {
                 userType: ATHLETE,
                 fullName: fullName,
               });
             } else {
-              props.navigation.navigate(ScreenNames.COACH_EMAIL_PASS, {
+              navigation.navigate(ScreenNames.COACH_EMAIL_PASS, {
                 userType: COACH,
                 fullName: fullName,
               });
@@ -65,6 +65,12 @@ const AthleteCoachSelection = (props) => {
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       )}
+      <TouchableOpacity
+        style={styles.backContainer}
+        onPress={() => navigation.navigate(ScreenNames.WELCOME)}
+      >
+        <Text style={styles.back}>{"<"}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -75,6 +81,17 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     height: "1000%",
+  },
+
+  backContainer: {
+    position: "absolute",
+    left: 42,
+    top: 40,
+  },
+
+  back: {
+    fontSize: 30,
+    fontWeight: "bold",
   },
 
   nextButton: {

@@ -132,23 +132,27 @@ const AthleteEmailPassword = ({ navigation, route }) => {
           style={[styles.box, styles.textBox, styles.spacingBetweenBoxes]}
         />
 
-        <View style={styles.checkContainer}>
-          <Text>{"Password must include following:"}</Text>
-          <Text>
-            {password.length >= 8
-              ? "✓ at least 8 characters"
-              : "x at least 8 characters"}
-          </Text>
-          <Text>
-            {isIncluded(numArray)
-              ? "✓ 1 numeric characters"
-              : "x 1 numeric characters"}
-          </Text>
-          <Text>
-            {isIncluded(symbolsArray)
-              ? "✓ 1 special characters"
-              : "x 1 special characters"}
-          </Text>
+        <View style={styles.margin1}>
+          <View style={styles.checkContainer}>
+            <Text>{"Password must include following:"}</Text>
+            <View style={styles.margin2}>
+              <Text style={styles.passwordRequirements}>
+                {password.length >= 8
+                  ? "✓  at least 8 characters"
+                  : "x  at least 8 characters"}
+              </Text>
+              <Text style={styles.passwordRequirements}>
+                {isIncluded(numArray)
+                  ? "✓  1 numeric characters"
+                  : "x  1 numeric characters"}
+              </Text>
+              <Text style={styles.passwordRequirements}>
+                {isIncluded(symbolsArray)
+                  ? "✓  1 special characters"
+                  : "x  1 special characters"}
+              </Text>
+            </View>
+          </View>
         </View>
 
         {isValidEmail() && isValidPassword() && (
@@ -193,6 +197,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
+  margin1: {
+    marginTop: 14,
+  },
+
+  margin2: {
+    marginTop: 4,
+  },
+
   textBox: {
     color: "#555555",
     fontSize: 14,
@@ -201,6 +213,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 69,
     paddingLeft: 17,
     backgroundColor: "#FFFFFF",
+  },
+
+  emailvalid: {
+    textAlign: "left",
+    marginTop: 5,
+    fontSize: 13,
   },
 
   box: {
@@ -214,12 +232,19 @@ const styles = StyleSheet.create({
     marginTop: 126,
   },
 
+  passwordRequirements1: {
+    fontWeight: "normal",
+    textAlign: "right",
+    marginTop: 10,
+    fontSize: 13,
+  },
+
   spacingBetweenBoxes: {
     marginTop: 46,
   },
 
   checkContainer: {
-    marginHorizontal: 72,
+    marginHorizontal: 77,
   },
 
   nextBtn: {

@@ -9,7 +9,7 @@ import {
 import { gql, useQuery } from "@apollo/client";
 
 import ScreenNames from "../../constants/ScreenNames";
-  
+
 const GET_POSITIONS = gql`
   query PositionsBySport($sportId: ID!) {
     positionsBySport(sportId: $sportId) {
@@ -157,7 +157,7 @@ const CoachPositionSelection = (props) => {
             });
           }}
         >
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>Complete Profile</Text>
         </TouchableOpacity>
       )}
     </View>
