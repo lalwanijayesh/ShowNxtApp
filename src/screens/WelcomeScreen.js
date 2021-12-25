@@ -7,7 +7,7 @@ const WelcomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={{ ...styles.button, ...styles.loginButton }}
-        onPress={() => Alert.alert("Login!")}
+        onPress={() => navigation.navigate(ScreenNames.LOGIN)}
       >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>

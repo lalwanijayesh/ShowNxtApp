@@ -1,6 +1,6 @@
 const ScreenNames = {
   WELCOME: "welcome",
-
+  LOGIN: "login",
   EMAIL_PASSWORD: "email_password",
   EMAIL_CONFIRMATION: "email_confirmation",
   ATHLETE_SPORT_INFO: "athlete_sport_info",

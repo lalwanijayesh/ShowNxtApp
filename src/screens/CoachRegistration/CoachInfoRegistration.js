@@ -124,7 +124,8 @@ const CoachInfoRegistration = (props) => {
           <Text style={styles.oneText}>1</Text>
         </View>
 
-        <View style={styles.dash}></View>
+        <View style={styles.dash}>
+        </View>
 
         <View style={styles.circle2}>
           <Text style={styles.oneText}>2</Text>
@@ -140,14 +141,12 @@ const CoachInfoRegistration = (props) => {
         </View>
       </View>
 
-      {//currentUni !== null && currentSport !== null && jobTitle !== "" && 
+      {currentUni !== null && currentSport !== null && jobTitle !== "" &&
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
             props.navigation.navigate(ScreenNames.COACH_POSITION_SELECTION, {
-              fullName: props.route.params.fullName,
-              email: props.route.params.email,
-              password: props.route.params.password,
+              ...props.route.params,
               schoolId: currentUni,
               sportId: currentSport,
               jobTitle: jobTitle,

@@ -27,12 +27,14 @@ import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthletePr
 import CoachFlowTab from "./src/screens/CoachFlowTab";
 import AthleteFlowTab from "./src/screens/AthleteFlow/AthleteFlowTab";
 import UserIdContext from "./src/AppContext";
+import Login from "./src/screens/Login";
 const Stack = createNativeStackNavigator();
 
 // Ignore timer related warnings from firebase core APIs
 LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
+LogBox.ignoreLogs(["VirtualizedLists should never be nested inside"]);
+LogBox.ignoreAllLogs();
 
-// TODO: move out to its own file, but it didn't work when I tried to do it
 const client = new ApolloClient({
   uri: serverUrl,
   cache: new InMemoryCache(),
@@ -50,6 +52,12 @@ export default function App() {
               name={ScreenNames.WELCOME}
               component={WelcomeScreen}
               options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name={ScreenNames.LOGIN}
+                component={Login}
+                options={{ headerShown: false }}
             />
 
             <Stack.Screen
@@ -94,29 +102,6 @@ export default function App() {
               component={DisplayAthleteProfile}
               options={{ headerShown: false }}
             />
-
-            {/* <Stack.Screen
-            name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
-            component={DisplayAthleteDeclineAccept}
-            options={{ headerShown: false }}
-          /> */}
-            {/* <Stack.Screen
-            name={ScreenNames.SEARCH_FOR_COACH}
-            component={SearchForCoach}
-            options={{ headerShown: false }}
-          /> */}
-
-            {/* <Stack.Screen
-            name={ScreenNames.COMMUNICATION_PAGE}
-            component={CommunicationPage}
-            options={{ headerShown: false }}
-          /> */}
-
-            {/* <Stack.Screen
-            name={ScreenNames.PROFILE_PAGE_COACH}
-            component={ProfilePageCoach}
-            options={{ headerShown: false }}
-          /> */}
 
             <Stack.Screen
               name={ScreenNames.COACH_TAB_FLOW}
