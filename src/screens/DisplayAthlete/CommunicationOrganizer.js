@@ -12,9 +12,23 @@ import {
 import { gql, useQuery } from "@apollo/client";
 
 const GET_EVALUATIONS = gql`
-  query EvaluationsByCoach($coachId: ID!) {
-    evaluationsByCoach(coachId: $coachId) {
-      status
+query AcceptedEvaluations($userId: ID!) {
+  coach(userId: $userId) {
+    userId
+    schoolId
+    sportId
+    acceptedEvaluations {
+      application {
+        applicationId
+        profile {
+          athlete {
+            firstName
+            lastName
+          }
+        }
+      }
+    }
+    dismissedEvaluations {
       application {
         applicationId
         profile {
@@ -26,6 +40,7 @@ const GET_EVALUATIONS = gql`
       }
     }
   }
+}
 `;
 
 const AthleteItem = (props) => {
@@ -64,30 +79,17 @@ const AthleteItem = (props) => {
   );
 };
 
-const CommunicationOrganizer = ({ navigation }) => {
-  const coachId = 1; //todo: figure this out from context once we're actually creating coach objects
-
+const CommunicationOrganizer = ({ navigation, route }) => {
   const [acceptedApplications, setAcceptedApplications] = React.useState([]);
   const [rejectedApplications, setRejectedApplications] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
   const [likedSelected, setLikedSelected] = React.useState(true);
 
   const { loading, error, data } = useQuery(GET_EVALUATIONS, {
-    variables: { coachId },
+    variables: { userId : route.params.userId },
     onCompleted: (data) => {
-      let resAcceptedApps = [];
-      let resRejectedApps = [];
-
-      data.evaluationsByCoach.forEach(({ status, application }) => {
-        if (status === "accepted") {
-          resAcceptedApps.push(application);
-        } else {
-          resRejectedApps.push(application);
-        }
-      });
-
-      setAcceptedApplications(resAcceptedApps);
-      setRejectedApplications(resRejectedApps);
+      setAcceptedApplications(data.coach.acceptedEvaluations.map(e => e.application));
+      setRejectedApplications(data.coach.dismissedEvaluations.map(e => e.application));
     },
   });
 
@@ -180,6 +182,7 @@ const CommunicationOrganizer = ({ navigation }) => {
                 <AthleteItem
                   application={application}
                   navigation={navigation}
+                  key={application.applicationId}
                 />
               ))
           : rejectedApplications
@@ -196,6 +199,7 @@ const CommunicationOrganizer = ({ navigation }) => {
                 <AthleteItem
                   application={application}
                   navigation={navigation}
+                  key={application.applicationId}
                 />
               ))}
       </ScrollView>

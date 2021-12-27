@@ -2,16 +2,14 @@ import React, { useEffect } from "react";
 import {
   View,
   Text,
-  Button,
   Image,
   StyleSheet,
   TouchableOpacity,
   Alert,
   ScrollView,
+  Dimensions,
+  TouchableWithoutFeedback
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-//import ScreenNames from "../constants/ScreenNames";
-import Icon from "react-native-ico-material-design";
 import college from "../../../assets/uni.jpg";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import UserIdContext from "../../AppContext";
@@ -23,9 +21,12 @@ const GET_SCHOOL_POSITIONS = gql`
       name
       location
       openings {
-        positionId
         coachId
         openingCount
+        position {
+          positionId
+          positionName
+        }
       }
     }
 
@@ -44,7 +45,7 @@ const GET_SCHOOL_POSITIONS = gql`
 
 const GET_PROFILES_FOR_ATHLETE = gql`
   query AthleteProfiles($userId: ID!) {
-    profilesAthlete(user_id: $userId) {
+    athleteProfiles(user_id: $userId) {
       profileId
       positionId
     }
@@ -67,11 +68,11 @@ const CREATE_APPLICATION = gql`
   }
 `;
 
-const SchoolInfo = (props) => {
-  const [visible, setVisible] = React.useState(false);
+const height = Dimensions.get('screen').height;
 
-  const { schoolId, name, location } = props.route.params;
-  const [userId, setUserId] = React.useContext(UserIdContext);
+const SchoolInfo = (props) => {
+  const { userId, schoolId, name, location } = props.route.params;
+  // const [userId, setUserId] = React.useContext(UserIdContext);
 
   const [openings, setOpenings] = React.useState([]);
   const [shouldSkip, setShouldSkip] = React.useState(false);
@@ -82,21 +83,28 @@ const SchoolInfo = (props) => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
     onCompleted: (data) => {
-      Alert.alert("Successfully applied to school!");
+      Alert.alert("Application sent!");
     },
   });
 
-  const [attemptToApplyToSelected] = useLazyQuery(GET_PROFILES_FOR_ATHLETE, {
+  const handleClick = () => {
+    if (selectedOpening) {
+      setSelectedOpening(null);
+    }
+  };
+
+  const [attemptToApply] = useLazyQuery(GET_PROFILES_FOR_ATHLETE, {
     variables: { userId },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "network-only",
-
     onCompleted: (data) => {
-      let profile = data.profilesAthlete.find(
+      console.log(data);
+      console.log(selectedOpening);
+      let profile = data.athleteProfiles.find(
         (potentialProfile) =>
           potentialProfile.positionId === selectedOpening.positionId
       );
-
+      console.log(profile);
       if (profile) {
         // We can successfully apply
         createApplication({
@@ -105,11 +113,10 @@ const SchoolInfo = (props) => {
             schoolId: schoolId,
             positionId: selectedOpening.positionId,
           },
-        });
+        }).then(r => console.log("Application Sent!" + r.data));
       } else {
         Alert.alert("You haven't created a profile for that position yet!");
       }
-
       setSelectedOpening(null);
     },
   });
@@ -124,7 +131,7 @@ const SchoolInfo = (props) => {
 
         let position = data.positions.find(
           (possiblePosition) =>
-            possiblePosition.positionId === opening.positionId
+            possiblePosition.positionId === opening.position.positionId
         );
 
         let sport = data.sports.find(
@@ -150,24 +157,25 @@ const SchoolInfo = (props) => {
   if (error) return <Text>Error</Text>;
 
   return (
+    <TouchableWithoutFeedback onPress={() => handleClick()}>
     <View style={styles.container}>
-      <Image style={styles.photoContainer} source={college} />
-      <Text style={styles.collegeNameText}>{name}</Text>
-      <Text style={styles.locationText}>📍 {location}</Text>
-      <View style={styles.containerDescription}>
-        <Text>
-          {" "}
-          Northeastern University is a private research university with its main
-          campus in Boston. Established in 1898, the university offers
-          undergraduate and graduate programs on its main campus in Boston as
-          well as satellite campuses in Charlotte, North Carolina; Seattle,
-          Washington; San Jose, California, etc.
-        </Text>
-      </View>
-      <Text style={styles.titleText}>POSITIONS OPEN FOR 2021 APPLICATION</Text>
-      {/* POSITIONS  */}
-
-      <ScrollView style={styles.positionsScroll}>
+        <Image style={styles.photoContainer} source={college} />
+        <Text style={styles.collegeNameText}>{name}</Text>
+        <Text style={styles.locationText}>📍 {location}</Text>
+        <View style={styles.containerDescription}>
+          <Text style={{textAlign: 'justify'}}>
+            Northeastern University is a private research university with its main
+            campus in Boston. Established in 1898, the university offers
+            undergraduate and graduate programs on its main campus in Boston as
+            well as satellite campuses in Charlotte, North Carolina; Seattle,
+            Washington; San Jose, California, etc.
+          </Text>
+        </View>
+      {openings.length !== 0
+          ? <Text style={styles.titleText}>POSITIONS OPEN FOR 2021 APPLICATION</Text>
+          : <Text style={styles.titleText}>NO POSITIONS OPEN FOR 2021 APPLICATION</Text>
+      }
+      {openings && <ScrollView style={styles.positionsScroll}>
         {openings.map(
           ({ positionId, coachId, positionCount, positionName, sportName }) => (
             <View key={positionId} style={styles.containerPosition}>
@@ -189,7 +197,7 @@ const SchoolInfo = (props) => {
             </View>
           )
         )}
-      </ScrollView>
+      </ScrollView>}
 
       {selectedOpening && (
         <View style={styles.applyView}>
@@ -202,7 +210,8 @@ const SchoolInfo = (props) => {
           <TouchableOpacity
             style={styles.applyButton}
             onPress={() => {
-              attemptToApplyToSelected();
+              console.log("Applying with user id " + userId);
+              attemptToApply();
             }}
           >
             <Text style={styles.applyText}>APPLY</Text>
@@ -210,28 +219,28 @@ const SchoolInfo = (props) => {
         </View>
       )}
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   positionsScroll: {
     width: "90%",
+    margin: 20
   },
-
   oneReq: {
-    marginTop: 60,
+    marginTop: 50,
     color: "black",
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: "bold",
   },
   twoReq: {
     color: "black",
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: "bold",
   },
   applyText: {
     color: "white",
-    //fontWeight: "bold",
     fontSize: 25,
   },
   container: {
@@ -243,42 +252,35 @@ const styles = StyleSheet.create({
   nextButton: {
     borderColor: "black",
     borderRadius: 8,
-    // height: 40,
     padding: 5,
     borderWidth: 1,
-    //backgroundColor: "yellow",
   },
-
   applyButton: {
     borderColor: "black",
     backgroundColor: "black",
     borderRadius: 8,
     padding: 5,
     borderWidth: 1,
-    width: 280,
-    padding: 10,
+    width: 250,
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 60,
   },
-
   containerDescription: {
     height: "20%",
     width: "80%",
-    marginTop: 20,
+    marginTop: 25,
   },
   containerPosition: {
-    // backgroundColor: "yellow",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     color: "red",
     width: "100%",
-    // margin: 75,
-    //textAlign: "center",
-    //alignSelf: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+    padding: 5
   },
-
   containerPosition2: {
     display: "flex",
     flexDirection: "row",
@@ -287,7 +289,6 @@ const styles = StyleSheet.create({
     width: "80%",
     margin: -60,
   },
-
   photoContainer: {
     width: "100%",
     height: 250,
@@ -301,24 +302,23 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: "bold",
     color: "black",
-    fontSize: 17,
-    // margin: -40,
+    fontSize: 14,
   },
   locationText: {
     color: "black",
-    fontSize: 20,
+    fontSize: 16,
     margin: -15,
   },
   positionsText: {
     color: "black",
-    fontSize: 18,
+    fontSize: 15,
   },
-
   positionText: {
     color: "black",
     fontSize: 25,
     marginTop: 45,
     fontWeight: "bold",
+    textTransform: 'uppercase'
   },
 
   teamText: {
@@ -331,18 +331,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "50%",
     position: "absolute",
-    bottom: 17,
+    top: height / 2,
     opacity: 0.95,
     backgroundColor: "#87cefa",
     borderRadius: 39,
     flexDirection: "column",
     alignItems: "center",
   },
-  //   descriptionText: {
-  //     color: "black",
-  //     fontSize: 16,
-  //     margin: 55,
-  //   },
+
 });
 
 export default SchoolInfo;

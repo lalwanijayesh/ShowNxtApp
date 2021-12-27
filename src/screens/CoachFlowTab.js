@@ -47,6 +47,7 @@ const CoachFlowTab = (props) => {
       <Tab.Screen
         name={ScreenNames.COMMUNICATION_ORGANIZER}
         component={CommunicationOrganizer}
+        initialParams={props.route.params}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon

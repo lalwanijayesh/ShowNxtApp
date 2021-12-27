@@ -18,20 +18,6 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.COACH_TAB_FLOW)}
-      >
-        <Text style={styles.buttonText}>COACH TAB</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW)}
-      >
-        <Text style={styles.buttonText}>ATHLETE TAB</Text>
-      </TouchableOpacity>
     </View>
   );
 };

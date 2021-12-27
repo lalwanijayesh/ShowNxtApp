@@ -10,7 +10,6 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
-import Icon from "react-native-ico-material-design";
 import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
 import { firebaseBucket } from "../../constants/config";
@@ -65,6 +64,7 @@ const DisplayAthlete = ({ navigation, route }) => {
   const [videoUrls, setVideoUrls] = React.useState([]);
 
   const [applicationId, setApplicationId] = React.useState(null);
+  const [athleteProfile, setAthleteProfile] = React.useState(null);
 
   const [getNextApplication] = useLazyQuery(GET_NEXT_APPLICATION, {
     onError: (error) => {
@@ -75,6 +75,10 @@ const DisplayAthlete = ({ navigation, route }) => {
   const [setEvaluationStatus] = useMutation(SET_EVALUATION_STATUS, {
     onError: (error) => {
       console.log(error);
+    },
+    onCompleted: (data) => {
+      console.log(data);
+      nextApplication();
     }
   });
 
@@ -96,26 +100,40 @@ const DisplayAthlete = ({ navigation, route }) => {
     }
   };
 
-  React.useEffect(() => {
+  const nextApplication = () => {
     const storage = firebase.storage();
+    console.log(route.params.userId);
     getNextApplication({
       variables: {
         userId: route.params.userId
       }
     }).then(res => {
-      setApplicationId(res.data.coach.nextApplication.applicationId);
-      Promise.all(
-          res.data.coach.nextApplication.profile.videos.map(async (video) => {
-            const url = await storage
-                .refFromURL("gs://" + firebaseBucket + "/" + video.filePath)
-                .getDownloadURL();
-            console.log(url);
-            return url;
-          })
-      ).then((data) => {
-        setVideoUrls(data);
-      });
+      console.log(res.data);
+      if (res.data.coach.nextApplication !== null) {
+        setApplicationId(res.data.coach.nextApplication.applicationId);
+        setAthleteProfile(res.data.coach.nextApplication.profile.athlete);
+        Promise.all(
+            res.data.coach.nextApplication.profile.videos.map(async (video) => {
+              const url = await storage
+                  .refFromURL("gs://" + firebaseBucket + "/" + video.filePath)
+                  .getDownloadURL();
+              console.log(url);
+              return url;
+            })
+        ).then((data) => {
+          setVideoUrls(data);
+        });
+      } else {
+        setApplicationId(null);
+        setAthleteProfile(null);
+        setVideoUrls([]);
+        Alert.alert("No new applications!")
+      }
     });
+  };
+
+  React.useEffect(() => {
+    nextApplication();
   }, []);
 
   const renderItem = ({ item, index }) => {
@@ -145,11 +163,10 @@ const DisplayAthlete = ({ navigation, route }) => {
         coachId: route.params.userId,
         status: status
       }
-    }).then(r => console.log(r));
-    // TODO get next application
+    });
   };
 
-  return (
+  return athleteProfile ?
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
@@ -175,7 +192,6 @@ const DisplayAthlete = ({ navigation, route }) => {
                             onPress={() => evaluateApplication('DISMISS')}>
             <Text style={styles.symbolText}>X</Text>
           </TouchableOpacity>
-          <View style={styles.circlePerVid}></View>
           <TouchableOpacity style={styles.circleAccept}
                             onPress={() =>  evaluateApplication('ACCEPT')}>
             <Text style={styles.symbolText}>✓</Text>
@@ -216,7 +232,7 @@ const DisplayAthlete = ({ navigation, route }) => {
       </TouchableOpacity>
       {/* TOP DROPDOWN BUTTON */}
       {/* ATHLETE INFO */}
-      <View style={visible ? styles.atheleteInfoBar : styles.hidden}>
+      <View style={visible ? styles.athleteInfoBar : styles.hidden}>
         <Text style={styles.textLocation}> </Text>
         <Text style={styles.textLocation}> </Text>
         <Text style={styles.textInfoAthlete}> Height: 6'2"</Text>
@@ -228,16 +244,11 @@ const DisplayAthlete = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       {/* ATHLETE INFO */}
-      <View style={styles.buttonChangeVidContainer}>
-        <TouchableOpacity
-          style={styles.buttonChangeVidRect1}
-        ></TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonChangeVidRect2}
-        ></TouchableOpacity>
-      </View>
     </View>
-  );
+    :
+    <View style={styles.container}>
+      <Text>No New Applications</Text>
+    </View>
 };
 
 const styles = StyleSheet.create({
@@ -250,56 +261,28 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: width * 1.25,
     height: height * 1.8,
-    //width: 640 * 2.3,
-    // height: 400 * 2.3,
   },
   container: {
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
   },
-
-  buttonChangeVidContainer: {
-    flexDirection: "row",
-    backgroundColor: "pink",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  buttonChangeVidRect1: {
-    height: "100%",
-    width: "50%",
-    position: "absolute",
-    alignItems: "center",
-    bottom: 0,
-    color: "red",
-  },
-  buttonChangeVidRect2: {
-    height: "100%",
-    width: "50%",
-    position: "absolute",
-    alignItems: "center",
-    bottom: 0,
-    color: "blue",
-  },
   buttonsBar: {
     flexDirection: "row",
     width: "105%",
-    // backgroundColor: `#000000`,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
   buttonsContainer: {
     position: "absolute",
     alignItems: "center",
-    bottom: 85,
+    bottom: 65,
     color: `#000000`,
   },
 
   locationBar: {
     flexDirection: "row",
     width: "90%",
-    //backgroundColor: `pink`,
-    //alignItems: "center",
     justifyContent: "flex-start",
     position: "absolute",
     bottom: 190,
@@ -308,8 +291,6 @@ const styles = StyleSheet.create({
   positionBar: {
     flexDirection: "row",
     width: "90%",
-    //backgroundColor: `pink`,
-    //alignItems: "center",
     justifyContent: "flex-start",
     position: "absolute",
     bottom: 220,
@@ -319,8 +300,6 @@ const styles = StyleSheet.create({
   nameAgeBar: {
     flexDirection: "row",
     width: "90%",
-    //backgroundColor: `pink`,
-    //alignItems: "center",
     justifyContent: "flex-start",
     position: "absolute",
     bottom: 253,
@@ -329,8 +308,6 @@ const styles = StyleSheet.create({
   dropdownButton: {
     flexDirection: "row",
     width: "90%",
-    //backgroundColor: `pink`,
-    //alignItems: "center",
     justifyContent: "center",
     position: "absolute",
     top: 60,
@@ -358,15 +335,6 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
-  circlePerVid: {
-    width: 10,
-    height: 10,
-    borderRadius: 10 / 2,
-    backgroundColor: "white",
-    margin: 5,
-    display: "flex",
-    alignItems: "center",
-  },
   symbolText: {
     fontWeight: "bold",
     color: "white",
@@ -375,13 +343,11 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   textLocation: {
-    // fontWeight: "bold",
     color: "white",
     fontSize: 25,
   },
 
   textInfoAthlete: {
-    //fontWeight: "bold",
     color: "white",
     fontSize: 26,
   },
@@ -392,7 +358,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
 
-  atheleteInfoBar: {
+  athleteInfoBar: {
     position: "absolute",
     alignItems: "center",
     top: 0,

@@ -56,6 +56,7 @@ const SchoolSearch = (props) => {
                     style={styles.schoolContainer}
                     onPress={() =>
                         props.navigation.navigate(ScreenNames.SCHOOL_INFO, {
+                          ...props.route.params,
                           schoolId,
                           name,
                           location,

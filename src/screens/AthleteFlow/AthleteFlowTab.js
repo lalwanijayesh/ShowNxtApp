@@ -3,17 +3,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ScreenNames from "../../constants/ScreenNames";
 import SchoolSearch from "../ApplyToSchool/SchoolSearch";
 import CommunicationAthlete from "./CommunicationAthlete";
-import AthleteComplete from "../AthleteRegister/AthleteComplete";
 import Icon from "react-native-ico-material-design";
 import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SchoolInfo from "../ApplyToSchool/SchoolInfo";
+import DisplayAthleteProfile from "../DisplayAthlete/DisplayAthleteProfile";
 
 const Tab = createBottomTabNavigator();
 const ApplicationStack = createNativeStackNavigator();
 
 const ApplicationScreen = (props) => {
-  console.log(props.route.params);
   return (
     <ApplicationStack.Navigator
       initialRouteName={ScreenNames.SCHOOL_SEARCH}
@@ -36,7 +35,6 @@ const ApplicationScreen = (props) => {
 };
 
 const AthleteFlowTab = (props) => {
-  console.log(props.route.params);
   return (
     <Tab.Navigator
       initialRouteName={ScreenNames.ATHLETE_APPLICATION_STACK}
@@ -76,8 +74,8 @@ const AthleteFlowTab = (props) => {
         }}
       />
       <Tab.Screen
-        name={ScreenNames.ATHLETE_COMPLETE} // TODO: change this to the actual component once we have it
-        component={AthleteComplete}
+        name={ScreenNames.DISPLAY_ATHLETE_PROFILE} // TODO: change this to the actual component once we have it
+        component={DisplayAthleteProfile}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon name="two-men" height={size} width={size} color="white" />
