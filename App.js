@@ -53,68 +53,56 @@ export default function App() {
               component={WelcomeScreen}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
                 name={ScreenNames.LOGIN}
                 component={Login}
                 options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.ATHLETE_COACH_SELECTION}
               component={AthleteCoachSelection}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.COACH_EMAIL_PASS}
               component={EmailPassScreen}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.COACH_VERIFICATION}
               component={VerificationScreen}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.COACH_INFO_REGISTRATION}
               component={CoachInfoRegistration}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.COACH_POSITION_SELECTION}
               component={CoachPositionSelection}
               options={{ headerShown: false }}
             />
-
-            {/* NEW, NOT SURE IF WORKS */}
             <Stack.Screen
               name={ScreenNames.COACH_COMPLETE}
               component={CompleteProfilePage}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.DISPLAY_ATHLETE_PROFILE}
               component={DisplayAthleteProfile}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.COACH_TAB_FLOW}
               component={CoachFlowTab}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.ATHLETE_TAB_FLOW}
               component={AthleteFlowTab}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name={ScreenNames.EMAIL_PASSWORD}
               component={AthleteEmailPassword}
@@ -150,18 +138,6 @@ export default function App() {
               component={AthleteComplete}
               options={{ headerShown: false }}
             />
-
-            {/* <Stack.Screen
-            name={ScreenNames.ATHLETE_COMMUNICATION}
-            component={CommunicationAthlete}
-            options={{ headerShown: false }}
-          /> */}
-
-            {/* <Stack.Screen
-            name={ScreenNames.SCHOOL_SEARCH}
-            component={SchoolSearch}
-            options={{ headerShown: false }}
-          /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </UserIdContext.Provider>

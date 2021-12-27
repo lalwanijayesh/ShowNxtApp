@@ -12,7 +12,8 @@ import SchoolInfo from "../ApplyToSchool/SchoolInfo";
 const Tab = createBottomTabNavigator();
 const ApplicationStack = createNativeStackNavigator();
 
-const ApplicationScreen = () => {
+const ApplicationScreen = (props) => {
+  console.log(props.route.params);
   return (
     <ApplicationStack.Navigator
       initialRouteName={ScreenNames.SCHOOL_SEARCH}
@@ -22,6 +23,7 @@ const ApplicationScreen = () => {
     >
       <ApplicationStack.Screen
         name={ScreenNames.SCHOOL_SEARCH}
+        initialParams={props.route.params}
         component={SchoolSearch}
       />
 
@@ -34,6 +36,7 @@ const ApplicationScreen = () => {
 };
 
 const AthleteFlowTab = (props) => {
+  console.log(props.route.params);
   return (
     <Tab.Navigator
       initialRouteName={ScreenNames.ATHLETE_APPLICATION_STACK}
@@ -45,6 +48,7 @@ const AthleteFlowTab = (props) => {
     >
       <Tab.Screen
         name={ScreenNames.ATHLETE_APPLICATION_STACK}
+        initialParams={props.route.params}
         component={ApplicationScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (

@@ -37,6 +37,7 @@ const AthleteEmailPassword = ({ navigation, route }) => {
 
   const [createUser] = useMutation(CREATE_USER, {
     onError: error => {
+      console.log(error);
       Alert.alert("An error occurred during login. Please contact administrator.");
     }
   });
@@ -89,9 +90,9 @@ const AthleteEmailPassword = ({ navigation, route }) => {
                   userId: res.data.createUser.id
                 });
               })
-              .catch((error) => Alert.alert("An error occurred while sending verificaton email!"))
+              .catch((error) => Alert.alert("An error occurred while sending verification email!"))
         });
-      }).catch((error) => Alert.alert(error.message));
+      });
     }
   };
 

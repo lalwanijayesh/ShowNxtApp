@@ -44,12 +44,9 @@ const AthleteComplete = ({ navigation, route }) => {
     })();
   }, []);
 
-  const [videos, setVideos] = useState([
-    {
-      id: 0,
-      source: null
-    }
-  ]);
+  const dummy = {id: 0, source: null};
+
+  const [videos, setVideos] = useState([]);
 
   const pickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -121,6 +118,7 @@ const AthleteComplete = ({ navigation, route }) => {
                 useNativeControls={false}
                 resizeMode="cover"
                 isLooping
+                isMuted
                 shouldPlay
             />
             )}
@@ -156,7 +154,7 @@ const AthleteComplete = ({ navigation, route }) => {
       <View style={{ marginHorizontal: 34, marginTop: 23 }}>
         <FlatList
           bounces={false}
-          data={videos}
+          data={videos.concat(dummy)}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}

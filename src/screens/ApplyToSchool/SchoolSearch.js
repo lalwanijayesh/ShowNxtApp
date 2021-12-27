@@ -1,6 +1,5 @@
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
-import React, { useState } from "react";
+import {gql, useLazyQuery} from "@apollo/client";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -11,6 +10,7 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenNames from "../../constants/ScreenNames";
+import schoolImg from "../../../assets/school.jpg"
 
 const SCHOOL_SEARCH = gql`
   query SchoolSearch($term: String!) {
@@ -22,57 +22,57 @@ const SCHOOL_SEARCH = gql`
   }
 `;
 
-const SchoolsList = (props) => {
-  const { loading, error, data } = useQuery(SCHOOL_SEARCH, {
-    variables: { term: props.term },
-  });
-
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error</Text>;
-
-  const PLACEHOLDER_IMG =
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Northeastern_University.jpg/220px-Northeastern_University.jpg";
-
-  return (
-    <ScrollView style={styles.schoolsContainer}>
-      {data.schoolSearch
-        // .filter((school) => school.name.includes(props.term))
-        .map(({ schoolId, name, location }) => (
-          <TouchableOpacity
-            key={schoolId}
-            style={styles.schoolContainer}
-            onPress={() =>
-              props.navigation.navigate(ScreenNames.SCHOOL_INFO, {
-                schoolId,
-                name,
-                location,
-              })
-            }
-          >
-            <Image
-              style={styles.schoolImage}
-              source={{ uri: PLACEHOLDER_IMG }}
-            />
-            <Text style={styles.schoolName}>{name}</Text>
-          </TouchableOpacity>
-        ))}
-    </ScrollView>
-  );
-};
-
 const SchoolSearch = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [schoolsList, setSchoolsList] = useState([]);
+
+  const [searchSchools] = useLazyQuery(SCHOOL_SEARCH, {
+    onError: error => console.log(error)
+  });
+
+  useEffect(() => {
+    searchSchools({variables: {term: ''}})
+        .then(r => setSchoolsList(r.data.schoolSearch));
+  }, []);
 
   return (
     <View style={styles.searchContainer}>
       <TextInput
         value={searchTerm}
-        onChangeText={setSearchTerm}
+        onChangeText={term => {
+          setSearchTerm(term);
+          searchSchools({variables: {term: term}})
+              .then(r => setSchoolsList(r.data.schoolSearch));
+        }}
         placeholder={"Search for a school..."}
         style={styles.searchInput}
       />
-
-      <SchoolsList term={searchTerm} navigation={props.navigation} />
+      {schoolsList.length !== 0 ?
+      <ScrollView style={styles.schoolsContainer}>
+        {schoolsList
+            .map(({ schoolId, name, location }) => (
+                <TouchableOpacity
+                    key={schoolId}
+                    style={styles.schoolContainer}
+                    onPress={() =>
+                        props.navigation.navigate(ScreenNames.SCHOOL_INFO, {
+                          schoolId,
+                          name,
+                          location,
+                        })
+                    }
+                >
+                  <Image
+                      style={styles.schoolImage}
+                      source={schoolImg}
+                  />
+                  <Text style={styles.schoolName}>{name}</Text>
+                </TouchableOpacity>
+            ))}
+      </ScrollView> :
+      <Text style={styles.displayText}>
+        {"No results to display.\nTry changing search query."}
+      </Text>}
     </View>
   );
 };
@@ -103,6 +103,13 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    margin: 10
+  },
+
+  displayText: {
+    padding: 10,
+    margin: 10,
+    textAlign: 'center'
   },
 
   schoolImage: {
