@@ -177,8 +177,8 @@ const SchoolInfo = (props) => {
       }
       {openings && <ScrollView style={styles.positionsScroll}>
         {openings.map(
-          ({ positionId, coachId, positionCount, positionName, sportName }) => (
-            <View key={positionId} style={styles.containerPosition}>
+          ({ positionId, coachId, positionCount, positionName, sportName }, index) => (
+            <View key={index} style={styles.containerPosition}>
               <Text style={styles.positionsText}>{sportName}</Text>
               <TouchableOpacity
                 style={styles.nextButton}

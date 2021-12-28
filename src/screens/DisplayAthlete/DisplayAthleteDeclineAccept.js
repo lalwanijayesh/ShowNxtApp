@@ -67,17 +67,44 @@ const DisplayAthlete = ({ navigation, route }) => {
   const [athleteProfile, setAthleteProfile] = React.useState(null);
 
   const [getNextApplication] = useLazyQuery(GET_NEXT_APPLICATION, {
-    onError: (error) => {
-      console.log(error);
+    fetchPolicy: "no-cache",
+    onCompleted: (data) => {
+      console.log(data);
+      const storage = firebase.storage();
+      if (data.coach.nextApplication !== null) {
+        setApplicationId(data.coach.nextApplication.applicationId);
+        setAthleteProfile(data.coach.nextApplication.profile.athlete);
+        Promise.all(
+            data.coach.nextApplication.profile.videos.map(async (video) => {
+              const url = await storage
+                  .refFromURL("gs://" + firebaseBucket + "/" + video.filePath)
+                  .getDownloadURL();
+              console.log(url);
+              return url;
+            })
+        ).then((data) => {
+          setVideoUrls(data);
+        });
+      } else {
+        setApplicationId(null);
+        setAthleteProfile(null);
+        setVideoUrls([]);
+        Alert.alert("No new applications!")
+      }
     }
   });
 
   const [setEvaluationStatus] = useMutation(SET_EVALUATION_STATUS, {
+    fetchPolicy: "no-cache",
     onError: (error) => {
       console.log(error);
     },
     onCompleted: (data) => {
-      console.log(data);
+      if (data.makeEvaluation.status === 'ACCEPT') {
+        Alert.alert("ACCEPTED");
+      } else if (data.makeEvaluation.status === 'DISMISS') {
+        Alert.alert("DISMISSED");
+      }
       nextApplication();
     }
   });
@@ -101,33 +128,10 @@ const DisplayAthlete = ({ navigation, route }) => {
   };
 
   const nextApplication = () => {
-    const storage = firebase.storage();
     console.log(route.params.userId);
     getNextApplication({
       variables: {
         userId: route.params.userId
-      }
-    }).then(res => {
-      console.log(res.data);
-      if (res.data.coach.nextApplication !== null) {
-        setApplicationId(res.data.coach.nextApplication.applicationId);
-        setAthleteProfile(res.data.coach.nextApplication.profile.athlete);
-        Promise.all(
-            res.data.coach.nextApplication.profile.videos.map(async (video) => {
-              const url = await storage
-                  .refFromURL("gs://" + firebaseBucket + "/" + video.filePath)
-                  .getDownloadURL();
-              console.log(url);
-              return url;
-            })
-        ).then((data) => {
-          setVideoUrls(data);
-        });
-      } else {
-        setApplicationId(null);
-        setAthleteProfile(null);
-        setVideoUrls([]);
-        Alert.alert("No new applications!")
       }
     });
   };
