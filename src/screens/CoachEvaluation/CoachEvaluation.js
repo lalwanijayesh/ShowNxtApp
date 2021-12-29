@@ -78,6 +78,7 @@ const CoachEvaluation = ({ navigation, route }) => {
   const [getPositions] = useLazyQuery(GET_POSITIONS, {
     fetchPolicy: "no-cache",
     onCompleted: (data) => {
+      console.log(data.positions);
       setPositions(data.positions);
     }
   });
@@ -179,7 +180,7 @@ const CoachEvaluation = ({ navigation, route }) => {
   };
 
   return (
-    (athleteProfile !== null && videoUrls.length > 0) ?
+    (athleteProfile !== null && videoUrls.length > 0 && positions.length > 0) ?
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
