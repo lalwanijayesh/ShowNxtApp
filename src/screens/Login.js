@@ -39,12 +39,12 @@ const Login = ({ navigation }) => {
                     }).then(res => {
                         const userType = res.data.userByEmail.type;
                         if (userType === 'COACH') {
-                            navigation.navigate(ScreenNames.COACH_TAB_FLOW, {
+                            navigation.navigate(ScreenNames.COACH_HOMEPAGE, {
                                 email: email,
                                 userId: res.data.userByEmail.id
                             });
                         } else if (userType === 'ATHLETE') {
-                            navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW, {
+                            navigation.navigate(ScreenNames.ATHLETE_HOMEPAGE, {
                                 email: email,
                                 userId: res.data.userByEmail.id
                             });

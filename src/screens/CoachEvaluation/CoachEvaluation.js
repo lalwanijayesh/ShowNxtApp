@@ -65,7 +65,7 @@ query Query {
 
 const { width, height } = Dimensions.get("window");
 
-const DisplayAthlete = ({ navigation, route }) => {
+const CoachEvaluation = ({ navigation, route }) => {
 
   const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
   const [dropdownVisible, setDropdownVisible] = React.useState(false);
@@ -391,4 +391,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DisplayAthlete;
+export default CoachEvaluation;

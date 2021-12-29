@@ -79,7 +79,7 @@ const AthleteItem = (props) => {
   );
 };
 
-const CommunicationOrganizer = ({ navigation, route }) => {
+const CoachCommunication = ({ navigation, route }) => {
   const [acceptedApplications, setAcceptedApplications] = React.useState([]);
   const [rejectedApplications, setRejectedApplications] = React.useState([]);
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -331,4 +331,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CommunicationOrganizer;
+export default CoachCommunication;

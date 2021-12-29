@@ -4,14 +4,14 @@ import ScreenNames from '../../constants/ScreenNames';
 import Icon from "react-native-ico-material-design";
 
 // TODO Confirm email verified before moving to next screen
-const EmailConfirmation = ({navigation, route}) => {
+const AthleteEmailVerification = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
           style={styles.backContainer}
           onPress={() =>
-              navigation.navigate(ScreenNames.EMAIL_PASSWORD, route.params)}
+              navigation.navigate(ScreenNames.ATHLETE_EMAIL_PASSWORD, route.params)}
       >
         <Icon
             name="left-arrow-key"
@@ -38,7 +38,7 @@ const EmailConfirmation = ({navigation, route}) => {
   ) 
 }
 
-export default EmailConfirmation;
+export default AthleteEmailVerification;
 
 const styles = StyleSheet.create({
   container: {

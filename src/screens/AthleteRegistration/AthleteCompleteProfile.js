@@ -26,7 +26,7 @@ mutation AddProfileVideo($profileId: ID!, $filePath: String!) {
 }
 `
 
-const AthleteComplete = ({ navigation, route }) => {
+const AthleteCompleteProfile = ({ navigation, route }) => {
   // TODO use application context to store details of logged-in user
   const [userId, setUserId] = useContext(UserIdContext);
 
@@ -178,7 +178,7 @@ const AthleteComplete = ({ navigation, route }) => {
         style={styles.nextBtn}
         onPress={() => {
           setUserId(route.params.userId);
-          navigation.navigate(ScreenNames.ATHLETE_TAB_FLOW, route.params);
+          navigation.navigate(ScreenNames.ATHLETE_HOMEPAGE, route.params);
         }}
       >
         <Text style={styles.nextText}>{"Start Exploring"}</Text>
@@ -193,7 +193,7 @@ const AthleteComplete = ({ navigation, route }) => {
   );
 };
 
-export default AthleteComplete;
+export default AthleteCompleteProfile;
 
 const styles = StyleSheet.create({
   container: {

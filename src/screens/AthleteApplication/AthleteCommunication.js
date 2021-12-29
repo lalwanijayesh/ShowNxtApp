@@ -5,13 +5,13 @@ import {
   StyleSheet,
 } from "react-native";
 
-const SearchProfile = () => {
+const AthleteCommunication = () => {
   return (
-      <View style={styles.container}>
-        <Text style={styles.buttonText}>
-          SEARCH PROFILE PAGE
-        </Text>
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.buttonText}>
+        ATHLETE COMMUNICATION PAGE
+      </Text>
+    </View>
   );
 };
 
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SearchProfile;
+export default AthleteCommunication;

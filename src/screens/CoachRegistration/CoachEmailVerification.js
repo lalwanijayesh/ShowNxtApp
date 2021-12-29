@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import ScreenNames from "../../constants/ScreenNames";
 import Icon from "react-native-ico-material-design";
 
-const VerificationScreen = (props) => {
+const CoachEmailVerification = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.backContainer}
-        onPress={() => props.navigation.navigate(ScreenNames.COACH_EMAIL_PASS,
+        onPress={() => props.navigation.navigate(ScreenNames.COACH_EMAIL_PASSWORD,
             props.route.params)}
       >
         <Icon
@@ -27,7 +27,7 @@ const VerificationScreen = (props) => {
         style={styles.buttonReady}
         onPress={() => {
           props.navigation.navigate(
-            ScreenNames.COACH_INFO_REGISTRATION,
+            ScreenNames.COACH_SPORT_INFO,
             props.route.params
           );
         }}
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VerificationScreen;
+export default CoachEmailVerification;

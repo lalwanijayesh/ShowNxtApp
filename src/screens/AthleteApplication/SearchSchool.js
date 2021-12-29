@@ -22,7 +22,7 @@ const SCHOOL_SEARCH = gql`
   }
 `;
 
-const SchoolSearch = (props) => {
+const SearchSchool = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [schoolsList, setSchoolsList] = useState([]);
 
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SchoolSearch;
+export default SearchSchool;

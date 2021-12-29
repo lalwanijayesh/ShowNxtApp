@@ -85,7 +85,7 @@ const AthleteEmailPassword = ({ navigation, route }) => {
           console.log("User created successfully with id " + res.data.createUser.id);
           userCredential.user.sendEmailVerification()
               .then(() => {
-                navigation.navigate(ScreenNames.EMAIL_CONFIRMATION, {
+                navigation.navigate(ScreenNames.ATHLETE_EMAIL_VERIFICATION, {
                   ...route.params,
                   email: email,
                   userId: res.data.createUser.id

@@ -91,7 +91,7 @@ const isPasswordSufficient = (password) => {
   );
 };
 
-const EmailPassScreen = (props) => {
+const CoachEmailPassword = (props) => {
   let [email, setEmail] = React.useState("");
   let [password, setPassword] = React.useState("");
 
@@ -115,7 +115,7 @@ const EmailPassScreen = (props) => {
           console.log("User created successfully with id " + res.data.createUser.id);
           userCredential.user.sendEmailVerification()
               .then(() => {
-                props.navigation.navigate(ScreenNames.COACH_VERIFICATION, {
+                props.navigation.navigate(ScreenNames.COACH_EMAIL_VERIFICATION, {
                   fullName: fullName,
                   email: email,
                   userId: res.data.createUser.id
@@ -286,4 +286,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmailPassScreen;
+export default CoachEmailPassword;

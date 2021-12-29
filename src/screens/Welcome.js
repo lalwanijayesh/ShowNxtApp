@@ -4,7 +4,7 @@ import ScreenNames from "../constants/ScreenNames";
 
 const height = Dimensions.get('screen').height;
 
-const WelcomeScreen = ({ navigation }) => {
+const Welcome = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeScreen;
+export default Welcome;

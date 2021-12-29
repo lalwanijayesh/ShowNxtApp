@@ -5,13 +5,13 @@ import {
   StyleSheet,
 } from "react-native";
 
-const CommunicationAthlete = () => {
+const DisplayCoachProfie = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.buttonText}>
-        COMMUNICATION PAGE
-      </Text>
-    </View>
+      <View style={styles.container}>
+        <Text style={styles.buttonText}>
+          DISPLAY COACH PROFILE
+        </Text>
+      </View>
   );
 };
 
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CommunicationAthlete;
+export default DisplayCoachProfie;

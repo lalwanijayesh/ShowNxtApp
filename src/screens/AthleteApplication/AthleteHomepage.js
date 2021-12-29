@@ -1,13 +1,13 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ScreenNames from "../../constants/ScreenNames";
-import SchoolSearch from "../ApplyToSchool/SchoolSearch";
-import CommunicationAthlete from "./CommunicationAthlete";
+import SearchSchool from "./SearchSchool";
+import AthleteCommunication from "./AthleteCommunication";
 import Icon from "react-native-ico-material-design";
 import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SchoolInfo from "../ApplyToSchool/SchoolInfo";
-import DisplayAthleteProfile from "../DisplayAthlete/DisplayAthleteProfile";
+import SchoolInfo from "./SchoolInfo";
+import DisplayAthleteProfile from "../CoachEvaluation/DisplayAthleteProfile";
 
 const Tab = createBottomTabNavigator();
 const ApplicationStack = createNativeStackNavigator();
@@ -15,15 +15,15 @@ const ApplicationStack = createNativeStackNavigator();
 const ApplicationScreen = (props) => {
   return (
     <ApplicationStack.Navigator
-      initialRouteName={ScreenNames.SCHOOL_SEARCH}
+      initialRouteName={ScreenNames.SEARCH_SCHOOL}
       screenOptions={{
         headerShown: false,
       }}
     >
       <ApplicationStack.Screen
-        name={ScreenNames.SCHOOL_SEARCH}
+        name={ScreenNames.SEARCH_SCHOOL}
         initialParams={props.route.params}
-        component={SchoolSearch}
+        component={SearchSchool}
       />
       <ApplicationStack.Screen
         name={ScreenNames.SCHOOL_INFO}
@@ -33,7 +33,7 @@ const ApplicationScreen = (props) => {
   );
 };
 
-const AthleteFlowTab = (props) => {
+const AthleteHomepage = (props) => {
   return (
     <Tab.Navigator
       initialRouteName={ScreenNames.ATHLETE_APPLICATION_STACK}
@@ -60,7 +60,7 @@ const AthleteFlowTab = (props) => {
       />
       <Tab.Screen
         name={ScreenNames.ATHLETE_COMMUNICATION}
-        component={CommunicationAthlete}
+        component={AthleteCommunication}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AthleteFlowTab;
+export default AthleteHomepage;

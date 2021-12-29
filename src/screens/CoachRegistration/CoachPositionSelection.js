@@ -75,7 +75,7 @@ const CoachPositionSelection = (props) => {
     <View style={styles.containerMain}>
       <TouchableOpacity
           style={styles.backContainer}
-          onPress={() => props.navigation.navigate(ScreenNames.COACH_INFO_REGISTRATION,
+          onPress={() => props.navigation.navigate(ScreenNames.COACH_SPORT_INFO,
               props.route.params)}
       >
         <Icon
@@ -157,7 +157,7 @@ const CoachPositionSelection = (props) => {
         <TouchableOpacity
           style={styles.buttonReady}
           onPress={() => {
-            props.navigation.navigate(ScreenNames.COACH_COMPLETE, {
+            props.navigation.navigate(ScreenNames.COACH_COMPLETE_PROFILE, {
               ...props.route.params,
               positions: getFilledPositions(),
             });

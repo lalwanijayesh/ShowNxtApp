@@ -1,19 +1,19 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ScreenNames from "../constants/ScreenNames";
-import DisplayAthlete from "./DisplayAthlete/DisplayAthleteDeclineAccept";
-import SearchForCoach from "./DisplayAthlete/SearchForCoach";
-import CommunicationOrganizer from "./DisplayAthlete/CommunicationOrganizer";
-import ProfilePageCoach from "./DisplayAthlete/ProfilePageCoach";
+import ScreenNames from "../../constants/ScreenNames";
+import CoachEvaluation from "./CoachEvaluation";
+import SearchForCoach from "./SearchAthlete";
+import CoachCommunication from "./CoachCommunication";
+import ProfilePageCoach from "../AthleteApplication/DisplayCoachProfile";
 import { StyleSheet } from "react-native";
 import Icon from "react-native-ico-material-design";
 
 const Tab = createBottomTabNavigator();
 
-const CoachFlowTab = (props) => {
+const CoachHomepage = (props) => {
   return (
     <Tab.Navigator
-      initialRouteName={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
+      initialRouteName={ScreenNames.COACH_EVALUATION}
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -21,7 +21,7 @@ const CoachFlowTab = (props) => {
       }}
     >
       <Tab.Screen
-        name={ScreenNames.SEARCH_FOR_COACH}
+        name={ScreenNames.SEARCH_ATHLETE}
         component={SearchForCoach}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -35,8 +35,8 @@ const CoachFlowTab = (props) => {
         }}
       />
       <Tab.Screen
-        name={ScreenNames.DISPLAY_ATHLETE_DECLINE_ACCEPT}
-        component={DisplayAthlete}
+        name={ScreenNames.COACH_EVALUATION}
+        component={CoachEvaluation}
         initialParams={props.route.params}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -45,8 +45,8 @@ const CoachFlowTab = (props) => {
         }}
       />
       <Tab.Screen
-        name={ScreenNames.COMMUNICATION_ORGANIZER}
-        component={CommunicationOrganizer}
+        name={ScreenNames.COACH_COMMUNICATION}
+        component={CoachCommunication}
         initialParams={props.route.params}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -60,7 +60,7 @@ const CoachFlowTab = (props) => {
         }}
       />
       <Tab.Screen
-        name={ScreenNames.PROFILE_PAGE_COACH}
+        name={ScreenNames.DISPLAY_COACH_PROFILE}
         component={ProfilePageCoach}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CoachFlowTab;
+export default CoachHomepage;

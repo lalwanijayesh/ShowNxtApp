@@ -102,7 +102,7 @@ const AthleteSportInfo = ({ navigation, route }) => {
     <View style={styles.container}>
     <TouchableOpacity
         style={styles.backContainer}
-        onPress={() => navigation.navigate(ScreenNames.EMAIL_CONFIRMATION,
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_EMAIL_VERIFICATION,
             route.params)}>
       <Icon
           name="left-arrow-key"

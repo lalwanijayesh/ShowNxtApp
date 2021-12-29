@@ -5,11 +5,11 @@ import {
   StyleSheet,
 } from "react-native";
 
-const CoachProfile = () => {
+const SearchAthlete = () => {
   return (
       <View style={styles.container}>
         <Text style={styles.buttonText}>
-          COACH PROFILE PAGE
+          SEARCH ATHLETE
         </Text>
       </View>
   );
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CoachProfile;
+export default SearchAthlete;

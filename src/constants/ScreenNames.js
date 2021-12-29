@@ -1,33 +1,37 @@
 const ScreenNames = {
   WELCOME: "welcome",
   LOGIN: "login",
-  EMAIL_PASSWORD: "email_password",
-  EMAIL_CONFIRMATION: "email_confirmation",
+  ATHLETE_COACH_SELECTION: "athlete_coach_selection",
+
+  // Athlete Registration Flow
+  ATHLETE_EMAIL_PASSWORD: "athlete_email_password",
+  ATHLETE_EMAIL_VERIFICATION: "athlete_email_verification",
   ATHLETE_SPORT_INFO: "athlete_sport_info",
   ATHLETE_HEIGHT_WEIGHT: "athlete_height_weight",
   ATHLETE_ACADEMIC: "athlete_academic",
-  ATHLETE_COMPLETE: "athlete_complete_page",
-  SEARCH_FOR_COACH: "search_for_coach",
-  ATHLETE_COMMUNICATION: "athlete_communication",
+  ATHLETE_COMPLETE_PROFILE: "athlete_complete_profile",
 
-  ATHLETE_COACH_SELECTION: "athlete_coach_selection",
-  COACH_EMAIL_PASS: "coach_email_pass",
-  COACH_INFO_REGISTRATION: "coach_info_registration",
+  // Coach Registration Flow
+  COACH_EMAIL_PASSWORD: "coach_email_password",
+  COACH_EMAIL_VERIFICATION: "coach_email_verification",
+  COACH_SPORT_INFO: "coach_sport_info",
   COACH_POSITION_SELECTION: "coach_position_selection",
-  COACH_VERIFICATION: "coach_verification",
-  COACH_COMPLETE: "coach_complete",
-  PROFILE_PAGE_COACH: "profile_page_coach",
-  DISPLAY_ATHLETE_PROFILE: "display_athlete_profile",
+  COACH_COMPLETE_PROFILE: "coach_complete_profile",
 
-  DISPLAY_ATHLETE_DECLINE_ACCEPT: "display_athlete_decline_accept",
-  COMMUNICATION_ORGANIZER: "communication_organizer",
-  SCHOOL_SEARCH: "school_search",
-  SCHOOL_INFO: "school_info",
-
-  COACH_TAB_FLOW: "coach_tab_flow",
-  ATHLETE_TAB_FLOW: "athlete_tab_flow",
-
+  // Athlete Application
+  ATHLETE_HOMEPAGE: "athlete_homepage",
   ATHLETE_APPLICATION_STACK: "athlete_application_stack",
+  SEARCH_SCHOOL: "search_school",
+  SCHOOL_INFO: "school_info",
+  ATHLETE_COMMUNICATION: "athlete_communication",
+  DISPLAY_COACH_PROFILE: "display_coach_profile",
+
+  // Coach Evaluation
+  COACH_HOMEPAGE: "coach_homepage",
+  COACH_EVALUATION: "coach_evaluation",
+  COACH_COMMUNICATION: "coach_communication",
+  SEARCH_ATHLETE: "search_athlete",
+  DISPLAY_ATHLETE_PROFILE: "display_athlete_profile",
 };
 
 export default ScreenNames;

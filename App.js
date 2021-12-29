@@ -9,25 +9,24 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { serverUrl } from "./src/constants/config";
 
 // Screen imports
-import WelcomeScreen from "./src/screens/WelcomeScreen";
-import AthleteCoachSelection from "./src/screens/AthleteCoachSelection";
-import EmailPassScreen from "./src/screens/CoachRegistration/CoachEmailPass";
-import VerificationScreen from "./src/screens/CoachRegistration/Verification";
-import CoachInfoRegistration from "./src/screens/CoachRegistration/CoachInfoRegistration";
-import CoachPositionSelection from "./src/screens/CoachRegistration/CoachPositionSelection";
-import CompleteProfilePage from "./src/screens/CoachRegistration/CompleteProfilePage";
-import AthleteSportInfo from "./src/screens/AthleteRegister/AthleteSportInfo";
-import AthleteHeightWeight from "./src/screens/AthleteRegister/AthleteHeightWeight";
-import AthleteAcademic from "./src/screens/AthleteRegister/AthleteAcademic";
-import AthleteComplete from "./src/screens/AthleteRegister/AthleteComplete";
-import AthleteEmailPassword from "./src/screens/AthleteRegister/AthleteEmailPassword";
-import EmailConfirmation from "./src/screens/AthleteRegister/AthleteEmailConfirmation";
-import SchoolInfo from "./src/screens/ApplyToSchool/SchoolInfo";
-import DisplayAthleteProfile from "./src/screens/DisplayAthlete/DisplayAthleteProfile";
-import CoachFlowTab from "./src/screens/CoachFlowTab";
-import AthleteFlowTab from "./src/screens/AthleteFlow/AthleteFlowTab";
-import UserIdContext from "./src/AppContext";
+import Welcome from "./src/screens/Welcome";
 import Login from "./src/screens/Login";
+import AthleteCoachSelection from "./src/screens/AthleteCoachSelection";
+import CoachEmailPassword from "./src/screens/CoachRegistration/CoachEmailPassword";
+import CoachEmailVerification from "./src/screens/CoachRegistration/CoachEmailVerification";
+import CoachSportInfo from "./src/screens/CoachRegistration/CoachSportInfo";
+import CoachPositionSelection from "./src/screens/CoachRegistration/CoachPositionSelection";
+import CoachCompleteProfile from "./src/screens/CoachRegistration/CoachCompleteProfile";
+import AthleteEmailPassword from "./src/screens/AthleteRegistration/AthleteEmailPassword";
+import AthleteEmailVerification from "./src/screens/AthleteRegistration/AthleteEmailVerification";
+import AthleteSportInfo from "./src/screens/AthleteRegistration/AthleteSportInfo";
+import AthleteHeightWeight from "./src/screens/AthleteRegistration/AthleteHeightWeight";
+import AthleteAcademic from "./src/screens/AthleteRegistration/AthleteAcademic";
+import AthleteCompleteProfile from "./src/screens/AthleteRegistration/AthleteCompleteProfile";
+import CoachHomepage from "./src/screens/CoachEvaluation/CoachHomepage";
+import AthleteHomepage from "./src/screens/AthleteApplication/AthleteHomepage";
+import UserIdContext from "./src/AppContext";
+
 const Stack = createNativeStackNavigator();
 
 // Ignore timer related warnings from firebase core APIs
@@ -50,7 +49,7 @@ export default function App() {
           <Stack.Navigator initialRouteName={ScreenNames.WELCOME}>
             <Stack.Screen
               name={ScreenNames.WELCOME}
-              component={WelcomeScreen}
+              component={Welcome}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -64,18 +63,18 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.COACH_EMAIL_PASS}
-              component={EmailPassScreen}
+              name={ScreenNames.COACH_EMAIL_PASSWORD}
+              component={CoachEmailPassword}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.COACH_VERIFICATION}
-              component={VerificationScreen}
+              name={ScreenNames.COACH_EMAIL_VERIFICATION}
+              component={CoachEmailVerification}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.COACH_INFO_REGISTRATION}
-              component={CoachInfoRegistration}
+              name={ScreenNames.COACH_SPORT_INFO}
+              component={CoachSportInfo}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -84,38 +83,18 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.COACH_COMPLETE}
-              component={CompleteProfilePage}
+              name={ScreenNames.COACH_COMPLETE_PROFILE}
+              component={CoachCompleteProfile}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.DISPLAY_ATHLETE_PROFILE}
-              component={DisplayAthleteProfile}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name={ScreenNames.COACH_TAB_FLOW}
-              component={CoachFlowTab}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name={ScreenNames.ATHLETE_TAB_FLOW}
-              component={AthleteFlowTab}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name={ScreenNames.EMAIL_PASSWORD}
+              name={ScreenNames.ATHLETE_EMAIL_PASSWORD}
               component={AthleteEmailPassword}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.SCHOOL_INFO}
-              component={SchoolInfo}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name={ScreenNames.EMAIL_CONFIRMATION}
-              component={EmailConfirmation}
+              name={ScreenNames.ATHLETE_EMAIL_VERIFICATION}
+              component={AthleteEmailVerification}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -134,9 +113,19 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name={ScreenNames.ATHLETE_COMPLETE}
-              component={AthleteComplete}
+              name={ScreenNames.ATHLETE_COMPLETE_PROFILE}
+              component={AthleteCompleteProfile}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={ScreenNames.COACH_HOMEPAGE}
+                component={CoachHomepage}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={ScreenNames.ATHLETE_HOMEPAGE}
+                component={AthleteHomepage}
+                options={{ headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>

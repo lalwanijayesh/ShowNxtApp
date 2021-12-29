@@ -201,7 +201,7 @@ const AthleteAcademic = ({ navigation, route }) => {
               },
             }).then((res) => {
               gpa !== "" && !!school && !!year
-                ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE, {
+                ? navigation.navigate(ScreenNames.ATHLETE_COMPLETE_PROFILE, {
                     ...route.params,
                     profileId: res.data.createProfile.profileId,
                     school: school,

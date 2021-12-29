@@ -51,7 +51,7 @@ const splitName = (name) => {
   };
 };
 
-const CompleteProfilePage = (props) => {
+const CoachCompleteProfile = (props) => {
 
   const [firstName, setFirstName] = React.useState(
     splitName(props.route.params.fullName).firstName
@@ -307,7 +307,7 @@ const CompleteProfilePage = (props) => {
               }
             }).then(res => {
               console.log(res.data);
-              props.navigation.navigate(ScreenNames.COACH_TAB_FLOW, props.route.params);
+              props.navigation.navigate(ScreenNames.COACH_HOMEPAGE, props.route.params);
             });
           }}
         >
@@ -443,4 +443,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompleteProfilePage;
+export default CoachCompleteProfile;

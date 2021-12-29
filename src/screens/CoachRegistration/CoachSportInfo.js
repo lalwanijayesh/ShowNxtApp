@@ -27,7 +27,7 @@ const GET_SCHOOLS_AND_SPORTS = gql`
   }
 `;
 
-const CoachInfoRegistration = (props) => {
+const CoachSportInfo = (props) => {
   const [uniVisible, setUniVisible] = useState(false);
   const [currentUni, setCurrentUni] = useState(null);
   const [uniList, setUniList] = useState([]);
@@ -70,7 +70,7 @@ const CoachInfoRegistration = (props) => {
     <View style={styles.container}>
       <TouchableOpacity
           style={styles.backContainer}
-          onPress={() => props.navigation.navigate(ScreenNames.COACH_VERIFICATION,
+          onPress={() => props.navigation.navigate(ScreenNames.COACH_EMAIL_VERIFICATION,
               props.route.params)}
       >
         <Icon
@@ -281,4 +281,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CoachInfoRegistration;
+export default CoachSportInfo;

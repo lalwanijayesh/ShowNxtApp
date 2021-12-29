@@ -63,12 +63,12 @@ const AthleteCoachSelection = ({ navigation, props }) => {
           style={styles.buttonReady}
           onPress={() => {
             if (type === "athlete") {
-              navigation.navigate(ScreenNames.EMAIL_PASSWORD, {
+              navigation.navigate(ScreenNames.ATHLETE_EMAIL_PASSWORD, {
                 userType: ATHLETE,
                 fullName: fullName,
               });
             } else {
-              navigation.navigate(ScreenNames.COACH_EMAIL_PASS, {
+              navigation.navigate(ScreenNames.COACH_EMAIL_PASSWORD, {
                 userType: COACH,
                 fullName: fullName,
               });
