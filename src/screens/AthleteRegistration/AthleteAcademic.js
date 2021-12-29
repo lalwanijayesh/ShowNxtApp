@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
-import years from "../../data/years";
+import years from "../../constants/years";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
 import Icon from "react-native-ico-material-design";
 

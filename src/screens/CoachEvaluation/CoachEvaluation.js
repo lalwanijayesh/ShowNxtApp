@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
-import { firebaseBucket } from "../../constants/config";
+import { FIREBASE_BUCKET } from "@env";
 import {gql, useLazyQuery, useMutation} from "@apollo/client";
 import ScreenNames from "../../constants/ScreenNames";
 import Icon from "react-native-ico";
@@ -96,7 +96,7 @@ const CoachEvaluation = ({ navigation, route }) => {
         Promise.all(
             data.coach.nextApplication.profile.videos.map(async (video) => {
               const url = await storage
-                  .refFromURL("gs://" + firebaseBucket + "/" + video.filePath)
+                  .refFromURL("gs://" + FIREBASE_BUCKET + "/" + video.filePath)
                   .getDownloadURL();
               console.log(url);
               return url;

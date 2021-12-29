@@ -6,7 +6,7 @@ import { LogBox } from "react-native";
 
 import ScreenNames from "./src/constants/ScreenNames";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { serverUrl } from "./src/constants/config";
+import { API_SERVER } from "@env";
 
 // Screen imports
 import Welcome from "./src/screens/Welcome";
@@ -35,7 +35,7 @@ LogBox.ignoreLogs(["VirtualizedLists should never be nested inside"]);
 LogBox.ignoreAllLogs();
 
 const client = new ApolloClient({
-  uri: serverUrl,
+  uri: API_SERVER,
   cache: new InMemoryCache(),
 });
 
