@@ -14,6 +14,8 @@ import { Video } from "expo-av";
 import firebase from "../../firebase/firebase";
 import { firebaseBucket } from "../../constants/config";
 import {gql, useLazyQuery, useMutation} from "@apollo/client";
+import ScreenNames from "../../constants/ScreenNames";
+import Icon from "react-native-ico";
 
 const GET_NEXT_APPLICATION = gql`
 query Query($userId: ID!) {
@@ -52,19 +54,33 @@ mutation Mutation($applicationId: ID!, $coachId: ID!, $status: EvalStatus!) {
   }
 }
 `
+const GET_POSITIONS = gql`
+query Query {
+  positions {
+    positionId
+    positionName
+  }
+}
+`
 
-// TODO: make a method that for each video displays a little white circle at the bottom of the screen
 const { width, height } = Dimensions.get("window");
 
 const DisplayAthlete = ({ navigation, route }) => {
 
   const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
-  const [visible, setVisible] = React.useState(false);
-  const [visibleButton1, setVisibleButton1] = React.useState(true);
+  const [dropdownVisible, setDropdownVisible] = React.useState(false);
   const [videoUrls, setVideoUrls] = React.useState([]);
 
   const [applicationId, setApplicationId] = React.useState(null);
   const [athleteProfile, setAthleteProfile] = React.useState(null);
+
+  const [positions, setPositions] = React.useState([]);
+  const [getPositions] = useLazyQuery(GET_POSITIONS, {
+    fetchPolicy: "no-cache",
+    onCompleted: (data) => {
+      setPositions(data.positions);
+    }
+  });
 
   const [getNextApplication] = useLazyQuery(GET_NEXT_APPLICATION, {
     fetchPolicy: "no-cache",
@@ -73,7 +89,9 @@ const DisplayAthlete = ({ navigation, route }) => {
       const storage = firebase.storage();
       if (data.coach.nextApplication !== null) {
         setApplicationId(data.coach.nextApplication.applicationId);
-        setAthleteProfile(data.coach.nextApplication.profile.athlete);
+        const positionName = positions.filter(p =>
+            p.positionId === data.coach.nextApplication.profile.positionId)[0].positionName;
+        setAthleteProfile({...data.coach.nextApplication.profile.athlete, positionName});
         Promise.all(
             data.coach.nextApplication.profile.videos.map(async (video) => {
               const url = await storage
@@ -89,7 +107,6 @@ const DisplayAthlete = ({ navigation, route }) => {
         setApplicationId(null);
         setAthleteProfile(null);
         setVideoUrls([]);
-        Alert.alert("No new applications!")
       }
     }
   });
@@ -109,16 +126,6 @@ const DisplayAthlete = ({ navigation, route }) => {
     }
   });
 
-  const changeVisibility = () => {
-    setVisible(true);
-    setVisibleButton1(false);
-  };
-
-  const changeVisibilitySwitch = () => {
-    setVisible(false);
-    setVisibleButton1(true);
-  };
-
   const handleVideoClick = (index) => {
     if (currentlyPlaying === index) {
       setCurrentlyPlaying(null);
@@ -137,6 +144,7 @@ const DisplayAthlete = ({ navigation, route }) => {
   };
 
   React.useEffect(() => {
+    getPositions();
     nextApplication();
   }, []);
 
@@ -170,7 +178,8 @@ const DisplayAthlete = ({ navigation, route }) => {
     });
   };
 
-  return athleteProfile ?
+  return (
+    (athleteProfile !== null && videoUrls.length > 0) ?
     <View style={styles.container}>
       {/* DISPLAYING THE VIDEO  */}
       <View style={styles.containerVid}>
@@ -202,7 +211,6 @@ const DisplayAthlete = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* BUTTONS TO REJECT AND ACCEPT + DOTS FOR EACH VID */}
 
       {/* NAME/AGE OF ATHLETE */}
       <View style={styles.nameAgeBar}>
@@ -211,48 +219,59 @@ const DisplayAthlete = ({ navigation, route }) => {
             navigation.navigate(ScreenNames.DISPLAY_ATHLETE_PROFILE)
           }
         >
-          <Text style={styles.textName}> Jake Smith, 19</Text>
+          <Text style={styles.textName}>
+            {athleteProfile.firstName + " " + athleteProfile.lastName}
+          </Text>
         </TouchableOpacity>
       </View>
-      {/* NAME/AGE OF ATHLETE */}
 
-      {/* POSITION OF ATHLETE */}
+      {/* POSITION AND LOCATION OF ATHLETE */}
       <View style={styles.positionBar}>
-        <Text style={styles.textLocation}> 🏐 Goalkeeper</Text>
+        <Text style={styles.textLocation}> {"🏐 "}
+          {athleteProfile.positionName}
+        </Text>
       </View>
-      {/* POSITION OF ATHLETE */}
-
-      {/* LOCATION OF ATHLETE */}
       <View style={styles.locationBar}>
         <Text style={styles.textLocation}> 📍 Boston, MA</Text>
       </View>
-      {/* LOCATION OF ATHLETE */}
-      {/* TOP DROPDOWN BUTTON */}
+
+      {/* ATHLETE INFO DROPDOWN BUTTON */}
       <TouchableOpacity
-        style={visibleButton1 ? styles.dropdownButton : styles.hidden}
-        onPress={() => changeVisibility()}
+        style={dropdownVisible ? styles.hidden : styles.dropdownButton}
+        onPress={() => setDropdownVisible(true)}
       >
-        <Text style={styles.symbolText}>V</Text>
+        <Icon
+            name="angle-arrow-pointing-down"
+            group="coolicons"
+            height={40}
+            width={40}
+            color="white"
+        />
       </TouchableOpacity>
-      {/* TOP DROPDOWN BUTTON */}
+
       {/* ATHLETE INFO */}
-      <View style={visible ? styles.athleteInfoBar : styles.hidden}>
-        <Text style={styles.textLocation}> </Text>
-        <Text style={styles.textLocation}> </Text>
-        <Text style={styles.textInfoAthlete}> Height: 6'2"</Text>
-        <Text style={styles.textInfoAthlete}> Weight: 170lbs</Text>
-        <Text style={styles.textInfoAthlete}> GPA: 3.5</Text>
-        <Text style={styles.textInfoAthlete}> SAT: 1500</Text>
-        <TouchableOpacity onPress={() => changeVisibilitySwitch()}>
-          <Text style={styles.symbolText}>^</Text>
+      <View style={dropdownVisible ? styles.athleteInfoBar : styles.hidden}>
+        <Text style={styles.textInfoAthlete}> Height 6'2"</Text>
+        <Text style={styles.textInfoAthlete}> Weight 170 lbs</Text>
+        <Text style={styles.textInfoAthlete}> GPA 3.5</Text>
+        <Text style={styles.textInfoAthlete}> SAT 1500</Text>
+        <TouchableOpacity onPress={() => setDropdownVisible(false)}>
+          <Icon
+              name="up-arrow-angle"
+              group="coolicons"
+              height={40}
+              width={40}
+              color="white"
+          />
         </TouchableOpacity>
       </View>
-      {/* ATHLETE INFO */}
+
     </View>
     :
     <View style={styles.container}>
       <Text>No New Applications</Text>
     </View>
+  )
 };
 
 const styles = StyleSheet.create({
@@ -283,7 +302,6 @@ const styles = StyleSheet.create({
     bottom: 65,
     color: `#000000`,
   },
-
   locationBar: {
     flexDirection: "row",
     width: "90%",
@@ -300,7 +318,6 @@ const styles = StyleSheet.create({
     bottom: 220,
     alignItems: "flex-start",
   },
-
   nameAgeBar: {
     flexDirection: "row",
     width: "90%",
@@ -314,12 +331,8 @@ const styles = StyleSheet.create({
     width: "90%",
     justifyContent: "center",
     position: "absolute",
-    top: 60,
+    top: 70,
     alignItems: "center",
-  },
-
-  icon: {
-    padding: 14,
   },
   circleDecline: {
     width: 80,
@@ -350,18 +363,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 25,
   },
-
   textInfoAthlete: {
     color: "white",
-    fontSize: 26,
+    fontSize: 24
   },
-
   textName: {
     fontWeight: "bold",
     color: "white",
     fontSize: 35,
   },
-
   athleteInfoBar: {
     position: "absolute",
     alignItems: "center",
@@ -374,22 +384,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     opacity: 0.8,
     borderRadius: 10,
+    padding: 20
   },
-
-  containerForGradient: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 500,
-    bottom: 0,
-  },
-
   hidden: {
     display: "none",
   },

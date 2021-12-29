@@ -25,7 +25,6 @@ const ApplicationScreen = (props) => {
         initialParams={props.route.params}
         component={SchoolSearch}
       />
-
       <ApplicationStack.Screen
         name={ScreenNames.SCHOOL_INFO}
         component={SchoolInfo}
@@ -74,7 +73,7 @@ const AthleteFlowTab = (props) => {
         }}
       />
       <Tab.Screen
-        name={ScreenNames.DISPLAY_ATHLETE_PROFILE} // TODO: change this to the actual component once we have it
+        name={ScreenNames.DISPLAY_ATHLETE_PROFILE}
         component={DisplayAthleteProfile}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -88,8 +87,8 @@ const AthleteFlowTab = (props) => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "black",
-  },
+    backgroundColor: "black"
+  }
 });
 
 export default AthleteFlowTab;

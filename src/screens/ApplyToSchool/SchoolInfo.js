@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React  from "react";
 import {
   View,
   Text,
@@ -8,11 +8,11 @@ import {
   Alert,
   ScrollView,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback, ActivityIndicator
 } from "react-native";
-import college from "../../../assets/uni.jpg";
+import college from "../../../assets/college.jpg";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import UserIdContext from "../../AppContext";
+import {LinearGradient} from "expo-linear-gradient";
 
 const GET_SCHOOL_POSITIONS = gql`
   query GetSchoolAndPositions($schoolId: ID!) {
@@ -106,7 +106,7 @@ const SchoolInfo = (props) => {
       );
       console.log(profile);
       if (profile) {
-        // We can successfully apply
+        // We can successfully apply with relevant profile meeting requirements
         createApplication({
           variables: {
             profileId: profile.profileId,
@@ -153,7 +153,13 @@ const SchoolInfo = (props) => {
     },
   });
 
-  if (loading) return <Text>Loading</Text>;
+  if (loading)
+    return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color="#0000FF" />
+          <Text>Loading ...</Text>
+        </View>
+    );
   if (error) return <Text>Error</Text>;
 
   return (
@@ -164,11 +170,9 @@ const SchoolInfo = (props) => {
         <Text style={styles.locationText}>📍 {location}</Text>
         <View style={styles.containerDescription}>
           <Text style={{textAlign: 'justify'}}>
-            Northeastern University is a private research university with its main
-            campus in Boston. Established in 1898, the university offers
-            undergraduate and graduate programs on its main campus in Boston as
-            well as satellite campuses in Charlotte, North Carolina; Seattle,
-            Washington; San Jose, California, etc.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae gravida ante, vitae sodales arcu.
+            Proin dictum lacinia risus nec hendrerit. Mauris tincidunt, ipsum porta aliquam vehicula, tortor sapien
+            posuere est, sed suscipit dolor eros vel elit. Nullam cursus ex.
           </Text>
         </View>
       {openings.length !== 0
@@ -200,7 +204,9 @@ const SchoolInfo = (props) => {
       </ScrollView>}
 
       {selectedOpening && (
-        <View style={styles.applyView}>
+        <LinearGradient
+            colors={['rgb(217, 238, 253)', 'rgb(255, 255, 255)']}
+            style={styles.applyView}>
           <Text style={styles.positionText}>
             {selectedOpening.positionName}
           </Text>
@@ -216,7 +222,7 @@ const SchoolInfo = (props) => {
           >
             <Text style={styles.applyText}>APPLY</Text>
           </TouchableOpacity>
-        </View>
+        </LinearGradient>
       )}
     </View>
     </TouchableWithoutFeedback>
@@ -248,6 +254,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
+    backgroundColor: '#FFFFFF'
   },
   nextButton: {
     borderColor: "black",
@@ -281,14 +288,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     padding: 5
   },
-  containerPosition2: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "80%",
-    margin: -60,
-  },
   photoContainer: {
     width: "100%",
     height: 250,
@@ -320,25 +319,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: 'uppercase'
   },
-
   teamText: {
     color: "black",
     fontSize: 17,
     marginTop: 2,
   },
-
   applyView: {
     width: "100%",
     height: "50%",
     position: "absolute",
-    top: height / 2,
-    opacity: 0.95,
-    backgroundColor: "#87cefa",
+    top: height * 0.52,
     borderRadius: 39,
     flexDirection: "column",
     alignItems: "center",
   },
-
+  loading: {
+    position: 'absolute',
+    backgroundColor: '#F5FCFF88',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 });
 
 export default SchoolInfo;

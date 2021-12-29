@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import {
   View,
@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { ATHLETE, COACH } from "../constants/enums";
 import ScreenNames from "../constants/ScreenNames";
+import Icon from "react-native-ico-material-design";
 
 const AthleteCoachSelection = ({ navigation, props }) => {
   const [fullName, setFullName] = React.useState("");
@@ -23,6 +24,18 @@ const AthleteCoachSelection = ({ navigation, props }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.navigate(ScreenNames.WELCOME)}
+      >
+        <Icon
+            name="left-arrow-key"
+            height={15}
+            width={15}
+            color="black"
+        />
+      </TouchableOpacity>
+      <Text style={styles.header}>REGISTER</Text>
       <TextInput
         style={styles.nameInput}
         onChangeText={setFullName}
@@ -41,8 +54,8 @@ const AthleteCoachSelection = ({ navigation, props }) => {
         setItems={setTypeList}
         zIndex={3000}
         zIndexInverse={1000}
-        style={[styles.spacingToHeader, styles.box, styles.pickleStyle]}
-        dropDownContainerStyle={[styles.spacingToHeader, styles.pickleStyle]}
+        style={[styles.spacingToHeader, styles.box, styles.pickerStyle]}
+        dropDownContainerStyle={[styles.spacingToHeader, styles.pickerStyle]}
       />
 
       {fullName !== "" && type !== null && (
@@ -65,12 +78,6 @@ const AthleteCoachSelection = ({ navigation, props }) => {
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       )}
-      <TouchableOpacity
-        style={styles.backContainer}
-        onPress={() => navigation.navigate(ScreenNames.WELCOME)}
-      >
-        <Text style={styles.back}>{"<"}</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -80,39 +87,26 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "1000%",
+    height: "100%",
   },
-
+  header: {
+    alignItems: "center",
+    textAlign: "center",
+    padding: 10,
+    marginTop: 50,
+    fontWeight: "bold",
+    fontSize: 16
+  },
   backContainer: {
     position: "absolute",
-    left: 42,
-    top: 40,
+    left: 40,
+    top: 60,
   },
-
-  back: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-
-  nextButton: {
-    display: "flex",
-    alignItems: "center",
-    borderColor: "black",
-    borderRadius: 8,
-    borderWidth: 1,
-    padding: 10,
-    margin: 370,
-    width: 237,
-    backgroundColor: "#fff",
-  },
-
-  // TODO add arrow icon in button
   buttonText: {
     fontWeight: "bold",
     textAlign: "center",
     color: "white",
   },
-
   nameInput: {
     width: 237,
     height: 40,
@@ -120,46 +114,19 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderRadius: 8,
     padding: 10,
-    marginTop: 175,
+    marginTop: 100,
   },
-
-  typePicker: {
-    width: 237,
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 20,
-  },
-
   spacingToHeader: {
     marginTop: 60,
   },
-
-  spacingBetween: {
-    marginTop: 46,
-  },
-
   box: {
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6,
+    borderRadius: 6,
     height: 37,
   },
-
-  pickleStyle: {
+  pickerStyle: {
     width: Dimensions.get("screen").width - 89 * 2,
     marginLeft: 89,
   },
-
-  nextText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    fontSize: 14,
-    lineHeight: 16,
-  },
-
   buttonReady: {
     display: "flex",
     alignItems: "center",
@@ -167,17 +134,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     padding: 10,
-    margin: 410,
+    margin: 300,
     width: 237,
     backgroundColor: "#000000",
-  },
-
-  buttonTextArrow: {
-    fontWeight: "bold",
-    textAlign: "right",
-    color: "black",
-    fontSize: 20,
-  },
+  }
 });
 
 export default AthleteCoachSelection;

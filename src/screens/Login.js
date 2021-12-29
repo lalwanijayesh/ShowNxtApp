@@ -3,6 +3,7 @@ import { Text, TextInput, View, TouchableOpacity, Alert, StyleSheet } from "reac
 import firebase from "../firebase/firebase";
 import {gql, useLazyQuery} from "@apollo/client";
 import ScreenNames from "../constants/ScreenNames";
+import Icon from "react-native-ico-material-design";
 
 const GET_USER = gql`
     query Query($email: String!) {
@@ -58,7 +59,17 @@ const Login = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-
+            <TouchableOpacity
+                style={styles.backContainer}
+                onPress={() => navigation.navigate(ScreenNames.WELCOME)}
+            >
+                <Icon
+                    name="left-arrow-key"
+                    height={15}
+                    width={15}
+                    color="black"
+                />
+            </TouchableOpacity>
             <Text style={styles.header}>LOGIN</Text>
             <TextInput
                 style={styles.input}
@@ -92,6 +103,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         paddingHorizontal: 50,
         paddingVertical: 30
+    },
+    backContainer: {
+        position: "absolute",
+        left: 40,
+        top: 60,
     },
     header: {
         alignItems: "center",

@@ -99,7 +99,7 @@ const CompleteProfilePage = (props) => {
 
     setSportList(
         data.sports.map(({ sportId, sportName, gender }) => ({
-          label: sportName + " [" + gender + "]",
+          label: sportName,
           value: sportId,
         }))
     );
@@ -117,25 +117,21 @@ const CompleteProfilePage = (props) => {
   const incrementValue = (i) => {
     let currentCounters = {};
     Object.assign(currentCounters, counters);
-
     currentCounters[i] += 1;
-
     setCounters(currentCounters);
   };
 
   const decrementValue = (i) => {
     let currentCounters = {};
     Object.assign(currentCounters, counters);
-
     currentCounters[i] = Math.max(currentCounters[i] - 1, 0);
-
     setCounters(currentCounters);
   };
 
   return (
     <View style={{ backgroundColor: "#FFFFFF" }}>
       <ScrollView style={{ marginBottom: 39 }}>
-        <View style={styles.infoConatiner}>
+        <View style={styles.infoContainer}>
           <View style={styles.avaContainer}>
             <View style={styles.avatar}>
               {/* TODO add profile avatar */}
@@ -323,17 +319,15 @@ const CompleteProfilePage = (props) => {
 };
 
 const styles = StyleSheet.create({
-  infoConatiner: {
+  infoContainer: {
     marginHorizontal: 22,
   },
-
   avaContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
-
   avatar: {
-    marginTop: 56,
+    marginTop: 80,
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
@@ -341,24 +335,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 5,
   },
-
   title: {
     fontSize: 10,
     lineHeight: 16,
     fontWeight: "bold",
   },
-
   dropdownContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-
   boxSmallBorder: {
     borderWidth: 0.5,
     borderRadius: 5,
     borderColor: "#000000",
   },
-
   boxSmallDimensions: {
     paddingVertical: Platform.select({
       ios: 7,
@@ -366,7 +356,6 @@ const styles = StyleSheet.create({
     paddingLeft: 9,
     width: (Dimensions.get("screen").width - 67) / 2,
   },
-
   itemContainer: {
     display: "flex",
     flexDirection: "row",
@@ -374,14 +363,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 50,
   },
-
   itemLabelContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 31,
   },
-
   itemIncrementContainer: {
     display: "flex",
     flexDirection: "row",
@@ -393,28 +380,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 35,
   },
-
   itemLabel: {
     padding: 10,
     fontSize: 14,
     lineHeight: 16,
   },
-
   itemCounter: {
     fontSize: 16,
     lineHeight: 16,
     paddingHorizontal: 23,
   },
-
   itemButton: {
     justifyContent: "center",
     alignItems: "center",
   },
-
   itemButtonPlus: {
     fontSize: 25,
   },
-
   borderMinusSign: {
     borderRightColor: "#000000",
     borderTopEndRadius: 5,
@@ -423,7 +405,6 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
   },
-
   borderPlusSign: {
     borderLeftColor: "#000000",
     borderTopLeftRadius: 5,
@@ -432,11 +413,9 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
   },
-
   itemButtonMinus: {
     fontSize: 25,
   },
-
   textAddMore: {
     textDecorationLine: "underline",
     marginRight: 19,
@@ -446,7 +425,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     color: "#555555",
   },
-
   nextBtn: {
     justifyContent: "center",
     alignItems: "center",
@@ -457,7 +435,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 6,
   },
-
   nextText: {
     color: "#FFFFFF",
     fontWeight: "bold",

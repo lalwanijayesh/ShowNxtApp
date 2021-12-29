@@ -1,6 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import ScreenNames from "../constants/ScreenNames";
+
+const height = Dimensions.get('screen').height;
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -24,12 +26,12 @@ const WelcomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: height/2,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     height: "100%",
   },
-
   button: {
     display: "flex",
     borderColor: "black",
@@ -39,11 +41,6 @@ const styles = StyleSheet.create({
     margin: 15,
     width: 237,
   },
-
-  loginButton: {
-    marginTop: 300,
-  },
-
   buttonText: {
     fontWeight: "bold",
   },

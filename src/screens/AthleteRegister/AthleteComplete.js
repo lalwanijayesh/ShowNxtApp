@@ -15,6 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import firebase from "../../firebase/firebase";
 import uuid from "react-native-uuid";
 import {Video} from "expo-av";
+import Icon from "react-native-ico-material-design";
 
 const ADD_VIDEO = gql`
 mutation AddProfileVideo($profileId: ID!, $filePath: String!) {
@@ -26,6 +27,7 @@ mutation AddProfileVideo($profileId: ID!, $filePath: String!) {
 `
 
 const AthleteComplete = ({ navigation, route }) => {
+  // TODO use application context to store details of logged-in user
   const [userId, setUserId] = useContext(UserIdContext);
 
   const [addVideo] = useMutation(ADD_VIDEO, {
@@ -130,11 +132,17 @@ const AthleteComplete = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={styles.backContainer}
-        onPress={() => navigation.navigate(ScreenNames.ATHLETE_ACADEMIC)}
-      >
-        <Text style={styles.back}>{"<"}</Text>
+          style={styles.backContainer}
+          onPress={() => navigation.navigate(ScreenNames.ATHLETE_ACADEMIC,
+              route.params)}>
+        <Icon
+            name="left-arrow-key"
+            height={15}
+            width={15}
+            color="black"
+        />
       </TouchableOpacity>
+
       <Text style={styles.register}>{"COMPLETE PROFILE"}</Text>
 
       <View style={styles.infoContainer}>
@@ -192,32 +200,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
   backContainer: {
     position: "absolute",
-    left: 42,
-    top: 40,
+    left: 40,
+    top: 60,
   },
-
-  back: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-
   register: {
-    fontWeight: "bold",
-    fontSize: 14,
-    lineHeight: 16,
-    marginTop: 54,
     alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 10,
+    marginTop: 50,
   },
-
   infoContainer: {
     marginTop: 40,
     flexDirection: "row",
     marginHorizontal: 32,
   },
-
   avatar: {
     width: 100,
     height: 100,
@@ -226,34 +226,30 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 34,
   },
-
   textName: {
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
     color: "#000000",
+    marginTop: 10
   },
-
   spacingBetweenText: {
     marginTop: 30,
   },
-
   textInfo: {
     color: "#555555",
     fontSize: 10,
     lineHeight: 16,
     fontWeight: "bold",
   },
-
   videoTitle: {
-    marginTop: 57,
+    marginTop: 50,
     fontSize: 14,
     fontWeight: "bold",
     lineHeight: 16,
     color: "#000000",
     marginLeft: 34,
   },
-
   videoStyle: {
     width: 135,
     height: 271,
@@ -264,7 +260,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   text: {
     marginTop: 22,
     marginLeft: 34,
@@ -272,7 +267,6 @@ const styles = StyleSheet.create({
     lineHeight: 11,
     color: "#000000",
   },
-
   nextBtn: {
     justifyContent: "center",
     alignItems: "center",
@@ -283,14 +277,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 6,
   },
-
   nextText: {
     color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
   },
-
   video: {
     width: 135,
     height: 271,
@@ -298,7 +290,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
   buttons: {
     justifyContent: 'center',
     alignItems: 'center',

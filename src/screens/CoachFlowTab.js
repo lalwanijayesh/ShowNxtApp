@@ -74,8 +74,8 @@ const CoachFlowTab = (props) => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: "black",
-  },
+    backgroundColor: "black"
+  }
 });
 
 export default CoachFlowTab;

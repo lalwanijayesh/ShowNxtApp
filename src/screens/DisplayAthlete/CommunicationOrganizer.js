@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 
 const GET_EVALUATIONS = gql`
 query AcceptedEvaluations($userId: ID!) {
@@ -85,7 +85,7 @@ const CommunicationOrganizer = ({ navigation, route }) => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [likedSelected, setLikedSelected] = React.useState(true);
 
-  const { loading, error, data } = useQuery(GET_EVALUATIONS, {
+  const [getEvaluations] = useLazyQuery(GET_EVALUATIONS, {
     variables: { userId : route.params.userId },
     onCompleted: (data) => {
       setAcceptedApplications(data.coach.acceptedEvaluations.map(e => e.application));
@@ -93,8 +93,9 @@ const CommunicationOrganizer = ({ navigation, route }) => {
     },
   });
 
-  if (loading) return <Text>Loading</Text>;
-  if (error) return <Text>Error</Text>;
+  useEffect(() => {
+    getEvaluations();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -168,7 +169,8 @@ const CommunicationOrganizer = ({ navigation, route }) => {
         contentContainerStyle={styles.athletesContainer}
       >
         {likedSelected
-          ? acceptedApplications
+          ? (acceptedApplications.length !== 0 ?
+              acceptedApplications
               .filter((application) =>
                 (
                   application.profile.athlete.firstName +
@@ -184,8 +186,13 @@ const CommunicationOrganizer = ({ navigation, route }) => {
                   navigation={navigation}
                   key={application.applicationId}
                 />
-              ))
-          : rejectedApplications
+              )) :
+              <Text style={styles.centerText}>
+                No results to display
+              </Text>
+            )
+          : (rejectedApplications.length !== 0 ?
+              rejectedApplications
               .filter((application) =>
                 (
                   application.profile.athlete.firstName +
@@ -201,7 +208,12 @@ const CommunicationOrganizer = ({ navigation, route }) => {
                   navigation={navigation}
                   key={application.applicationId}
                 />
-              ))}
+              )) :
+              <Text style={styles.centerText}>
+                No results to display
+              </Text>
+            )
+        }
       </ScrollView>
     </View>
   );
@@ -215,28 +227,24 @@ const styles = StyleSheet.create({
     height: "100%",
     marginTop: 50,
   },
-
   menuContainer: {
     display: "flex",
     flexDirection: "column",
   },
-
   searchFilterContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
   },
-
   searchInput: {
     width: 200,
-    backgroundColor: "#ababab",
+    backgroundColor: "#dddddd",
     height: 35,
     borderRadius: 20,
     color: "black",
     padding: 10,
   },
-
   filterContainer: {
     marginLeft: 20,
     backgroundColor: "rgba(164, 164, 164, 0.2)",
@@ -247,19 +255,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   filterText: {
     color: "black",
     fontWeight: "bold",
   },
-
   likedRejectedContainer: {
     display: "flex",
     flexDirection: "row",
     width: "90%",
     marginTop: 15,
   },
-
   likedButtonContainerUnselected: {
     backgroundColor: "#DBDDE0",
     width: "50%",
@@ -269,7 +274,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   likedButtonContainerSelected: {
     backgroundColor: "#000000",
     width: "50%",
@@ -279,59 +283,52 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   likedButtonTextSelected: {
     color: "#FFFFFF",
   },
-
   likedButtonTextUnselected: {
     color: "#000000",
   },
-
   athletesScroll: {
     width: "90%",
   },
-
   athletesContainer: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
   },
-
   athleteContainer: {
     borderColor: "black",
     borderRadius: 15,
     margin: 5,
   },
-
   athleteVideoFrame: {
     width: 170,
     height: 170,
-
     display: "flex",
     flexDirection: "row",
     alignItems: "flex-start",
-
     overflow: "hidden",
     borderRadius: 15,
   },
-
   athleteProfileImage: {
     width: 50,
     height: 50,
-
     overflow: "hidden",
     borderRadius: 30,
     borderWidth: 1,
   },
-
   athleteName: {
     color: "white",
     fontWeight: "bold",
     textShadowColor: "black",
     textShadowRadius: 3,
   },
+  centerText: {
+    marginHorizontal: 10,
+    marginVertical: 20
+  }
 });
 
 export default CommunicationOrganizer;

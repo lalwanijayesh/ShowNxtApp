@@ -2,18 +2,16 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
-  TouchableOpacity,
-  Alert,
 } from "react-native";
-// import ScreenNames from "../constants/ScreenNames";
 
-const SearchForCoach = ({ navigation }) => {
+const SearchProfile = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.buttonText}>Welcome to the Search Page!</Text>
-    </View>
+      <View style={styles.container}>
+        <Text style={styles.buttonText}>
+          SEARCH PROFILE PAGE
+        </Text>
+      </View>
   );
 };
 
@@ -24,30 +22,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
   },
-  icon: {
-    padding: 14,
-  },
-
-  navBar: {
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: `#000000`,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  navContainer: {
-    position: "absolute",
-    alignItems: "center",
-    bottom: 0,
-    color: `#000000`,
-  },
-
   buttonText: {
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center",
-    margin: 90,
-  },
+    margin: 100,
+  }
 });
 
-export default SearchForCoach;
+export default SearchProfile;

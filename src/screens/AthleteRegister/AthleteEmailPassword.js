@@ -11,6 +11,7 @@ import firebase from "../../firebase/firebase";
 import ScreenNames from "../../constants/ScreenNames";
 import { gql, useMutation } from '@apollo/client';
 import {ATHLETE} from "../../constants/enums";
+import Icon from "react-native-ico-material-design";
 
 const CREATE_USER = gql`
   mutation CreateUser($email: String!, $type: UserType!) {
@@ -91,8 +92,8 @@ const AthleteEmailPassword = ({ navigation, route }) => {
                 });
               })
               .catch((error) => Alert.alert("An error occurred while sending verification email!"))
-        });
-      });
+        })
+      }).catch(error => Alert.alert(error.message));
     }
   };
 
@@ -100,18 +101,21 @@ const AthleteEmailPassword = ({ navigation, route }) => {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.backContainer}
-          onPress={() =>
-            navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)
-          }
+            style={styles.backContainer}
+            onPress={() => navigation.navigate(ScreenNames.ATHLETE_COACH_SELECTION)}
         >
-          <Text style={styles.back}>{"<"}</Text>
+          <Icon
+              name="left-arrow-key"
+              height={15}
+              width={15}
+              color="black"
+          />
         </TouchableOpacity>
 
         <Text style={styles.register}>{"REGISTER"}</Text>
 
         <TextInput
-          placeholder="Enter Email"
+          placeholder="Enter email"
           autoCapitalize="none"
           autoCorrect={false}
           value={email}
@@ -119,8 +123,10 @@ const AthleteEmailPassword = ({ navigation, route }) => {
           style={[styles.box, styles.textBox, styles.spacingBetweenHeader]}
         />
 
-        <View style={styles.checkContainer}>
-          <Text>{"Please use a valid email"}</Text>
+        <View style={styles.margin1}>
+          <View style={styles.checkContainer}>
+            <Text>{"Please use a valid email."}</Text>
+          </View>
         </View>
 
         <TextInput
@@ -135,7 +141,7 @@ const AthleteEmailPassword = ({ navigation, route }) => {
 
         <View style={styles.margin1}>
           <View style={styles.checkContainer}>
-            <Text>{"Password must include following:"}</Text>
+            <Text>{"Password must include the following:"}</Text>
             <View style={styles.margin2}>
               <Text style={styles.passwordRequirements}>
                 {password.length >= 8
@@ -144,13 +150,13 @@ const AthleteEmailPassword = ({ navigation, route }) => {
               </Text>
               <Text style={styles.passwordRequirements}>
                 {isIncluded(numArray)
-                  ? "✓  1 numeric characters"
-                  : "x  1 numeric characters"}
+                  ? "✓  1 numeric character"
+                  : "x  1 numeric character"}
               </Text>
               <Text style={styles.passwordRequirements}>
                 {isIncluded(symbolsArray)
-                  ? "✓  1 special characters"
-                  : "x  1 special characters"}
+                  ? "✓  1 special character"
+                  : "x  1 special character"}
               </Text>
             </View>
           </View>
@@ -178,34 +184,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
   backContainer: {
     position: "absolute",
-    left: 42,
-    top: 40,
+    left: 40,
+    top: 60,
   },
-
-  back: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-
   register: {
-    fontWeight: "bold",
-    fontSize: 14,
-    lineHeight: 16,
-    marginTop: 54,
     alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 10,
+    marginTop: 50,
   },
-
   margin1: {
-    marginTop: 14,
+    marginTop: 10,
   },
-
   margin2: {
     marginTop: 4,
   },
-
   textBox: {
     color: "#555555",
     fontSize: 14,
@@ -215,64 +212,34 @@ const styles = StyleSheet.create({
     paddingLeft: 17,
     backgroundColor: "#FFFFFF",
   },
-
-  emailvalid: {
-    textAlign: "left",
-    marginTop: 5,
-    fontSize: 13,
-  },
-
   box: {
     borderColor: "#000000",
     borderWidth: 1,
     borderRadius: 6,
     height: 37,
   },
-
   spacingBetweenHeader: {
-    marginTop: 126,
+    marginTop: 100,
   },
-
-  passwordRequirements1: {
-    fontWeight: "normal",
-    textAlign: "right",
-    marginTop: 10,
-    fontSize: 13,
-  },
-
   spacingBetweenBoxes: {
     marginTop: 46,
   },
-
   checkContainer: {
     marginHorizontal: 77,
   },
-
   nextBtn: {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
     marginHorizontal: 69,
-    marginTop: 312,
+    marginTop: 200,
     backgroundColor: "#000000",
     height: 40,
   },
-
   nextText: {
     color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 14,
     lineHeight: 16,
-  },
-
-  preloader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
   },
 });

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { TouchableOpacity, Text, TextInput, View, StyleSheet, Alert, Keyboard } from 'react-native';
 import ScreenNames from '../../constants/ScreenNames';
+import Icon from "react-native-ico-material-design";
 
 const AthleteHeightWeight = ({ navigation, route }) => {
 
@@ -10,9 +11,16 @@ const AthleteHeightWeight = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backContainer}
-                        onPress={() => navigation.navigate(ScreenNames.ATHLETE_SPORT_INFO)}>
-        <Text style={styles.back}>{"<"}</Text>
+      <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => navigation.navigate(ScreenNames.ATHLETE_SPORT_INFO,
+              route.params)}>
+        <Icon
+            name="left-arrow-key"
+            height={15}
+            width={15}
+            color="black"
+        />
       </TouchableOpacity>
 
       <Text style={styles.register}>{"REGISTER"}</Text>
@@ -46,7 +54,7 @@ const AthleteHeightWeight = ({ navigation, route }) => {
       <View style={[styles.spacingBetweenBoxes, styles.margin]}>
         <Text style={styles.text}>{"Weight"}</Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TextInput style={[styles.text, styles.spacingBetweenText, styles.textBox]}
+        <TextInput style={[styles.text, styles.spacingBetweenText, styles.textBoxLarge]}
                    keyboardType={"numeric"}
                    returnKeyLabel='Done' 
                    returnKeyType='done' 
@@ -66,7 +74,7 @@ const AthleteHeightWeight = ({ navigation, route }) => {
                             height: { ft: ft, inch: inch},
                             weight: weight
                           }) :
-                          Alert.alert("Please enter your height and weight before moving to the next step!!")
+                          Alert.alert("Please enter your height and weight before moving to the next step!")
                         }}
                         style={[styles.nextBtn, ft && inch && weight ?
                             {backgroundColor: '#000000', borderColor: '#000000',} :
@@ -84,26 +92,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-
   backContainer: {
-    position: 'absolute',
-    left: 42,
-    top: 40,
+    position: "absolute",
+    left: 40,
+    top: 60,
   },
-
-  back: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-
   register: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    lineHeight: 16, 
-    marginTop: 54,
-    alignSelf: 'center',
+    alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 10,
+    marginTop: 50,
   },
-
   text: {
     color: '#000000',
     fontSize: 14,
@@ -113,31 +114,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 5,
   },
-
   textBox: {
     borderColor: '#000000',
-    borderWidth: 0.5,
+    borderWidth: 0.5
   },
-
+  textBoxLarge: {
+    borderColor: '#000000',
+    borderWidth: 0.5,
+    width: 50
+  },
   margin: {
     marginHorizontal: 69,
     flexDirection: 'row', 
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-
   spacingBetweenText: {
     marginRight: 5,
   },
-
   spacingBetweenHeader: {
-    marginTop: 126,
+    marginTop: 100,
   },
-
   spacingBetweenBoxes: {
     marginTop: 46,
   },
-
   nextBtn: {
     borderWidth: 1,
     borderRadius: 6,
@@ -145,10 +145,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     marginHorizontal: 69,
-    marginTop: 390,
+    marginTop: 300,
     height: 40,
   },
-
   nextText: {
     color: '#FFFFFF',
     fontWeight: 'bold',

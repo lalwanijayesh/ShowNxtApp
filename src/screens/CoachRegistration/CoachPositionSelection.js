@@ -7,8 +7,8 @@ import {
   FlatList,
 } from "react-native";
 import { gql, useQuery } from "@apollo/client";
-
 import ScreenNames from "../../constants/ScreenNames";
+import Icon from "react-native-ico-material-design";
 
 const GET_POSITIONS = gql`
   query PositionsBySport($sportId: ID!) {
@@ -29,17 +29,13 @@ const CoachPositionSelection = (props) => {
 
   const incrementValue = (i) => {
     let currentPositions = [...positions];
-
     currentPositions[i].counter += 1;
-
     setPositions(currentPositions);
   };
 
   const decrementValue = (i) => {
     let currentPositions = [...positions];
-
     currentPositions[i].counter = Math.max(currentPositions[i].counter - 1, 0);
-
     setPositions(currentPositions);
   };
 
@@ -62,24 +58,34 @@ const CoachPositionSelection = (props) => {
         return true;
       }
     }
-
     return false;
   };
 
   const getFilledPositions = () => {
     let res = [];
-
     for (let i = 0; i < positions.length; i += 1) {
       if (positions[i].counter > 0) {
         res.push(positions[i]);
       }
     }
-
     return res;
   };
 
   return (
-    <View style={styles.containerTitle}>
+    <View style={styles.containerMain}>
+      <TouchableOpacity
+          style={styles.backContainer}
+          onPress={() => props.navigation.navigate(ScreenNames.COACH_INFO_REGISTRATION,
+              props.route.params)}
+      >
+        <Icon
+            name="left-arrow-key"
+            height={15}
+            width={15}
+            color="black"
+        />
+      </TouchableOpacity>
+      <Text style={styles.register}>{"REGISTER"}</Text>
       <Text style={styles.startText}>Positions recruiting for Fall 2022</Text>
 
       <View style={styles.container}>
@@ -140,10 +146,10 @@ const CoachPositionSelection = (props) => {
 
       <View style={styles.textUnderCircles}>
         <View>
-          <Text style={styles.SandRText}>Sports</Text>
+          <Text style={styles.SandRText}>Sport</Text>
         </View>
         <View>
-          <Text style={styles.SandRText}>Position</Text>
+          <Text style={styles.SandRText}>Positions</Text>
         </View>
       </View>
 
@@ -163,6 +169,7 @@ const CoachPositionSelection = (props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   progressContainer: {
     display: "flex",
@@ -170,7 +177,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 50,
   },
-
   textUnderCircles: {
     display: "flex",
     flexDirection: "row",
@@ -186,7 +192,6 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
   },
-
   circle1: {
     width: 30,
     height: 30,
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
   oneText: {
     fontWeight: "bold",
     color: "white",
-    fontSize: 20,
+    fontSize: 22,
     textAlign: "center",
   },
   dash: {
@@ -206,83 +211,90 @@ const styles = StyleSheet.create({
     backgroundColor: "mediumseagreen",
     textAlign: "center",
   },
-
   SandRText: {
     color: "black",
     fontSize: 10,
     textAlign: "center",
     margin: 20,
   },
-
   container: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     width: "80%",
     height: "40%",
+    marginTop: 20,
+    marginBottom: 20
   },
-  containerTitle: {
+  containerMain: {
     flexDirection: "column",
     alignItems: "center",
-    height: "100%",
-    margin: 30,
+    height: "100%"
+  },
+  backContainer: {
+    position: "absolute",
+    left: 40,
+    top: 60,
+  },
+  register: {
+    alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 10,
+    marginTop: 50,
+    marginBottom: 80
   },
   startText: {
     fontWeight: "bold",
     textAlign: "center",
-    margin: 90,
-    fontSize: 18,
+    fontSize: 16,
   },
-
   itemContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 50,
+    height: 50
   },
-
   itemLabelContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
-
   itemIncrementContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    marginLeft: 20,
+    marginRight: 20,
   },
-
   itemLabel: {
     padding: 10,
-    fontSize: 18,
+    fontSize: 16,
   },
-
   itemCounter: {
     fontSize: 20,
+    padding: 10,
+    width: 32,
+    fontWeight: 'bold'
   },
-
   itemButton: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
   },
-
   itemButtonPlus: {
+    fontSize: 35,
+  },
+  itemButtonMinus: {
     fontSize: 40,
   },
-
-  itemButtonMinus: {
-    fontSize: 45,
-  },
-
   buttonText: {
     fontWeight: "bold",
     textAlign: "center",
     color: "white",
   },
-
   buttonReady: {
     display: "flex",
     alignItems: "center",

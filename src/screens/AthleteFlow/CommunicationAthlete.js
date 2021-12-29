@@ -1,30 +1,33 @@
 import React from "react";
 import {
-  StyleSheet,
   View,
   Text,
-  TouchableOpacity,
-  FlatList,
+  StyleSheet,
 } from "react-native";
 
-// TODO: Replace image in the circle view
-// TODO: find the way to let the user upload videos into react-native
-// TODO: This screen is currently a pure UI, it will be fixed later to use to connect back-end for user data.
-const CommunicationAthlete = (props) => {
+const CommunicationAthlete = () => {
   return (
-    <View>
-      <Text style={styles.buttonText}> Communication page!</Text>
+    <View style={styles.container}>
+      <Text style={styles.buttonText}>
+        COMMUNICATION PAGE
+      </Text>
     </View>
   );
 };
 
-export default CommunicationAthlete;
-
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100%",
+  },
   buttonText: {
     fontWeight: "bold",
     fontSize: 20,
     textAlign: "center",
-    margin: 120,
-  },
+    margin: 100,
+  }
 });
+
+export default CommunicationAthlete;

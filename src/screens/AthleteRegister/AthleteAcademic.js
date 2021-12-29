@@ -13,6 +13,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import ScreenNames from "../../constants/ScreenNames";
 import years from "../../data/years";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import Icon from "react-native-ico-material-design";
 
 // TODO move all gql constants to separate file
 const GET_SCHOOLS = gql`
@@ -97,15 +98,21 @@ const AthleteAcademic = ({ navigation, route }) => {
   const handleSchoolOpen = useCallback(() => {
     setOpenSchool(true);
     setOpenYear(false);
+    getSchools();
   }, []);
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.backContainer}
-        onPress={() => navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT)}
-      >
-        <Text style={styles.back}>{"<"}</Text>
+        onPress={() => navigation.navigate(ScreenNames.ATHLETE_HEIGHT_WEIGHT,
+            route.params)}>
+          <Icon
+              name="left-arrow-key"
+              height={15}
+              width={15}
+              color="black"
+          />
       </TouchableOpacity>
 
       <Text style={styles.register}>{"REGISTER"}</Text>
@@ -123,10 +130,10 @@ const AthleteAcademic = ({ navigation, route }) => {
         onOpen={handleSchoolOpen}
         zIndex={3000}
         zIndexInverse={1000}
-        style={[styles.spacingBetweenHeader, styles.box, styles.pickleStyle]}
+        style={[styles.spacingBetweenHeader, styles.box, styles.pickerStyle]}
         dropDownContainerStyle={[
           styles.spacingBetweenHeader,
-          styles.pickleStyle,
+          styles.pickerStyle,
         ]}
       />
 
@@ -143,10 +150,10 @@ const AthleteAcademic = ({ navigation, route }) => {
         onOpen={handleYearOpen}
         zIndex={2000}
         zIndexInverse={2000}
-        style={[styles.spacingBetweenBoxes, styles.box, styles.pickleStyle]}
+        style={[styles.spacingBetweenBoxes, styles.box, styles.pickerStyle]}
         dropDownContainerStyle={[
           styles.spacingBetweenBoxes,
-          styles.pickleStyle,
+          styles.pickerStyle,
         ]}
       />
 
@@ -176,7 +183,7 @@ const AthleteAcademic = ({ navigation, route }) => {
                 firstName: route.params.fullName.split(/\s+/)[0],
                 lastName: route.params.fullName.split(/\s+/)[1],
                 gender: route.params.gender.toUpperCase(),
-                // TODO propose height format change
+                // TODO make uniform format for height
                 height: parseInt(
                   parseFloat(route.params.height.ft) * 30.48 +
                     parseFloat(route.params.height.inch) * 2.54
@@ -230,26 +237,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
-
   backContainer: {
     position: "absolute",
-    left: 42,
-    top: 40,
+    left: 40,
+    top: 60,
   },
-
-  back: {
-    fontSize: 30,
-    fontWeight: "bold",
-  },
-
   register: {
-    fontWeight: "bold",
-    fontSize: 14,
-    lineHeight: 16,
-    marginTop: 54,
     alignSelf: "center",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+    padding: 10,
+    marginTop: 50,
   },
-
   textBox: {
     color: "#555555",
     fontSize: 14,
@@ -258,7 +258,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 69,
     paddingLeft: 17,
   },
-
   textBoxContainer: {
     borderColor: "#000000",
     borderWidth: 1,
@@ -266,29 +265,20 @@ const styles = StyleSheet.create({
     height: 37,
     backgroundColor: "#FFFFFF",
   },
-
   spacingBetweenHeader: {
-    marginTop: 126,
+    marginTop: 100,
   },
-
   spacingBetweenBoxes: {
     marginTop: 46,
   },
-
-  // TODO: think a better way to style this.
   box: {
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6,
+    borderRadius: 6,
     height: 37,
   },
-
-  pickleStyle: {
+  pickerStyle: {
     width: Dimensions.get("screen").width - 69 * 2,
     marginLeft: 69,
   },
-
   nextBtn: {
     borderColor: "#000000",
     borderWidth: 1,
@@ -297,10 +287,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
     marginHorizontal: 69,
-    marginTop: 312,
+    marginTop: 200,
     height: 40,
   },
-
   nextText: {
     color: "#FFFFFF",
     fontWeight: "bold",

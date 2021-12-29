@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
-
   searchInput: {
     marginTop: "30%",
     width: 237,
@@ -94,31 +93,26 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
   },
-
   schoolsContainer: {
     marginTop: "5%",
     width: "90%",
   },
-
   schoolContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     margin: 10
   },
-
   displayText: {
     padding: 10,
     margin: 10,
     textAlign: 'center'
   },
-
   schoolImage: {
     width: 50,
     height: 50,
     borderRadius: 30,
   },
-
   schoolName: {
     marginLeft: 10,
   },
