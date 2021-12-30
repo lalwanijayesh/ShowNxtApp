@@ -113,7 +113,7 @@ const SchoolInfo = (props) => {
             schoolId: schoolId,
             positionId: selectedOpening.positionId,
           },
-        }).then(r => console.log("Application Sent!" + r.data));
+        }).then(r => console.log("Application Sent!"));
       } else {
         Alert.alert("You haven't created a profile for that position yet!");
       }
@@ -139,7 +139,7 @@ const SchoolInfo = (props) => {
         );
 
         resOpenings.push({
-          positionId: opening.positionId,
+          positionId: opening.position.positionId,
           coachId: opening.coachId,
           openingCount: opening.openingCount,
           positionName: position.positionName,
@@ -147,7 +147,6 @@ const SchoolInfo = (props) => {
           sportName: sport.sportName,
         });
       }
-
       setOpenings(resOpenings);
       setShouldSkip(true);
     },
